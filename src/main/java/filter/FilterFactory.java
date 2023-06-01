@@ -8,4 +8,3 @@ public class FilterFactory {
         return (Filter) filterClass.getDeclaredConstructor().newInstance();
     }
 }
-

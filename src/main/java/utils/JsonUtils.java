@@ -1,18 +1,26 @@
 package utils;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.File;
+import java.io.IOException;
 
 public class JsonUtils {
-    public static <T> T fromJson(InputStream inputStream, Class<T> classType){
-        // gibt ein Objekt der KLasse "classType" zurück
+
+    private static ObjectMapper mapper;
+
+    static {
+        mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
-    public static <T> void toJson(T object, OutputStream outputStream) {
-        // Wandelt ein Objekt in ein Outputstream im Json-Format um
+    public static <T> T fromJson(File jsonFile, Class<T> classType) throws IOException {
+        return mapper.readValue(jsonFile, classType);
     }
 
-    // eventuell weitere Utils
-
-
+    public static void toJson(Object obj, String filePath) throws IOException {
+        mapper.writeValue(new File(filePath), obj);
+    }
 }
