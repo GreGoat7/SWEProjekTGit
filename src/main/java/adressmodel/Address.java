@@ -31,4 +31,29 @@ public class Address {
 
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public List<Email> getEmail() {
+        return emails;
+    }
+
+    public AddressDetails getAddressDetails() {
+        return address;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public List<Phone> getPhone() {
+        return phones;
+    }
+
+
 }
