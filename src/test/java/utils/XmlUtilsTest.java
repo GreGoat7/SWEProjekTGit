@@ -94,7 +94,7 @@ public class XmlUtilsTest {
         assertEquals(age, address.getAge(), "Invalid age");
 
         // Validate AddressDetails
-        AddressDetails details = address.getAddressDetails();
+        AddressDetails details = address.getAddress();
         assertNotNull(details, "AddressDetails should not be null");
         assertEquals(street, details.getStreet(), "Invalid street");
         assertEquals(city, details.getCity(), "Invalid city");
@@ -109,6 +109,22 @@ public class XmlUtilsTest {
         List<Email> emails = address.getEmail();
         assertNotNull(emails, "Email list should not be null");
         assertEquals(expectedEmailCount, emails.size(), "Invalid number of emails");
+    }
+
+    @Test
+    public void testToXml(){
+
+        AddressDetails xmlAdressDetails = new AddressDetails("test", "testt", "testtt");
+        String outputFilePath = "src/test/resources/xml_adress_details.xml";
+        Address testAddress = new Address();
+        testAddress.setAddress(xmlAdressDetails);
+        try {
+            XmlUtils.toXml(testAddress, outputFilePath);
+        }catch (Exception e){
+            fail("Exception thrown during test: " + e.toString());
+            return;
+        }
+
     }
 
 

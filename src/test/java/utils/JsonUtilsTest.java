@@ -127,7 +127,7 @@ class JsonUtilsTest {
         assertEquals(age, address.getAge(), "Invalid age");
 
         // Validate AddressDetails
-        AddressDetails details = address.getAddressDetails();
+        AddressDetails details = address.getAddress();
         assertNotNull(details, "AddressDetails should not be null");
         assertEquals(street, details.getStreet(), "Invalid street");
         assertEquals(city, details.getCity(), "Invalid city");
