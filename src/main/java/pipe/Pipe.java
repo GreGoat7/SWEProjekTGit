@@ -1,4 +1,4 @@
-package pipe;
+/*package pipe;
 
 import filter.Filter;
 import java.io.ByteArrayInputStream;
@@ -50,4 +50,4 @@ public class Pipe {
             }
         }
     }
-}
+} */

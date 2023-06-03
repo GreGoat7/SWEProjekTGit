@@ -1,21 +1,33 @@
 package adressmodel;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
+//@JacksonXmlRootElement(localName = "root")
 public class Address {
     @JsonProperty("FirstName")
+    @JacksonXmlProperty(localName = "FirstName")
     private String firstName;
     @JsonProperty("Surname")
+    @JacksonXmlProperty(localName = "Surname")
     private String surname;
+
     @JsonProperty("Age")
+    @JacksonXmlProperty(localName = "Age")
     private int age;
     @JsonProperty("Address")
+    @JacksonXmlProperty(localName = "Address")
     private AddressDetails address;
     @JsonProperty("Phone")
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "Phone")
     private List<Phone> phones;
     @JsonProperty("Email")
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "Email")
     private List<Email> emails;
 
     public Address(String FirstName, String Surname, int Age, AddressDetails Address, List<Phone> Phone, List<Email> Email){

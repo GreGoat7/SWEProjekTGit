@@ -22,21 +22,25 @@ public class JsonUtils {
 
     public static <T> T fromJson(File jsonFile, Class<T> classType) throws IOException {
         JsonNode rootNode = mapper.readTree(jsonFile);
-        if (rootNode.isArray()) {
-            throw new IllegalArgumentException("JSON file contains an array of elements. Please use the fromJson method with TypeReference parameter.");
-        }
         return mapper.readValue(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8), classType);
     }
 
     public static <T> T fromJson(File jsonFile, TypeReference<T> type) throws IOException {
         JsonNode rootNode = mapper.readTree(jsonFile);
-        if (!rootNode.isArray()) {
-            throw new IllegalArgumentException("JSON file contains a single element. Please use the fromJson method with Class parameter.");
-        }
         return mapper.readValue(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8), type);
     }
 
     public static void toJson(Object obj, String filePath) throws IOException {
         mapper.writeValue(new File(filePath), obj);
+    }
+
+    public static boolean isArray(File jsonFile) throws IOException{
+        JsonNode rootNode = mapper.readTree(jsonFile);
+        if(rootNode.isArray()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

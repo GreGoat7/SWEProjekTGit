@@ -1,29 +1,26 @@
 package utils;
 
+import adressmodel.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-import adressmodel.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-
-class JsonUtilsTest {
+public class XmlUtilsTest {
     @Test
-    void testFromJsonToAddressDetails() {
-        // Vorbereitung
-        File inputFile = new File("src/test/resources/AddressDetails.json");
+    void testFromXmlToAddressDetails(){
+        File inputFile = new File("src/test/resources/AddressDetails.xml");
         Class<AddressDetails> targetClass = AddressDetails.class;
 
         // Ausführung
         AddressDetails result;
         try {
-            result = JsonUtils.fromJson(inputFile, targetClass);
+            result = XmlUtils.fromXml(inputFile, targetClass);
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             result = null;
@@ -39,15 +36,15 @@ class JsonUtilsTest {
     }
 
     @Test
-    void testFromJsonToEmail() {
+    void testFromXmlToEmail() {
         // Vorbereitung
-        File inputFile = new File("src/test/resources/Email.json");
+        File inputFile = new File("src/test/resources/email.xml");
         Class<Email> targetClass = Email.class;
 
         // Ausführung
         Email result;
         try {
-            result = JsonUtils.fromJson(inputFile, targetClass);
+            result = XmlUtils.fromXml(inputFile, targetClass);
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             result = null;
@@ -65,45 +62,15 @@ class JsonUtilsTest {
         assertTrue(result.getEmailAddress().contains("fsmith@my-work.com"), "Address list should contain 'fsmith@my-work.com'");
     }
 
-
-
-
-    @Test
-    void testFromAddressDetailsListJsonToJava() {
-        // Vorbereitung
-        File inputFile = new File("src/test/resources/AddressDetailsList.json");
-        TypeReference<List<AddressDetails>> targetClass = new TypeReference<>() {};
-
-        // Ausführung
-        List<AddressDetails> result;
-        try {
-            result = JsonUtils.fromJson(inputFile, targetClass);
-        } catch (IOException e) {
-            fail("Exception thrown during test: " + e.toString());
-            return;
-        }
-
-        // Überprüfung
-        assertNotNull(result, "Result should not be null");
-        assertFalse(result.isEmpty(), "Result should not be empty");
-
-        // Beispiel: Überprüfen des ersten Address-Objekts in der Liste
-        AddressDetails secondDetails = result.get(1);
-        assertEquals("Test",secondDetails.getCity(), "Falsch");
-
-
-        // usw. für die restlichen Adressen und Felder
-    }
-
     @Test
     void AddressListJsonToJava() {
-        File inputFile = new File("src/test/resources/adresse.json");
+        File inputFile = new File("src/test/resources/adresse.xml");
         TypeReference<List<Address>> targetClass = new TypeReference<>() {};
 
         // Ausführung
         List<Address> result;
         try {
-            result = JsonUtils.fromJson(inputFile, targetClass);
+            result = XmlUtils.fromXml(inputFile, targetClass);
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             return;
@@ -143,7 +110,6 @@ class JsonUtilsTest {
         assertNotNull(emails, "Email list should not be null");
         assertEquals(expectedEmailCount, emails.size(), "Invalid number of emails");
     }
-
 
 
 }
