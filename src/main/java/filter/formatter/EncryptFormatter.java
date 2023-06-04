@@ -8,11 +8,15 @@ import java.io.File;
 
 import adressmodel.Person;
 import com.fasterxml.jackson.core.type.TypeReference;
+import utils.FormatUtils;
 import utils.JsonUtils;
 import utils.XmlUtils;
+import adressmodel.AddressList;
 import adressmodel.Address;
 import adressmodel.Phone;
+import adressmodel.Email;
 import java.util.List;
+import java.util.ArrayList;
 
 public class EncryptFormatter {
     private static final String ALGORITHM = "AES";
@@ -22,7 +26,7 @@ public class EncryptFormatter {
         File file = new File(filePath);
 
         // Determine the file format
-        String fileFormat = determineFileFormat(filePath);
+        String fileFormat = FormatUtils.detectFileType(filePath);
 
         switch (fileFormat.toLowerCase()) {
             case "json":
@@ -49,11 +53,28 @@ public class EncryptFormatter {
         for (Person person : personList) {
             person.setFirstName(encryptString(person.getFirstName(), cipher));
             person.setSurname(encryptString(person.getSurname(), cipher));
+            person.setAge(encryptString(person.getAge(), cipher));
             encryptAddressDetails(person.getAddress(), cipher);
-            for(Phone phone : person.getPhone()){
-                phone.setType(encryptString(phone.getType(), cipher));
-                phone.setNumber(encryptString(phone.getNumber(), cipher));
+            encryptPhoneDetails(person.getPhone(), cipher);
+            encryptEmailDetails(person.getEmail(), cipher);
+        }
+    }
+
+    private void encryptPhoneDetails(List<Phone> phones, Cipher cipher) throws Exception {
+        for (Phone phone : phones) {
+            phone.setNumber(encryptString(phone.getNumber(), cipher));
+            phone.setType(encryptString(phone.getType(), cipher));
+        }
+    }
+
+    private void encryptEmailDetails(List<Email> emails, Cipher cipher) throws Exception {
+        for (Email email : emails) {
+            List<String> encryptedEmails = new ArrayList<>();
+            for (String emailAddress : email.getEmailAddress()) {
+                encryptedEmails.add(encryptString(emailAddress, cipher));
             }
+            email.setEmailAddress(encryptedEmails);
+            email.setType(encryptString(email.getType(), cipher));
         }
     }
 
@@ -68,14 +89,5 @@ public class EncryptFormatter {
     private String encryptString(String value, Cipher cipher) throws Exception {
         byte[] encrypted = cipher.doFinal(value.getBytes(StandardCharsets.UTF_8));
         return Base64.getEncoder().encodeToString(encrypted);
-    }
-
-    private String determineFileFormat(String filePath) {
-        int i = filePath.lastIndexOf('.');
-        if (i > 0) {
-            return filePath.substring(i + 1);
-        } else {
-            return "";
-        }
     }
 }
