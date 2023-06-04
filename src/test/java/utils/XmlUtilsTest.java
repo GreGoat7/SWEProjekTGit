@@ -155,7 +155,7 @@ public class XmlUtilsTest {
     @Test
     void testArray(){
         File testFile = new File("src/test/resources/xmladresse.xml");
-        boolean result = true;
+        boolean result = false;
         try {
             result = XmlUtils.isArray(testFile);
         }catch (Exception e){

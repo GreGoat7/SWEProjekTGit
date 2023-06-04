@@ -18,20 +18,18 @@ public class XmlToJsonConverter implements Filter {
     public void process(String inputFilePath, String outputFilePath) throws IOException {
         // Lesen der XML-Eingabedatei in eine Liste von Adressobjekten
         File inputFile = new File(inputFilePath);
-        Class<Address> targetClass = Address.class;
         List<Address> addresses;
 
-        // TypeReference<List<Address>> targetClass = new TypeReference<>() {};
+        TypeReference<List<Address>> targetClass = new TypeReference<>() {};
 
-        addresses = Collections.singletonList(XmlUtils.fromXml(inputFile, targetClass));
-        /*if(XmlUtils.isArray(inputFile)) {
+
+        if(XmlUtils.isArray(inputFile)) {
             addresses = XmlUtils.fromXml(inputFile, new TypeReference<List<Address>>() {});
         } else {
             addresses = Collections.singletonList(XmlUtils.fromXml(inputFile, Address.class));
-        } */
+        }
 
         // Schreiben der Adressinformationen in die JSON-Ausgabedatei
-        File outputFile = new File(outputFilePath);
         if(addresses.size() > 1) {
             JsonUtils.toJson(addresses, outputFilePath);
         } else {
