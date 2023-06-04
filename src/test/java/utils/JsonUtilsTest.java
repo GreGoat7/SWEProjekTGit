@@ -114,8 +114,8 @@ class JsonUtilsTest {
         assertFalse(result.isEmpty(), "Result should not be empty");
 
         // Beispiel: Überprüfen der einzelnen Person-Objekte in der Liste
-        validateAddress(result.get(0), "Fred", "Smith", 28, "Hursley Park", "Winchester", "SO21 2JN", 4, 2);
-        validateAddress(result.get(1), "Dieter", "M\u00FCller", 32, "Nordbahnhofstr", "Stuttgart", "70191", 2, 1);
+        validateAddress(result.get(0), "Fred", "Smith", "28", "Hursley Park", "Winchester", "SO21 2JN", 4, 2);
+        validateAddress(result.get(1), "Dieter", "M\u00FCller", "32", "Nordbahnhofstr", "Stuttgart", "70191", 2, 1);
     }
 
     @Test
@@ -158,7 +158,7 @@ class JsonUtilsTest {
 
 
     // Hilfsmethode zur Validierung eines Person-Objekts
-    private void validateAddress(Person person, String firstName, String surname, int age,
+    private void validateAddress(Person person, String firstName, String surname, String age,
                                  String street, String city, String postcode,
                                  int expectedPhoneCount, int expectedEmailCount) {
         assertEquals(firstName, person.getFirstName(), "Invalid first name");

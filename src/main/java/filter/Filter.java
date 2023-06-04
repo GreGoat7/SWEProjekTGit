@@ -5,5 +5,5 @@ import java.io.OutputStream;
 
 
 public interface Filter {
-    void process(String inputFilePath, String outputFilePath) throws IOException;
+    void process(String inputFilePath, String outputFilePath) throws Exception;
 }
