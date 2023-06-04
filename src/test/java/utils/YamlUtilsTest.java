@@ -82,7 +82,7 @@ class YamlUtilsTest {
         assertFalse(result.isEmpty(), "Result should not be empty");
 
         // Beispiel: Überprüfen des ersten Address-Objekts in der Liste
-        AddressDetails secondDetails = result.get(1);
+        Address secondDetails = result.get(1);
         assertEquals("Test",secondDetails.getCity(), "Falsch");
 
         // usw. für die restlichen Adressen und Felder
@@ -94,7 +94,7 @@ class YamlUtilsTest {
         TypeReference<List<Person>> targetClass = new TypeReference<>() {};
 
         // Ausführung
-        List<Address> result;
+        List<Person> result;
         try {
             result = YamlUtils.fromYaml(inputFile, targetClass);
         } catch (IOException e) {
@@ -112,7 +112,7 @@ class YamlUtilsTest {
     }
 
     // Hilfsmethode zur Validierung eines Address-Objekts
-    private void validateAddress(Address address, String firstName, String surname, int age,
+    private void validateAddress(Person address, String firstName, String surname, int age,
                                  String street, String city, String postcode,
                                  int expectedPhoneCount, int expectedEmailCount) {
         assertEquals(firstName, address.getFirstName(), "Invalid first name");

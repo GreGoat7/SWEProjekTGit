@@ -1,7 +1,12 @@
 package utils;
 
+import adressmodel.Address;
+import adressmodel.Email;
+import adressmodel.Person;
+import adressmodel.Phone;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -58,6 +63,26 @@ public class XmlUtils {
             System.err.println("Fehler beim Parsen der XML-Datei: " + e.getMessage());
             return false;  // Rückgabe von false, da das Parsen fehlgeschlagen ist
         }
+    }
+
+    public static TypeReference<?> determineListType(File xmlFile) throws IOException {
+        JsonNode rootNode = mapper.readTree(xmlFile);
+        if (rootNode.isArray() && rootNode.size() > 0) {
+            JsonNode firstElement = rootNode.get(0);
+            // Prüfen auf das Vorhandensein bestimmter Felder in den JSON-Elementen
+            if (firstElement.has("FirstName")) {
+                return new TypeReference<List<Person>>() {};
+            } else if (firstElement.has("type") && firstElement.has("address")) {
+                return new TypeReference<List<Email>>() {};
+            }
+            else if(firstElement.has("type") && firstElement.has("number")){
+                return new TypeReference<List<Phone>>() {};
+            }
+            else if(firstElement.has("Street")){
+                return new TypeReference<List<Address>>() {};
+            }
+        }
+            throw new InvalidFormatException("Das XML-Format entspricht nicht erwarteten Feldern", xmlFile, Object.class);
     }
 
 
