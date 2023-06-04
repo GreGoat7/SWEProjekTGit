@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 public class XmlUtils {
     private static XmlMapper mapper;
@@ -39,19 +42,23 @@ public class XmlUtils {
         mapper.writeValue(new File(filePath), obj);
     }
 
-    public static boolean isArray(File xmlFile) throws IOException {
-        XmlMapper xmlMapper = new XmlMapper();
-        JsonNode rootNode = xmlMapper.readTree(xmlFile);
+    public static boolean isArray(File xmlFile) {
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(xmlFile);
 
-        List<String> possibleRoots = Arrays.asList("ArrayList", "root");
+            // Wird zur Ermittlung des obersten Knoten im XML-Dokument verwendet
+            Element rootElement = doc.getDocumentElement();
 
-        for (String root : possibleRoots) {
-            if (rootNode.has(root)) {
-                return true;
-            }
+            // Überprüft, ob der oberste Knoten "ArrayList" oder "root" ist
+            return rootElement.getNodeName().equals("ArrayList") || rootElement.getNodeName().equals("root");
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            // Behandlung der Ausnahmen, z.B. durch Protokollierung oder Ausgabe einer Fehlermeldung
+            System.err.println("Fehler beim Parsen der XML-Datei: " + e.getMessage());
+            return false;  // Rückgabe von false, da das Parsen fehlgeschlagen ist
         }
-        return false;
-
     }
+
 
 }
