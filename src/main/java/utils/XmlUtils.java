@@ -1,5 +1,6 @@
 package utils;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,6 +13,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 
 import org.w3c.dom.Document;
 
@@ -36,10 +39,19 @@ public class XmlUtils {
         mapper.writeValue(new File(filePath), obj);
     }
 
-    public static boolean isArray(File xmlFile) throws Exception {
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(xmlFile);
-        return doc.getDocumentElement().getElementsByTagName("*").getLength() > 1;
+    public static boolean isArray(File xmlFile) throws IOException {
+        XmlMapper xmlMapper = new XmlMapper();
+        JsonNode rootNode = xmlMapper.readTree(xmlFile);
+
+        List<String> possibleRoots = Arrays.asList("ArrayList", "root");
+
+        for (String root : possibleRoots) {
+            if (rootNode.has(root)) {
+                return true;
+            }
+        }
+        return false;
+
     }
+
 }
