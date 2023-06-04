@@ -18,16 +18,17 @@ public class AddressDetails {
     @JacksonXmlProperty(localName = "Postcode")
     private String postcode;
 
-    public AddressDetails(String street, String city, String postcode){
+    public AddressDetails(String street, String city, String postcode) {
         this.street = street;
         this.city = city;
         this.postcode = postcode;
     }
 
-    public AddressDetails(){
+    public AddressDetails() {
 
     }
 
+    //getter Methoden
     @JsonProperty("Street")
     @JacksonXmlProperty(localName = "Street")
     public String getStreet() {
@@ -36,7 +37,7 @@ public class AddressDetails {
 
     @JsonProperty("City")
     @JacksonXmlProperty(localName = "City")
-    public String getCity(){
+    public String getCity() {
         return city;
     }
 
@@ -44,5 +45,25 @@ public class AddressDetails {
     @JacksonXmlProperty(localName = "Postcode")
     public String getPostcode() {
         return postcode;
+    }
+
+
+    //setter Methoden
+    @JsonProperty("Street")
+    @JacksonXmlProperty(localName = "Street")
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    @JsonProperty("City")
+    @JacksonXmlProperty(localName = "City")
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    @JsonProperty("Postcode")
+    @JacksonXmlProperty(localName = "Postcode")
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
 }

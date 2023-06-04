@@ -44,6 +44,7 @@ public class Address {
 
     }
 
+    //getter Methoden
     public String getFirstName() {
         return firstName;
     }
@@ -68,7 +69,25 @@ public class Address {
         return phone;
     }
 
+    //setter Methoden
     public void setAddress(AddressDetails address) {
         this.address = address;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setphone(String surname) {
+        this.surname = surname;
+    }
+
 }
