@@ -14,6 +14,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.15.1")
     implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.1")
+    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.1")
 }
 
 tasks.test {
