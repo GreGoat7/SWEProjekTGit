@@ -1,93 +1,69 @@
 package adressmodel;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
-import java.util.List;
-
-@JsonPropertyOrder({ "FirstName", "Surname", "Age", "Address", "Phone", "Email" })
-@JacksonXmlRootElement(localName = "root")
+@JsonPropertyOrder({ "Street", "City", "Postcode"})
+@JacksonXmlRootElement(localName = "Person")
 public class Address {
-    @JsonProperty("FirstName")
-    @JacksonXmlProperty(localName = "FirstName")
-    private String firstName;
-    @JsonProperty("Surname")
-    @JacksonXmlProperty(localName = "Surname")
-    private String surname;
+    @JsonProperty("Street")
+    @JacksonXmlProperty(localName = "Street")
+    private String street;
+    @JsonProperty("City")
+    @JacksonXmlProperty(localName = "City")
+    private String city;
+    @JsonProperty("Postcode")
+    @JacksonXmlProperty(localName = "Postcode")
+    private String postcode;
 
-    @JsonProperty("Age")
-    @JacksonXmlProperty(localName = "Age")
-    private int age;
-    @JsonProperty("Address")
-    @JacksonXmlProperty(localName = "Address")
-    private AddressDetails address;
-    @JsonProperty("Phone")
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "Phone")
-    private List<Phone> phone;
-    @JsonProperty("Email")
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "Email")
-    private List<Email> email;
-
-    public Address(String FirstName, String Surname, int Age, AddressDetails Address, List<Phone> Phone, List<Email> Email){
-        this.firstName = FirstName;
-        this.surname = Surname;
-        this.age = Age;
-        this.address = Address;
-        this.phone = Phone;
-        this.email = Email;
+    public Address(String street, String city, String postcode) {
+        this.street = street;
+        this.city = city;
+        this.postcode = postcode;
     }
 
-    public Address(){
+    public Address() {
 
     }
 
     //getter Methoden
-    public String getFirstName() {
-        return firstName;
+    @JsonProperty("Street")
+    @JacksonXmlProperty(localName = "Street")
+    public String getStreet() {
+        return street;
     }
 
-    public String getSurname() {
-        return surname;
+    @JsonProperty("City")
+    @JacksonXmlProperty(localName = "City")
+    public String getCity() {
+        return city;
     }
 
-    public List<Email> getEmail() {
-        return email;
+    @JsonProperty("Postcode")
+    @JacksonXmlProperty(localName = "Postcode")
+    public String getPostcode() {
+        return postcode;
     }
 
-    public AddressDetails getAddress() {
-        return address;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public List<Phone> getPhone() {
-        return phone;
-    }
 
     //setter Methoden
-    public void setAddress(AddressDetails address) {
-        this.address = address;
+    @JsonProperty("Street")
+    @JacksonXmlProperty(localName = "Street")
+    public void setStreet(String street) {
+        this.street = street;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    @JsonProperty("City")
+    @JacksonXmlProperty(localName = "City")
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setPhone(List<Phone> phone) {
-        this.phone = phone;
+    @JsonProperty("Postcode")
+    @JacksonXmlProperty(localName = "Postcode")
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
 }

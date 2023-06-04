@@ -3,11 +3,6 @@
     <FirstName>Fred</FirstName>
     <Surname>Smith</Surname>
     <Age>28</Age>
-    <Address>
-      <Street>Hursley Park</Street>
-      <City>Winchester</City>
-      <Postcode>SO21 2JN</Postcode>
-    </Address>
     <Phone>
       <type>home</type>
       <number>0203 544 1234</number>
@@ -34,16 +29,16 @@
       <address>freddy@my-social.com</address>
       <address>frederic.smith@very-serious.com</address>
     </Email>
+    <Address>
+      <Street>Hursley Park</Street>
+      <City>Winchester</City>
+      <Postcode>SO21 2JN</Postcode>
+    </Address>
   </item>
   <item>
     <FirstName>Dieter</FirstName>
     <Surname>Müller</Surname>
     <Age>32</Age>
-    <Address>
-      <Street>Nordbahnhofstr</Street>
-      <City>Stuttgart</City>
-      <Postcode>70191</Postcode>
-    </Address>
     <Phone>
       <type>home</type>
       <number>0711 123456789</number>
@@ -57,5 +52,10 @@
       <address>bohl@moenkemoeller.com</address>
       <address>bohl@lehre.dhbw-stuttgart.de</address>
     </Email>
+    <Address>
+      <Street>Nordbahnhofstr</Street>
+      <City>Stuttgart</City>
+      <Postcode>70191</Postcode>
+    </Address>
   </item>
 </ArrayList>

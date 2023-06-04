@@ -2,11 +2,6 @@
   "FirstName" : "Fred",
   "Surname" : "Smith",
   "Age" : 28,
-  "Address" : {
-    "Street" : "Hursley Park",
-    "City" : "Winchester",
-    "Postcode" : "SO21 2JN"
-  },
   "Phone" : [ {
     "type" : "home",
     "number" : "0203 544 1234"
@@ -26,16 +21,16 @@
   }, {
     "type" : "home",
     "address" : [ "freddy@my-social.com", "frederic.smith@very-serious.com" ]
-  } ]
+  } ],
+  "Address" : {
+    "Street" : "Hursley Park",
+    "City" : "Winchester",
+    "Postcode" : "SO21 2JN"
+  }
 }, {
   "FirstName" : "Dieter",
   "Surname" : "Müller",
   "Age" : 32,
-  "Address" : {
-    "Street" : "Nordbahnhofstr",
-    "City" : "Stuttgart",
-    "Postcode" : "70191"
-  },
   "Phone" : [ {
     "type" : "home",
     "number" : "0711 123456789"
@@ -46,5 +41,10 @@
   "Email" : [ {
     "type" : "office",
     "address" : [ "bohl@moenkemoeller.com", "bohl@lehre.dhbw-stuttgart.de" ]
-  } ]
+  } ],
+  "Address" : {
+    "Street" : "Nordbahnhofstr",
+    "City" : "Stuttgart",
+    "Postcode" : "70191"
+  }
 } ]
