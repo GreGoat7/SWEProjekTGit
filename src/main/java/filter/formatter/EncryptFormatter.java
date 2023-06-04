@@ -12,7 +12,9 @@ import utils.XmlUtils;
 import adressmodel.Address;
 import adressmodel.AddressDetails;
 import adressmodel.Phone;
+import adressmodel.Email;
 import java.util.List;
+import java.util.ArrayList;
 
 public class EncryptFormatter {
     private static final String ALGORITHM = "AES";
@@ -49,11 +51,28 @@ public class EncryptFormatter {
         for (Address address : addresses) {
             address.setFirstName(encryptString(address.getFirstName(), cipher));
             address.setSurname(encryptString(address.getSurname(), cipher));
+            //address.setAge(encryptString(Integer.toString(address.getAge()), cipher));
             encryptAddressDetails(address.getAddress(), cipher);
-            for(Phone phone : address.getPhone()){
-                phone.setType(encryptString(phone.getType(), cipher));
-                phone.setNumber(encryptString(phone.getNumber(), cipher));
+            encryptPhoneDetails(address.getPhone(), cipher);
+            encryptEmailDetails(address.getEmail(), cipher);
+        }
+    }
+
+    private void encryptPhoneDetails(List<Phone> phones, Cipher cipher) throws Exception {
+        for (Phone phone : phones) {
+            phone.setNumber(encryptString(phone.getNumber(), cipher));
+            phone.setType(encryptString(phone.getType(), cipher));
+        }
+    }
+
+    private void encryptEmailDetails(List<Email> emails, Cipher cipher) throws Exception {
+        for (Email email : emails) {
+            List<String> encryptedEmails = new ArrayList<>();
+            for (String emailAddress : email.getEmailAddress()) {
+                encryptedEmails.add(encryptString(emailAddress, cipher));
             }
+            email.setEmailAddress(encryptedEmails);
+            email.setType(encryptString(email.getType(), cipher));
         }
     }
 

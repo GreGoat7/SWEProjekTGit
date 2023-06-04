@@ -19,22 +19,15 @@ public class Email {
     @JacksonXmlProperty(localName = "address")
     private List<String> emailAddress;
 
-    public Email(String type, List<String> emailAddress){
+    public Email(String type, List<String> emailAddress) {
         this.type = type;
         this.emailAddress = emailAddress;
     }
 
-    public Email(){
+    public Email() {
 
     }
 
-    public List<String> getEmailAddress() {
-        return emailAddress;
-    }
-
-    public String getType() {
-        return type;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -48,5 +41,22 @@ public class Email {
     @Override
     public int hashCode() {
         return Objects.hash(type, emailAddress);
+    }
+
+    //getter und setter
+    public List<String> getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(List<String> emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

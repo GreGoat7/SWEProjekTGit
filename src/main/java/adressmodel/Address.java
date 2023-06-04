@@ -87,8 +87,7 @@ public class Address {
         this.age = age;
     }
 
-    public void setphone(String surname) {
-        this.surname = surname;
+    public void setPhone(List<Phone> phone) {
+        this.phone = phone;
     }
-
 }
