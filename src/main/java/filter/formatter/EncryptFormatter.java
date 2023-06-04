@@ -11,6 +11,7 @@ import utils.JsonUtils;
 import utils.XmlUtils;
 import adressmodel.Address;
 import adressmodel.AddressDetails;
+import adressmodel.Phone;
 import java.util.List;
 
 public class EncryptFormatter {
@@ -49,6 +50,10 @@ public class EncryptFormatter {
             address.setFirstName(encryptString(address.getFirstName(), cipher));
             address.setSurname(encryptString(address.getSurname(), cipher));
             encryptAddressDetails(address.getAddress(), cipher);
+            for(Phone phone : address.getPhone()){
+                phone.setType(encryptString(phone.getType(), cipher));
+                phone.setNumber(encryptString(phone.getNumber(), cipher));
+            }
         }
     }
 
