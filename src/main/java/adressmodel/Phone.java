@@ -9,6 +9,7 @@ public class Phone {
     @JsonProperty("type")
     @JacksonXmlProperty(localName = "type")
     private String type;
+
     @JsonProperty("number")
     @JacksonXmlProperty(localName = "number")
     private String number;
@@ -22,6 +23,20 @@ public class Phone {
 
     }
 
+    // Getter und Setter Methoden
+    public String getType() {
+        return this.type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
 
+    public String getNumber() {
+        return this.number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 }

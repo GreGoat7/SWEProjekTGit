@@ -1,9 +1,9 @@
 package filter.converter;
 
+import adressmodel.Person;
 import com.fasterxml.jackson.core.type.TypeReference;
 import utils.JsonUtils;
 import utils.XmlUtils;
-import adressmodel.Address;
 import filter.Filter;
 
 import java.io.File;
@@ -17,19 +17,19 @@ public class JsonToXmlConverter implements Filter{
     public void process(String inputFilePath, String outputFilePath) throws IOException {
         // Lesen der JSON-Eingabedatei in eine Liste von Adressobjekten
         File inputFile = new File(inputFilePath);
-        List<Address> addresses;
+        List<Person> personList;
         if(JsonUtils.isArray(inputFile)){
-            addresses = JsonUtils.fromJson(inputFile, new TypeReference<List<Address>>() {});
+            personList = JsonUtils.fromJson(inputFile, new TypeReference<List<Person>>() {});
         } else {
-            addresses = Collections.singletonList(JsonUtils.fromJson(inputFile, Address.class));
+            personList = Collections.singletonList(JsonUtils.fromJson(inputFile, new TypeReference<Person>() {}));
         }
 
         // Schreiben der Adressinformationen in die XML-Ausgabedatei
         File outputFile = new File(outputFilePath);
-        if(addresses.size() > 1){
-            XmlUtils.toXml(addresses, outputFilePath);
+        if(personList.size() > 1){
+            XmlUtils.toXml(personList, outputFilePath);
         } else {
-            XmlUtils.toXml(addresses.get(0), outputFilePath);
+            XmlUtils.toXml(personList.get(0), outputFilePath);
         }
     }
 }

@@ -20,14 +20,14 @@ public class JsonUtils {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
-    public static <T> T fromJson(File jsonFile, Class<T> classType) throws IOException {
+    /*public static <T> T fromJson(File jsonFile, Class<T> classType) throws IOException {
         JsonNode rootNode = mapper.readTree(jsonFile);
         return mapper.readValue(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8), classType);
-    }
+    } */
 
-    public static <T> T fromJson(File jsonFile, TypeReference<T> type) throws IOException {
-        JsonNode rootNode = mapper.readTree(jsonFile);
-        return mapper.readValue(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8), type);
+    public static <T> T fromJson(File jsonFile, TypeReference<T> typeReference) throws IOException {
+        //JsonNode rootNode = mapper.readTree(jsonFile);
+        return mapper.readValue(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8), typeReference);
     }
 
     public static void toJson(Object obj, String filePath) throws IOException {
