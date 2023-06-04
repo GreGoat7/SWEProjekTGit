@@ -3,13 +3,13 @@
     <email>
       <email>
         <type>office</type>
-        <address>fred.smith@my-work.com</address>
-        <address>fsmith@my-work.com</address>
+        <person>fred.smith@my-work.com</person>
+        <person>fsmith@my-work.com</person>
       </email>
       <email>
         <type>home</type>
-        <address>freddy@my-social.com</address>
-        <address>frederic.smith@very-serious.com</address>
+        <person>freddy@my-social.com</person>
+        <person>frederic.smith@very-serious.com</person>
       </email>
     </email>
     <phone>
@@ -30,11 +30,11 @@
         <number>077 7700 1234</number>
       </phone>
     </phone>
-    <addressDetails>
+    <address>
       <Street>Hursley Park</Street>
       <City>Winchester</City>
       <Postcode>SO21 2JN</Postcode>
-    </addressDetails>
+    </address>
     <FirstName>Fred</FirstName>
     <Surname>Smith</Surname>
     <Age>28</Age>
@@ -61,21 +61,21 @@
     </Phone>
     <Email>
       <type>office</type>
-      <address>fred.smith@my-work.com</address>
-      <address>fsmith@my-work.com</address>
+      <person>fred.smith@my-work.com</person>
+      <person>fsmith@my-work.com</person>
     </Email>
     <Email>
       <type>home</type>
-      <address>freddy@my-social.com</address>
-      <address>frederic.smith@very-serious.com</address>
+      <person>freddy@my-social.com</person>
+      <person>frederic.smith@very-serious.com</person>
     </Email>
   </item>
   <item>
     <email>
       <email>
         <type>office</type>
-        <address>bohl@moenkemoeller.com</address>
-        <address>bohl@lehre.dhbw-stuttgart.de</address>
+        <person>bohl@moenkemoeller.com</person>
+        <person>bohl@lehre.dhbw-stuttgart.de</person>
       </email>
     </email>
     <phone>
@@ -88,11 +88,11 @@
         <number>0711 987654321</number>
       </phone>
     </phone>
-    <addressDetails>
+    <address>
       <Street>Nordbahnhofstr</Street>
       <City>Stuttgart</City>
       <Postcode>70191</Postcode>
-    </addressDetails>
+    </address>
     <FirstName>Dieter</FirstName>
     <Surname>Müller</Surname>
     <Age>32</Age>
@@ -111,8 +111,8 @@
     </Phone>
     <Email>
       <type>office</type>
-      <address>bohl@moenkemoeller.com</address>
-      <address>bohl@lehre.dhbw-stuttgart.de</address>
+      <person>bohl@moenkemoeller.com</person>
+      <person>bohl@lehre.dhbw-stuttgart.de</person>
     </Email>
   </item>
 </ArrayList>

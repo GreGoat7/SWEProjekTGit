@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class XmlUtilsTest {
     @Test
     void testFromXmlToAddressDetails(){
-        File inputFile = new File("src/test/resources/AddressDetails.xml");
-        Class<AddressDetails> targetClass = AddressDetails.class;
+        File inputFile = new File("src/test/resources/Address.xml");
+        Class<Address> targetClass = Address.class;
 
         // Ausführung
-        AddressDetails result;
+        Address result;
         try {
             result = XmlUtils.fromXml(inputFile, targetClass);
         } catch (IOException e) {
@@ -56,19 +56,19 @@ public class XmlUtilsTest {
         // Hier werden die erwarteten Werte überprüft
         assertNotNull(result, "Result should not be null");
         assertEquals("office", result.getType(), "Type should be 'office'");
-        assertNotNull(result.getEmailAddress(), "Address list should not be null");
-        assertEquals(2, result.getEmailAddress().size(), "Address list should have 2 emails");
-        assertTrue(result.getEmailAddress().contains("fred.smith@my-work.com"), "Address list should contain 'fred.smith@my-work.com'");
-        assertTrue(result.getEmailAddress().contains("fsmith@my-work.com"), "Address list should contain 'fsmith@my-work.com'");
+        assertNotNull(result.getEmailAddress(), "Person list should not be null");
+        assertEquals(2, result.getEmailAddress().size(), "Person list should have 2 emails");
+        assertTrue(result.getEmailAddress().contains("fred.smith@my-work.com"), "Person list should contain 'fred.smith@my-work.com'");
+        assertTrue(result.getEmailAddress().contains("fsmith@my-work.com"), "Person list should contain 'fsmith@my-work.com'");
     }
 
     @Test
     void AddressListXmlToJava() {
         File inputFile = new File("src/test/resources/adresse.xml");
-        TypeReference<List<Address>> targetClass = new TypeReference<>() {};
+        TypeReference<List<Person>> targetClass = new TypeReference<>() {};
 
         // Ausführung
-        List<Address> result;
+        List<Person> result;
         try {
             result = XmlUtils.fromXml(inputFile, targetClass);
         } catch (IOException e) {
@@ -80,33 +80,33 @@ public class XmlUtilsTest {
         assertNotNull(result, "Result should not be null");
         assertFalse(result.isEmpty(), "Result should not be empty");
 
-        // Beispiel: Überprüfen der einzelnen Address-Objekte in der Liste
+        // Beispiel: Überprüfen der einzelnen Person-Objekte in der Liste
         validateAddress(result.get(0), "Fred", "Smith", 28, "Hursley Park", "Winchester", "SO21 2JN", 4, 2);
         validateAddress(result.get(1), "Dieter", "M\u00FCller", 32, "Nordbahnhofstr", "Stuttgart", "70191", 2, 1);
     }
 
-    // Hilfsmethode zur Validierung eines Address-Objekts
-    private void validateAddress(Address address, String firstName, String surname, int age,
+    // Hilfsmethode zur Validierung eines Person-Objekts
+    private void validateAddress(Person person, String firstName, String surname, int age,
                                  String street, String city, String postcode,
                                  int expectedPhoneCount, int expectedEmailCount) {
-        assertEquals(firstName, address.getFirstName(), "Invalid first name");
-        assertEquals(surname, address.getSurname(), "Invalid surname");
-        assertEquals(age, address.getAge(), "Invalid age");
+        assertEquals(firstName, person.getFirstName(), "Invalid first name");
+        assertEquals(surname, person.getSurname(), "Invalid surname");
+        assertEquals(age, person.getAge(), "Invalid age");
 
-        // Validate AddressDetails
-        AddressDetails details = address.getAddress();
-        assertNotNull(details, "AddressDetails should not be null");
+        // Validate Address
+        Address details = person.getAddress();
+        assertNotNull(details, "Address should not be null");
         assertEquals(street, details.getStreet(), "Invalid street");
         assertEquals(city, details.getCity(), "Invalid city");
         assertEquals(postcode, details.getPostcode(), "Invalid postcode");
 
         // Validate Phone count
-        List<Phone> phones = address.getPhone();
+        List<Phone> phones = person.getPhone();
         assertNotNull(phones, "Phone list should not be null");
         assertEquals(expectedPhoneCount, phones.size(), "Invalid number of phones");
 
         // Validate Email count
-        List<Email> emails = address.getEmail();
+        List<Email> emails = person.getEmail();
         assertNotNull(emails, "Email list should not be null");
         assertEquals(expectedEmailCount, emails.size(), "Invalid number of emails");
     }
@@ -114,12 +114,12 @@ public class XmlUtilsTest {
     @Test
     public void testToXml(){
 
-        AddressDetails xmlAdressDetails = new AddressDetails("test", "testt", "testtt");
+        Address xmlAdressDetails = new Address("test", "testt", "testtt");
         String outputFilePath = "src/test/resources/xml_adress_details.xml";
-        Address testAddress = new Address();
-        testAddress.setAddress(xmlAdressDetails);
+        Person testPerson = new Person();
+        testPerson.setAddress(xmlAdressDetails);
         try {
-            XmlUtils.toXml(testAddress, outputFilePath);
+            XmlUtils.toXml(testPerson, outputFilePath);
         }catch (Exception e){
             fail("Exception thrown during test: " + e.toString());
             return;
@@ -130,10 +130,10 @@ public class XmlUtilsTest {
     @Test
     public void testFromXmlBackToXml(){
         File inputFile = new File("src/test/resources/adresse.xml");
-        TypeReference<List<Address>> targetClass = new TypeReference<>() {};
+        TypeReference<List<Person>> targetClass = new TypeReference<>() {};
 
         // Ausführung
-        List<Address> result;
+        List<Person> result;
         try {
             result = XmlUtils.fromXml(inputFile, targetClass);
         } catch (IOException e) {
