@@ -24,6 +24,8 @@ import java.util.List;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class XmlUtils {
@@ -65,24 +67,61 @@ public class XmlUtils {
         }
     }
 
-    public static TypeReference<?> determineListType(File xmlFile) throws IOException {
-        JsonNode rootNode = mapper.readTree(xmlFile);
-        if (rootNode.isArray() && rootNode.size() > 0) {
-            JsonNode firstElement = rootNode.get(0);
-            // Prüfen auf das Vorhandensein bestimmter Felder in den JSON-Elementen
-            if (firstElement.has("FirstName")) {
-                return new TypeReference<List<Person>>() {};
-            } else if (firstElement.has("type") && firstElement.has("address")) {
-                return new TypeReference<List<Email>>() {};
-            }
-            else if(firstElement.has("type") && firstElement.has("number")){
-                return new TypeReference<List<Phone>>() {};
-            }
-            else if(firstElement.has("Street")){
-                return new TypeReference<List<Address>>() {};
+    public static TypeReference<?> determineListType(File xmlFile) throws Exception {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(xmlFile);
+        doc.getDocumentElement().normalize();
+
+        NodeList itemList = doc.getElementsByTagName("item");
+        if (itemList.getLength() > 0) {
+            Node firstNode = itemList.item(0);
+            if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element firstElement = (Element) firstNode;
+                if (firstElement.getElementsByTagName("FirstName").getLength() > 0) {
+                    return new TypeReference<List<Person>>() {
+                    };
+                } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
+                        firstElement.getElementsByTagName("number").getLength() > 0) {
+                    return new TypeReference<List<Phone>>() {
+                    };
+                } else if (firstElement.getElementsByTagName("Street").getLength() > 0) {
+                    return new TypeReference<List<Address>>() {
+                    };
+                } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
+                        firstElement.getElementsByTagName("address").getLength() > 0) {
+                    return new TypeReference<List<Email>>() {
+                    };
+                }
             }
         }
-            throw new InvalidFormatException("Das XML-Format entspricht nicht erwarteten Feldern", xmlFile, Object.class);
+
+        NodeList rowList = doc.getElementsByTagName("row");
+        if (rowList.getLength() > 0) {
+            Node firstNode = rowList.item(0);
+            if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element firstElement = (Element) firstNode;
+                if (firstElement.getElementsByTagName("FirstName").getLength() > 0) {
+                    return new TypeReference<List<Person>>() {
+                    };
+                } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
+                        firstElement.getElementsByTagName("number").getLength() > 0) {
+                    return new TypeReference<List<Phone>>() {
+                    };
+                } else if (firstElement.getElementsByTagName("Street").getLength() > 0) {
+                    return new TypeReference<List<Address>>() {
+                    };
+                } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
+                        firstElement.getElementsByTagName("address").getLength() > 0) {
+                    return new TypeReference<List<Email>>() {
+                    };
+                }
+            }
+        }
+
+        throw new
+
+                InvalidFormatException("Das XML-Format entspricht nicht erwarteten Feldern", xmlFile, Object.class);
     }
 
 

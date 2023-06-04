@@ -1,7 +1,7 @@
 [ {
   "FirstName" : "Fred",
   "Surname" : "Smith",
-  "Age" : 28,
+  "Age" : "28",
   "Phone" : [ {
     "type" : "home",
     "number" : "0203 544 1234"
@@ -30,7 +30,7 @@
 }, {
   "FirstName" : "Dieter",
   "Surname" : "Müller",
-  "Age" : 32,
+  "Age" : "32",
   "Phone" : [ {
     "type" : "home",
     "number" : "0711 123456789"

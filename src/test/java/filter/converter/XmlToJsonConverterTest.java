@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class XmlToJsonConverterTest {
     @Test
-    void testXmlToJson() throws IOException {
-        String inputFilePath = "src/test/resources/xmladresse.xml";
-        String outputFilePath = "src/test/resources/xmltojson.json";
+    void testXmlToJson() throws Exception {
+        String inputFilePath = "src/test/resources/emails.xml";
+        String outputFilePath = "src/test/resources/xmltojsonemails.json";
 
         // Erstellen Sie ein neues XmlToJsonConverter-Objekt und verwenden Sie es, um die Dateien zu konvertieren
         XmlToJsonConverter converter = new XmlToJsonConverter();
