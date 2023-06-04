@@ -75,54 +75,49 @@ public class XmlUtils {
 
         NodeList itemList = doc.getElementsByTagName("item");
         if (itemList.getLength() > 0) {
-            Node firstNode = itemList.item(0);
-            if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element firstElement = (Element) firstNode;
-                if (firstElement.getElementsByTagName("FirstName").getLength() > 0) {
-                    return new TypeReference<List<Person>>() {
-                    };
-                } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
-                        firstElement.getElementsByTagName("number").getLength() > 0) {
-                    return new TypeReference<List<Phone>>() {
-                    };
-                } else if (firstElement.getElementsByTagName("Street").getLength() > 0) {
-                    return new TypeReference<List<Address>>() {
-                    };
-                } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
-                        firstElement.getElementsByTagName("address").getLength() > 0) {
-                    return new TypeReference<List<Email>>() {
-                    };
-                }
+            TypeReference<?> itemType = determineTypeFromNodeList(itemList);
+            if (itemType != null) {
+                return itemType;
             }
         }
 
         NodeList rowList = doc.getElementsByTagName("row");
         if (rowList.getLength() > 0) {
-            Node firstNode = rowList.item(0);
-            if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element firstElement = (Element) firstNode;
-                if (firstElement.getElementsByTagName("FirstName").getLength() > 0) {
-                    return new TypeReference<List<Person>>() {
-                    };
-                } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
-                        firstElement.getElementsByTagName("number").getLength() > 0) {
-                    return new TypeReference<List<Phone>>() {
-                    };
-                } else if (firstElement.getElementsByTagName("Street").getLength() > 0) {
-                    return new TypeReference<List<Address>>() {
-                    };
-                } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
-                        firstElement.getElementsByTagName("address").getLength() > 0) {
-                    return new TypeReference<List<Email>>() {
-                    };
-                }
+            TypeReference<?> rowType = determineTypeFromNodeList(rowList);
+            if (rowType != null) {
+                return rowType;
             }
         }
 
-        throw new
-
-                InvalidFormatException("Das XML-Format entspricht nicht erwarteten Feldern", xmlFile, Object.class);
+        throw new InvalidFormatException("Das XML-Format entspricht nicht erwarteten Feldern", xmlFile, Object.class);
     }
+
+    private static TypeReference<?> determineTypeFromNodeList(NodeList nodeList) {
+        Node firstNode = nodeList.item(0);
+        if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+            Element firstElement = (Element) firstNode;
+            if (firstElement.getElementsByTagName("FirstName").getLength() > 0) {
+                return new TypeReference<List<Person>>() {
+                };
+            } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
+                    firstElement.getElementsByTagName("number").getLength() > 0) {
+                return new TypeReference<List<Phone>>() {
+                };
+            } else if (firstElement.getElementsByTagName("Street").getLength() > 0) {
+                return new TypeReference<List<Address>>() {
+                };
+            } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
+                    firstElement.getElementsByTagName("address").getLength() > 0) {
+                return new TypeReference<List<Email>>() {
+                };
+            }
+        }
+
+        return null;
+    }
+
+
+
 
 
 }
