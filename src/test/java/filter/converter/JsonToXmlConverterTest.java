@@ -16,8 +16,8 @@ public class JsonToXmlConverterTest {
     @Test
     public void testJsonToXmlConverter() throws IOException {
         // Pfad zur Eingabedatei und zur Ausgabedatei
-        String inputFilePath = "src/test/resources/adresse.json";
-        String outputFilePath = "src/test/resources/xmladresse.xml";
+        String inputFilePath = "src/test/resources/expected_emails.json";
+        String outputFilePath = "src/test/resources/emails.xml";
 
         // Erstellen Sie ein neues JsonToXmlConverter-Objekt und verwenden Sie es, um die Dateien zu konvertieren
         JsonToXmlConverter converter = new JsonToXmlConverter();

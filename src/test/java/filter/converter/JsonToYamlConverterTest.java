@@ -18,7 +18,7 @@ class JsonToYamlConverterTest {
     @Test
     void testProcessForAddressDetails() throws IOException {
         runTest("src/test/resources/addressdetails.json", "src/test/resources/addressdetails.yaml",
-                new TypeReference<AddressDetails>() {});
+                new TypeReference<Address>() {});
     }
 
     @Test
@@ -36,7 +36,7 @@ class JsonToYamlConverterTest {
     @Test
     void testProcessForAddressDetailsList() throws IOException {
         runTest("src/test/resources/addressdetailslist.json", "src/test/resources/addressdetailslist.yaml",
-                new TypeReference<List<AddressDetails>>() {});
+                new TypeReference<List<Address>>() {});
     }
 
     private <T> void runTest(String inputFilePath, String outputFilePath, TypeReference<T> type) throws IOException {

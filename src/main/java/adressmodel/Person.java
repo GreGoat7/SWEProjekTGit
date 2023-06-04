@@ -19,7 +19,7 @@ public class Person {
 
     @JsonProperty("Age")
     @JacksonXmlProperty(localName = "Age")
-    private int age;
+    private String age;
     @JsonProperty("Address")
     @JacksonXmlProperty(localName = "Address")
     private Address address;
@@ -32,7 +32,7 @@ public class Person {
     @JacksonXmlProperty(localName = "Email")
     private List<Email> email;
 
-    public Person(String FirstName, String Surname, int Age, Address Address, List<Phone> Phone, List<Email> Email){
+    public Person(String FirstName, String Surname, String Age, Address Address, List<Phone> Phone, List<Email> Email){
         this.firstName = FirstName;
         this.surname = Surname;
         this.age = Age;
@@ -62,7 +62,7 @@ public class Person {
         return address;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
@@ -83,7 +83,7 @@ public class Person {
         this.surname = surname;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

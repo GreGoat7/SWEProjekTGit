@@ -15,21 +15,20 @@ public class JsonToXmlConverter implements Filter{
 
     @Override
     public void process(String inputFilePath, String outputFilePath) throws IOException {
-        // Lesen der JSON-Eingabedatei in eine Liste von Adressobjekten
+        // Lesen der JSON-Eingabedatei in eine Liste von Objekten
         File inputFile = new File(inputFilePath);
-        List<Person> personList;
-        if(JsonUtils.isArray(inputFile)){
-            personList = JsonUtils.fromJson(inputFile, new TypeReference<List<Person>>() {});
-        } else {
-            personList = Collections.singletonList(JsonUtils.fromJson(inputFile, new TypeReference<Person>() {}));
+        TypeReference<?> typeReference = JsonUtils.determineListType(inputFile);
+        Object result = JsonUtils.fromJson(inputFile, typeReference);
+
+        if (!(result instanceof List)) {
+            throw new ClassCastException("Ergebnis ist keine Liste");
         }
 
-        // Schreiben der Adressinformationen in die XML-Ausgabedatei
+        List<?> objectList = (List<?>) result;
+
+        // Schreiben der Informationen in die XML-Ausgabedatei
         File outputFile = new File(outputFilePath);
-        if(personList.size() > 1){
-            XmlUtils.toXml(personList, outputFilePath);
-        } else {
-            XmlUtils.toXml(personList.get(0), outputFilePath);
-        }
+        XmlUtils.toXml(objectList, outputFilePath);
     }
+
 }

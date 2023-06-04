@@ -15,10 +15,10 @@ class YamlUtilsTest {
     void testFromYamlToAddressDetails() {
         // Vorbereitung
         File inputFile = new File("src/test/resources/AddressDetails.yaml");
-        Class<AddressDetails> targetClass = AddressDetails.class;
+        Class<Address> targetClass = Address.class;
 
         // Ausführung
-        AddressDetails result;
+        Address result;
         try {
             result = YamlUtils.fromYaml(inputFile, targetClass);
         } catch (IOException e) {
@@ -66,10 +66,10 @@ class YamlUtilsTest {
     void testFromAddressDetailsListYamlToJava() {
         // Vorbereitung
         File inputFile = new File("src/test/resources/AddressDetailsList.yaml");
-        TypeReference<List<AddressDetails>> targetClass = new TypeReference<>() {};
+        TypeReference<List<Address>> targetClass = new TypeReference<>() {};
 
         // Ausführung
-        List<AddressDetails> result;
+        List<Address> result;
         try {
             result = YamlUtils.fromYaml(inputFile, targetClass);
         } catch (IOException e) {
@@ -91,7 +91,7 @@ class YamlUtilsTest {
     @Test
     void AddressListYamlToJava() {
         File inputFile = new File("src/test/resources/adresse.yaml");
-        TypeReference<List<Address>> targetClass = new TypeReference<>() {};
+        TypeReference<List<Person>> targetClass = new TypeReference<>() {};
 
         // Ausführung
         List<Address> result;
@@ -120,7 +120,7 @@ class YamlUtilsTest {
         assertEquals(age, address.getAge(), "Invalid age");
 
         // Validate AddressDetails
-        AddressDetails details = address.getAddress();
+        Address details = address.getAddress();
         assertNotNull(details, "AddressDetails should not be null");
         assertEquals(street, details.getStreet(), "Invalid street");
         assertEquals(city, details.getCity(), "Invalid city");
