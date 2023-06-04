@@ -30,9 +30,9 @@ public class XmlUtils {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
-    public static <T> T fromXml(File xmlFile, Class<T> classType) throws IOException {
+    /*public static <T> T fromXml(File xmlFile, Class<T> classType) throws IOException {
         return mapper.readValue(new InputStreamReader(new FileInputStream(xmlFile), StandardCharsets.UTF_8), classType);
-    }
+    } */
 
     public static <T> T fromXml(File xmlFile, TypeReference<T> type) throws IOException {
         return mapper.readValue(new InputStreamReader(new FileInputStream(xmlFile), StandardCharsets.UTF_8), type);

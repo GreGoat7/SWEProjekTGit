@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +21,12 @@ public class XmlUtilsTest {
         // Ausführung
         Address result;
         try {
-            result = XmlUtils.fromXml(inputFile, targetClass);
+            result = XmlUtils.fromXml(inputFile, new TypeReference<Address>() {
+                @Override
+                public Type getType() {
+                    return super.getType();
+                }
+            });
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             result = null;
@@ -44,7 +50,8 @@ public class XmlUtilsTest {
         // Ausführung
         Email result;
         try {
-            result = XmlUtils.fromXml(inputFile, targetClass);
+            result = XmlUtils.fromXml(inputFile, new TypeReference<Email>() {
+            });
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             result = null;

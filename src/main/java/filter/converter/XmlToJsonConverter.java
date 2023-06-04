@@ -25,7 +25,8 @@ public class XmlToJsonConverter implements Filter {
         if(XmlUtils.isArray(inputFile)) {
             personList = XmlUtils.fromXml(inputFile, new TypeReference<List<Person>>() {});
         } else {
-            personList = Collections.singletonList(XmlUtils.fromXml(inputFile, Person.class));
+            personList = Collections.singletonList(XmlUtils.fromXml(inputFile, new TypeReference<Person>() {
+            }));
         }
 
         // Schreiben der Adressinformationen in die JSON-Ausgabedatei

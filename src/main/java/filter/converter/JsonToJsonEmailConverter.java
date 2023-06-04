@@ -18,11 +18,12 @@ public class JsonToJsonEmailConverter implements Filter{
         // Lesen der JSON-Eingabedatei in eine Liste von Adressobjekten
         File inputFile = new File(inputFilePath);
         List<Person> personList;
+
         if (JsonUtils.isArray(inputFile)){
             personList = JsonUtils.fromJson(inputFile, new TypeReference<>() {});
         }
         else{
-            Person singlePerson = JsonUtils.fromJson(inputFile, Person.class);
+            Person singlePerson = JsonUtils.fromJson(inputFile, new TypeReference<Person>() {});
             personList = List.of(singlePerson); // Erstellen einer Liste mit der einzelnen Adresse
         }
 
