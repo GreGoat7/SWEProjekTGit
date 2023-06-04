@@ -63,7 +63,7 @@ public class XmlUtilsTest {
     }
 
     @Test
-    void AddressListJsonToJava() {
+    void AddressListXmlToJava() {
         File inputFile = new File("src/test/resources/adresse.xml");
         TypeReference<List<Address>> targetClass = new TypeReference<>() {};
 
@@ -127,5 +127,42 @@ public class XmlUtilsTest {
 
     }
 
+    @Test
+    public void testFromXmlBackToXml(){
+        File inputFile = new File("src/test/resources/adresse.xml");
+        TypeReference<List<Address>> targetClass = new TypeReference<>() {};
+
+        // Ausführung
+        List<Address> result;
+        try {
+            result = XmlUtils.fromXml(inputFile, targetClass);
+        } catch (IOException e) {
+            fail("Exception thrown during test: " + e.toString());
+            return;
+        }
+
+        String outputFilePath = "src/test/resources/back_adresse.xml";
+        try {
+            XmlUtils.toXml(result, outputFilePath);
+        }catch (Exception e){
+            fail("Exception thrown during test: " + e.toString());
+            return;
+        }
+
+
+    }
+
+    @Test
+    void testArray(){
+        File testFile = new File("src/test/resources/xmladresse.xml");
+        boolean result = true;
+        try {
+            result = XmlUtils.isArray(testFile);
+        }catch (Exception e){
+            fail("Fail" + e);
+        }
+
+        assertEquals(true, result);
+    }
 
 }
