@@ -25,7 +25,7 @@ public class EncryptFormatter {
     public void encryptFile(String filePath) throws Exception {
         File file = new File(filePath);
 
-        // Determine the file format
+        // Detect the file format
         String fileFormat = FormatUtils.detectFileType(filePath);
 
         switch (fileFormat.toLowerCase()) {
