@@ -11,7 +11,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import utils.FormatUtils;
 import utils.JsonUtils;
 import utils.XmlUtils;
-import adressmodel.AddressList;
 import adressmodel.Address;
 import adressmodel.Phone;
 import adressmodel.Email;
@@ -40,32 +39,56 @@ public class EncryptFormatter {
                 TypeReference<?> typeReference = JsonUtils.determineListType(new File(filePath));
                 handleJsonFile(filePath, typeReference);
                 break;
-            /*case "xml":
-                personList = XmlUtils.fromXml(file, new TypeReference<List<Person>>(){});
-                encryptAddresses(personList);
-                XmlUtils.toXml(personList, filePath);
-                break;*/
+            case "xml":
+                // Bestimmt den Typ der Daten in der Datei
+                TypeReference<?> xmlTypeReference = XmlUtils.determineListType(new File(filePath));
+                handleXmlFile(filePath, xmlTypeReference);
+                break;
             // Wenn das Dateiformat nicht unterstützt wird
             default:
                 throw new Exception("Unsupported file format: " + fileFormat);
         }
     }
 
+    //Die Verschlüsselungs-Hilfsmethode handleJsonFile wird aufgerufen, wenn es sich um eine JsonFile handelt
     private void handleJsonFile(String filePath, TypeReference<?> typeReference) throws Exception {
+
+        // Wenn die Daten eine Liste von Personen sind
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Person>>) typeReference);
             encryptAddresses(personList);
             JsonUtils.toJson(personList, filePath);
         }
+        //Wenn die Daten eine Liste von Emails sind
         else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Email>>) typeReference);
             encryptEmailDetails(emailList);
             JsonUtils.toJson(emailList, filePath);
         }
+        //Wenn die Daten eine Liste von Telefonnummern sind
         else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Phone>>) typeReference);
             encryptPhoneDetails(phoneList);
             JsonUtils.toJson(phoneList, filePath);
+        }
+    }
+
+    //Die Verschlüsselungs-Hilfsmethode handleXmlFile wird aufgerufen, wenn es sich um eine XmlFile handelt
+    private void handleXmlFile(String filePath, TypeReference<?> typeReference) throws Exception {
+        if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
+            List<Person> personList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Person>>) typeReference);
+            encryptAddresses(personList);
+            XmlUtils.toXml(personList, filePath);
+        }
+        else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
+            List<Email> emailList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Email>>) typeReference);
+            encryptEmailDetails(emailList);
+            XmlUtils.toXml(emailList, filePath);
+        }
+        else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
+            List<Phone> phoneList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Phone>>) typeReference);
+            encryptPhoneDetails(phoneList);
+            XmlUtils.toXml(phoneList, filePath);
         }
     }
 
