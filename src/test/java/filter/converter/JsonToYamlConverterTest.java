@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 class JsonToYamlConverterTest {
 
-    /*@Test
+    @Test
     void testProcessForAddressDetails() throws IOException {
         runTest("src/test/resources/addressdetails.json",
                 new TypeReference<Address>() {});
-    }*/
+    }
 
    /* @Test
     void testProcessForAddresses() throws IOException {

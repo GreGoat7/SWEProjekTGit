@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class XmlUtilsTest {
     @Test
     void testFromXmlToAddressDetails(){
-        File inputFile = new File("src/test/resources/Address.xml");
+        File inputFile = new File("src/test/resources/Person.xml");
         Class<Address> targetClass = Address.class;
 
         // Ausführung
@@ -71,7 +71,7 @@ public class XmlUtilsTest {
 
     @Test
     void AddressListXmlToJava() {
-        File inputFile = new File("src/test/resources/adresse.xml");
+        File inputFile = new File("src/test/resources/Person.xml");
         TypeReference<List<Person>> targetClass = new TypeReference<>() {};
 
         // Ausführung
@@ -95,10 +95,10 @@ public class XmlUtilsTest {
     @Test
     void testDetermineListType() {
         // Vorbereitung
-        File personFile = new File("src/test/resources/adresse.xml");
+        File personFile = new File("src/test/resources/Person.xml");
         File emailFile = new File("src/test/resources/emails.xml");
-        /*File phoneFile = new File("src/test/resources/PhoneList.json");
-        File addressFile = new File("src/test/resources/AddressList.json"); */
+        /*File phoneFile = new File("src/test/resources/PhoneList.json");*/
+        //File addressFile = new File("src/test/resources/Addressdetails.xml");
 
         // Ausführung und Überprüfung
         try {
@@ -121,10 +121,10 @@ public class XmlUtilsTest {
             );
 
             assertEquals(
-                    new TypeReference<List<Address>>() {}.getType(),
+                    new TypeReference<AddressList>() {}.getType(),
                     JsonUtils.determineListType(addressFile).getType(),
                     "Expected List<Address> type"
-            ); */
+            );*/
         } catch (Exception e) {
             fail("Exception thrown during test: " + e.toString());
         }
@@ -174,7 +174,7 @@ public class XmlUtilsTest {
 
     @Test
     public void testFromXmlBackToXml(){
-        File inputFile = new File("src/test/resources/adresse.xml");
+        File inputFile = new File("src/test/resources/Person.xml");
         TypeReference<List<Person>> targetClass = new TypeReference<>() {};
 
         // Ausführung

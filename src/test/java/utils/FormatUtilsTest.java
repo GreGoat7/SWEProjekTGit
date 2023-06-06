@@ -4,7 +4,7 @@ public class FormatUtilsTest {
     public static void main(String[] args) {
         testFileType("src/test/resources/adresse.json", "json");
         testFileType("src/test/resources/email.Json", "json");
-        testFileType("src/test/resources/adresse.xml", "xml");
+        testFileType("src/test/resources/Person.xml", "xml");
     }
 
     private static void testFileType(String filePath, String expectedFileType) {

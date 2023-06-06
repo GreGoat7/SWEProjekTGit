@@ -17,6 +17,8 @@ import adressmodel.Email;
 import java.util.List;
 import java.util.ArrayList;
 
+//soll neue encrypted datei erstellt werden oder alte datei ersetzt durcvh neue encrypted datei
+
 // Die Klasse EncryptFormatter verschlüsselt die Daten in einer Datei
 public class EncryptFormatter implements Filter {
     // AES-Algorithmus wird für die Verschlüsselung verwendet

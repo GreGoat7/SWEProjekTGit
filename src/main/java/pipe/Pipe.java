@@ -1,4 +1,4 @@
-/*package pipe;
+package pipe;
 
 import filter.Filter;
 import java.io.ByteArrayInputStream;
@@ -9,45 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pipe {
-    private List<Filter> filters;
+    private List<Filter> filters = new ArrayList<>();
 
-    public Pipe() {
-        filters = new ArrayList<Filter>();
-    }
-
-    public void addFilter(Filter filter) {
+    public Pipe addFilter(Filter filter) {
         filters.add(filter);
+        return this;
     }
 
-    public void execute(InputStream input, OutputStream output) throws Exception {
-        InputStream currentInput = input;
-        OutputStream currentOutput;
-
-        for (int i = 0; i < filters.size(); i++) {
-            Filter filter = filters.get(i);
-
-            if (i == filters.size() - 1) {
-                // Letzter Filter, also verwende den gegebenen Output-Stream
-                currentOutput = output;
-            } else {
-                // Nicht der letzte Filter, also erstelle einen neuen ByteArrayOutputStream
-                // für den temporären Output
-                currentOutput = new ByteArrayOutputStream();
-            }
-
-            // ausführen der Filterfunktion (converter oder formatter)
-            filter.process(currentInput, currentOutput);
-
-            if (currentInput != input) {
-                // Schließe den vorherigen temporären Input-Stream, wenn es nicht der ursprüngliche ist
-                currentInput.close();
-            }
-
-            if (i < filters.size() - 1) {
-                // Nicht der letzte Filter, also aktualisiere den Input-Stream
-                // für den nächsten Filter
-                currentInput = new ByteArrayInputStream(((ByteArrayOutputStream) currentOutput).toByteArray());
-            }
+    public String process(String input) throws Exception {
+        String output = input;
+        for (Filter filter : filters) {
+            output = filter.process(output);
         }
+        return output;
     }
-} */
+}
