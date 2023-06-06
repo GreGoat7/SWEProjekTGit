@@ -1,32 +1,34 @@
 package filter.converter;
 
-import filter.converter.JsonToXmlConverter;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import adressmodel.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class JsonToXmlConverterTest {
+class JsonToXmlConverterTest {
+    private JsonToXmlConverter converter;
+
+    @BeforeEach
+    void setUp() {
+        converter = new JsonToXmlConverter();
+    }
+
     @Test
-    public void testJsonToXmlConverter() throws IOException {
-        // Pfad zur Eingabedatei und zur Ausgabedatei
-        String inputFilePath = "src/test/resources/expected_emails.json";
-        String outputFilePath = "src/test/resources/emails.xml";
+    void testProcess() throws IOException {
+        // Setzen Sie den Pfad zu Ihrer vorhandenen JSON-Datei
+        String jsonFilePath = "src/test/resources/Test.json";
 
-        // Erstellen Sie ein neues JsonToXmlConverter-Objekt und verwenden Sie es, um die Dateien zu konvertieren
-        JsonToXmlConverter converter = new JsonToXmlConverter();
-        converter.process(inputFilePath, outputFilePath);
+        // Führen Sie die Konvertierung durch
+        converter.process(jsonFilePath);
 
-        // Überprüfen, ob die Ausgabedatei tatsächlich erstellt wurde
-        assertTrue(Files.exists(Paths.get(outputFilePath)));
-
-        // Hier könnten Sie weitere Tests hinzufügen, um die Genauigkeit der konvertierten Daten zu überprüfen
-        // z.B. Lesen der XML-Datei und Überprüfen, ob bestimmte Elemente vorhanden sind, Überprüfen der Reihenfolge der Elemente usw.
+        // Prüfen, ob eine XML-Datei mit dem erwarteten Namen erstellt wurde
+        Path expectedXmlFilePath = Paths.get(jsonFilePath.replace(".json", ".xml"));
+        assertTrue(Files.exists(expectedXmlFilePath), "Die XML-Datei wurde nicht erstellt.");
     }
 }

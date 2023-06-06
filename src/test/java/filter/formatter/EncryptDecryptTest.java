@@ -27,7 +27,7 @@ public class EncryptDecryptTest {
         byte[] originalFileBytes = Files.readAllBytes(originalFile.toPath());
 
         // Verschlüsselt die Datei
-        encryptFormatter.encryptFile(filePath);
+        encryptFormatter.process(filePath);
 
         // Entschlüsselt die Datei
         decryptFormatter.decryptFile(filePath);

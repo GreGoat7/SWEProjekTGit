@@ -5,5 +5,6 @@ import java.io.OutputStream;
 
 
 public interface Filter {
-    void process(String inputFilePath, String outputFilePath) throws Exception;
+    // converts/formats a inputfile and writes result to outputfile and returns its path
+    String process(String inputFilePath) throws Exception;
 }

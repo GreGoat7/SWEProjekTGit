@@ -5,8 +5,8 @@ public class EncryptTest {
     public static void main(String[] args) {
         EncryptFormatter encryptFormatter = new EncryptFormatter();
         try {
-            String filePath = "src/test/resources/test.enc.xml";
-            encryptFormatter.encryptFile(filePath);
+            String filePath = "src/test/resources/test.json";
+            encryptFormatter.process(filePath);
         } catch (Exception e) {
             e.printStackTrace();
         }

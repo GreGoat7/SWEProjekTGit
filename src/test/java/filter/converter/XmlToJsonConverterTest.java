@@ -12,11 +12,12 @@ public class XmlToJsonConverterTest {
     @Test
     void testXmlToJson() throws Exception {
         String inputFilePath = "src/test/resources/emails.xml";
-        String outputFilePath = "src/test/resources/xmltojsonemails.json";
+        // Generate output file path
+        String outputFilePath = inputFilePath.replace(".xml", ".json");
 
-        // Erstellen Sie ein neues XmlToJsonConverter-Objekt und verwenden Sie es, um die Dateien zu konvertieren
+        // Erstellen Sie ein neues XmlToJsonConverter-Objekt und verwenden Sie es, um die Datei zu konvertieren
         XmlToJsonConverter converter = new XmlToJsonConverter();
-        converter.process(inputFilePath, outputFilePath);
+        converter.process(inputFilePath);
 
         // Überprüfen, ob die Ausgabedatei tatsächlich erstellt wurde
         assertTrue(Files.exists(Paths.get(outputFilePath)));

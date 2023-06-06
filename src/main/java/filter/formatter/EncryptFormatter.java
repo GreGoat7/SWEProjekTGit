@@ -5,7 +5,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.io.File;
-
+import filter.Filter;
 import adressmodel.Person;
 import com.fasterxml.jackson.core.type.TypeReference;
 import utils.FormatUtils;
@@ -18,36 +18,44 @@ import java.util.List;
 import java.util.ArrayList;
 
 // Die Klasse EncryptFormatter verschlüsselt die Daten in einer Datei
-public class EncryptFormatter {
+public class EncryptFormatter implements Filter {
     // AES-Algorithmus wird für die Verschlüsselung verwendet
     private static final String ALGORITHM = "AES";
     // Schlüssel für die AES-Verschlüsselung
     private static final byte[] KEY = "ThisIsASecretKey".getBytes(StandardCharsets.UTF_8);
 
     // Die Methode encryptFile verschlüsselt die Daten in der angegebenen Datei
-    public void encryptFile(String filePath) throws Exception {
+    @Override
+    public String process(String filePath) throws Exception {
         File file = new File(filePath);
 
         // Erkennt das Dateiformat
         String fileFormat = FormatUtils.detectFileType(filePath);
 
-        // Führt verschiedene Aktionen basierend auf dem Dateiformat aus
+
+        String outputFilePath = null;
+
         switch (fileFormat.toLowerCase()) {
             // Wenn das Dateiformat JSON ist
-            case "json":
+            case "json" -> {
                 // Bestimmt den Typ der Daten in der Datei
                 TypeReference<?> typeReference = JsonUtils.determineListType(new File(filePath));
                 handleJsonFile(filePath, typeReference);
-                break;
-            case "xml":
+                //speichert den outputFilePath
+                outputFilePath = filePath.replace(".json", ".enc.json");
+            }
+            case "xml" -> {
                 // Bestimmt den Typ der Daten in der Datei
                 TypeReference<?> xmlTypeReference = XmlUtils.determineListType(new File(filePath));
                 handleXmlFile(filePath, xmlTypeReference);
-                break;
+                outputFilePath = filePath.replace(".xml", ".enc.xml");
+            }
             // Wenn das Dateiformat nicht unterstützt wird
-            default:
-                throw new Exception("Unsupported file format: " + fileFormat);
+            default -> throw new Exception("Unsupported file format: " + fileFormat);
         }
+
+        // Gibt den Pfad zur verschlüsselten Datei zurück
+        return outputFilePath;
     }
 
     //Die Verschlüsselungs-Hilfsmethode handleJsonFile wird aufgerufen, wenn es sich um eine JsonFile handelt
@@ -56,45 +64,49 @@ public class EncryptFormatter {
         // Wenn die Daten eine Liste von Personen sind
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Person>>) typeReference);
-            encryptAddresses(personList);
-            JsonUtils.toJson(personList, filePath);
+            encryptPersonList(personList);
+            JsonUtils.toJson(personList, filePath.replace(".json", ".enc.json"));
         }
         //Wenn die Daten eine Liste von Emails sind
         else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Email>>) typeReference);
-            encryptEmailDetails(emailList);
-            JsonUtils.toJson(emailList, filePath);
+            encryptEmails(emailList);
+            JsonUtils.toJson(emailList, filePath.replace(".json", ".enc.json"));
         }
         //Wenn die Daten eine Liste von Telefonnummern sind
         else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Phone>>) typeReference);
-            encryptPhoneDetails(phoneList);
-            JsonUtils.toJson(phoneList, filePath);
+            encryptPhones(phoneList);
+            JsonUtils.toJson(phoneList, filePath.replace(".json", ".enc.json"));
         }
     }
 
     //Die Verschlüsselungs-Hilfsmethode handleXmlFile wird aufgerufen, wenn es sich um eine XmlFile handelt
     private void handleXmlFile(String filePath, TypeReference<?> typeReference) throws Exception {
+        // Wenn die Daten eine Liste von Personen sind
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Person>>) typeReference);
-            encryptAddresses(personList);
-            XmlUtils.toXml(personList, filePath);
+            encryptPersonList(personList);
+            XmlUtils.toXml(personList, filePath.replace(".xml", ".enc.xml"));
         }
+        //Wenn die Daten eine Liste von Emails sind
         else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Email>>) typeReference);
-            encryptEmailDetails(emailList);
-            XmlUtils.toXml(emailList, filePath);
+            encryptEmails(emailList);
+            XmlUtils.toXml(emailList, filePath.replace(".xml", ".enc.xml"));
         }
+        //Wenn die Daten eine Liste von Telefonnummern sind
         else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Phone>>) typeReference);
-            encryptPhoneDetails(phoneList);
-            XmlUtils.toXml(phoneList, filePath);
+            encryptPhones(phoneList);
+            XmlUtils.toXml(phoneList, filePath.replace(".xml", ".enc.xml"));
+
         }
     }
 
 
     // Die Methode encryptAddresses verschlüsselt eine Liste von Personen
-    private void encryptAddresses(List<Person> personList) throws Exception {
+    private void encryptPersonList(List<Person> personList) throws Exception {
         // Erstellt den Schlüssel für die Verschlüsselung
         SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
         // Erstellt den Verschlüsselungsmechanismus
@@ -107,14 +119,14 @@ public class EncryptFormatter {
             person.setFirstName(encryptString(person.getFirstName(), cipher));
             person.setSurname(encryptString(person.getSurname(), cipher));
             person.setAge(encryptString(person.getAge(), cipher));
-            encryptAddressDetails(person.getAddress(), cipher);
-            encryptPhoneDetails(person.getPhone());
-            encryptEmailDetails(person.getEmail());
+            encryptAddresses(person.getAddress(), cipher);
+            encryptPhones(person.getPhone());
+            encryptEmails(person.getEmail());
         }
     }
 
     // Die Methode encryptPhoneDetails verschlüsselt eine Liste von Telefonnummern
-    private void encryptPhoneDetails(List<Phone> phones) throws Exception {
+    private void encryptPhones(List<Phone> phones) throws Exception {
         SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, keySpec);
@@ -126,7 +138,7 @@ public class EncryptFormatter {
     }
 
     // Die Methode encryptEmailDetails verschlüsselt eine Liste von Emails
-    private void encryptEmailDetails(List<Email> emails) throws Exception {
+    private void encryptEmails(List<Email> emails) throws Exception {
         SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, keySpec);
@@ -142,7 +154,7 @@ public class EncryptFormatter {
     }
 
     // Die Methode encryptAddressDetails verschlüsselt eine Adresse
-    private void encryptAddressDetails(Address address, Cipher cipher) throws Exception {
+    private void encryptAddresses(Address address, Cipher cipher) throws Exception {
         address.setStreet(encryptString(address.getStreet(), cipher));
         address.setCity(encryptString(address.getCity(), cipher));
         address.setPostcode(encryptString(address.getPostcode(), cipher));
