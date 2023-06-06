@@ -11,13 +11,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import utils.FormatUtils;
 import utils.JsonUtils;
 import utils.XmlUtils;
+import utils.YamlUtils;
 import adressmodel.Address;
 import adressmodel.Phone;
 import adressmodel.Email;
 import java.util.List;
 import java.util.ArrayList;
 
-//soll neue encrypted datei erstellt werden oder alte datei ersetzt durcvh neue encrypted datei
 
 // Die Klasse EncryptFormatter verschlüsselt die Daten in einer Datei
 public class EncryptFormatter implements Filter {
@@ -26,7 +26,7 @@ public class EncryptFormatter implements Filter {
     // Schlüssel für die AES-Verschlüsselung
     private static final byte[] KEY = "ThisIsASecretKey".getBytes(StandardCharsets.UTF_8);
 
-    // Die Methode encryptFile verschlüsselt die Daten in der angegebenen Datei
+    // Die Methode process verschlüsselt die Daten in der angegebenen Datei
     @Override
     public String process(String filePath) throws Exception {
         File file = new File(filePath);
@@ -52,6 +52,12 @@ public class EncryptFormatter implements Filter {
                 handleXmlFile(filePath, xmlTypeReference);
                 outputFilePath = filePath.replace(".xml", ".enc.xml");
             }
+            case "yaml" -> {
+                TypeReference<?> yamlTypeReference = YamlUtils.determineListType(new File(filePath));
+                handleYamlFile(filePath, yamlTypeReference);
+                outputFilePath = filePath.replace(".yaml", ".enc.yaml");
+            }
+
             // Wenn das Dateiformat nicht unterstützt wird
             default -> throw new Exception("Unsupported file format: " + fileFormat);
         }
@@ -103,6 +109,28 @@ public class EncryptFormatter implements Filter {
             encryptPhones(phoneList);
             XmlUtils.toXml(phoneList, filePath.replace(".xml", ".enc.xml"));
 
+        }
+    }
+
+    //Die Verschlüsselungs-Hilfsmethode handleYamlFile wird aufgerufen, wenn es sich um eine YamlFile handelt
+    private void handleYamlFile(String filePath, TypeReference<?> typeReference) throws Exception {
+        // Wenn die Daten eine Liste von Personen sind
+        if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
+            List<Person> personList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Person>>) typeReference);
+            encryptPersonList(personList);
+            YamlUtils.toYaml(personList, filePath.replace(".yaml", ".enc.yaml"));
+        }
+        //Wenn die Daten eine Liste von Emails sind
+        else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
+            List<Email> emailList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Email>>) typeReference);
+            encryptEmails(emailList);
+            YamlUtils.toYaml(emailList, filePath.replace(".yaml", ".enc.yaml"));
+        }
+        //Wenn die Daten eine Liste von Telefonnummern sind
+        else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
+            List<Phone> phoneList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Phone>>) typeReference);
+            encryptPhones(phoneList);
+            YamlUtils.toYaml(phoneList, filePath.replace(".yaml", ".enc.yaml"));
         }
     }
 

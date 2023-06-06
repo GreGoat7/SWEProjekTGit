@@ -7,6 +7,7 @@ import java.nio.file.Files;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
+// Vergleicht Dateiinhalt vor dem Verschlüsseln und nach dem Entschlüsseln
 public class EncryptDecryptTest {
 
     private EncryptFormatter encryptFormatter;
