@@ -33,7 +33,6 @@ public class JsonToXmlConverter implements Filter {
         String outputFilePath = Paths.get(inputPath.getParent().toString(), inputPath.getFileName().toString().replace(".json", ".xml")).toString();
 
         // Schreiben der Informationen in die XML-Ausgabedatei
-        File outputFile = new File(outputFilePath);
         XmlUtils.toXml(objectList, outputFilePath);
 
         return outputFilePath;

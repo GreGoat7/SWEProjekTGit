@@ -41,7 +41,6 @@ public class JsonToJsonEmailConverter implements Filter{
         String outputFilePath = new File(inputFile.getParent(), baseName + "_extracted_emails.json").getPath();
 
         // Schreiben der Email-Informationen in die JSON-Ausgabedatei
-        File outputFile = new File(outputFilePath);
         JsonUtils.toJson(emails, outputFilePath);
 
         return outputFilePath;
