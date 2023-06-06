@@ -69,7 +69,7 @@ class JsonUtilsTest {
 
 
     @Test
-    void testFromAddressDetailsListJsonToJava() {
+    void testFromAddressListJsonToJava() {
         // Vorbereitung
         File inputFile = new File("src/test/resources/AddressList.json");
         TypeReference<List<Address>> targetClass = new TypeReference<>() {};
@@ -96,7 +96,7 @@ class JsonUtilsTest {
     }
 
     @Test
-    void PersonListJsonToJava() {
+    void testPersonListJsonToJava() {
         File inputFile = new File("src/test/resources/adresse.json");
         TypeReference<List<Person>> targetClass = new TypeReference<>() {};
 
