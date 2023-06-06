@@ -13,7 +13,7 @@ public class Pipeline {
         return this;
     }
 
-    public String process(String input) throws Exception {
+    public String runPipeline(String input) throws Exception {
         String output = input;
         for (Filter filter : filters) {
             output = filter.process(output);

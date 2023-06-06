@@ -14,14 +14,14 @@ import filter.converter.JsonToJsonEmailConverter;
 public class Main {
     public static void main(String[] args) {
 
-       Pipe pipeline = new Pipe();
+       Pipeline pipeline = new Pipeline();
 
 
        pipeline.addFilter(new DecryptFormatter());
 
 
         try {
-            String outputFilePath = pipeline.process("src/main/java/maintest/Person.json");
+            String outputFilePath = pipeline.runPipeline("src/main/java/maintest/Person.json");
             System.out.println("Final output file: " + outputFilePath);
         } catch (Exception e) {
             e.printStackTrace();
