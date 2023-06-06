@@ -1,0 +1,17 @@
+<ArrayList>
+  <item>
+    <type>office</type>
+    <address>fred.smith@my-work.com</address>
+    <address>fsmith@my-work.com</address>
+  </item>
+  <item>
+    <type>home</type>
+    <address>freddy@my-social.com</address>
+    <address>frederic.smith@very-serious.com</address>
+  </item>
+  <item>
+    <type>office</type>
+    <address>bohl@moenkemoeller.com</address>
+    <address>bohl@lehre.dhbw-stuttgart.de</address>
+  </item>
+</ArrayList>

@@ -1,8 +1,11 @@
 package org.example;
 
-import pipe.Pipe;
-import filter.converter.JsonToXmlConverter;
-import filter.formatter.EncryptFormatter;
+import filter.formatter.DecryptFormatter;
+import pipeline.Pipeline;
+import filter.formatter.*;
+import filter.converter.*;
+
+
 import filter.converter.JsonToJsonEmailConverter;
 
 
@@ -13,8 +16,9 @@ public class Main {
 
        Pipe pipeline = new Pipe();
 
-       pipeline.addFilter(new JsonToXmlConverter());
-       pipeline.addFilter(new EncryptFormatter());
+
+       pipeline.addFilter(new DecryptFormatter());
+
 
         try {
             String outputFilePath = pipeline.process("src/main/java/maintest/Person.json");
@@ -22,5 +26,16 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+/*
+        Pipeline pipeline2 = new Pipeline();
+        pipeline2.addFilter(new JsonToJsonEmailConverter());
+        pipeline2.addFilter(new JsonToXmlConverter());
+
+        try {
+            String outputFilePath = pipeline2.process("src/main/java/maintest/Person.json");
+            System.out.println("Final output file: " + outputFilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
     }
 }

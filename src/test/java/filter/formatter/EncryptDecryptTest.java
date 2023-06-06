@@ -30,7 +30,7 @@ public class EncryptDecryptTest {
         encryptFormatter.process(filePath);
 
         // Entschlüsselt die Datei
-        decryptFormatter.decryptFile(filePath);
+        decryptFormatter.process(filePath);
 
         // Die Datei nach der Entschlüsselung speichern
         File decryptedFile = new File(filePath);

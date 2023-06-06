@@ -1,17 +1,14 @@
-package pipe;
+package pipeline;
 
 import filter.Filter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pipe {
+public class Pipeline {
     private List<Filter> filters = new ArrayList<>();
 
-    public Pipe addFilter(Filter filter) {
+    public Pipeline addFilter(Filter filter) {
         filters.add(filter);
         return this;
     }

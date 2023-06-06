@@ -7,67 +7,103 @@ import java.util.Base64;
 import java.io.File;
 import adressmodel.Person;
 import com.fasterxml.jackson.core.type.TypeReference;
+import filter.Filter;
 import utils.FormatUtils;
 import utils.JsonUtils;
 import utils.XmlUtils;
 import adressmodel.Address;
 import adressmodel.Phone;
 import adressmodel.Email;
+import utils.YamlUtils;
+
 import java.util.List;
 import java.util.ArrayList;
 
-public class DecryptFormatter {
+public class DecryptFormatter implements Filter {
     private static final String ALGORITHM = "AES";
     private static final byte[] KEY = "ThisIsASecretKey".getBytes(StandardCharsets.UTF_8);
 
-    public void decryptFile(String filePath) throws Exception {
-        File file = new File(filePath);
+    // Hilfsmethode zum Generieren des Ausgabepfads
+    private String getOutputFilePath(String inputFilePath) {
+        int lastDotIndex = inputFilePath.lastIndexOf(".");
+        String baseName = inputFilePath.substring(0, lastDotIndex);
+        String extension = inputFilePath.substring(lastDotIndex);
+        return baseName + ".dec" + extension;
+    }
 
-        String fileFormat = FormatUtils.detectFileType(filePath);
+    // Verwende die Hilfsmethode, um den Pfad der Ausgabedatei zu erzeugen und die Daten dorthin zu schreiben
+    @Override
+    public String process(String inputFilePath) throws Exception {
+        String outputFilePath = getOutputFilePath(inputFilePath);
+        File file = new File(inputFilePath);
+
+        String fileFormat = FormatUtils.detectFileType(inputFilePath);
 
         switch (fileFormat.toLowerCase()) {
             case "json":
-                TypeReference<?> typeReference = JsonUtils.determineListType(new File(filePath));
-                handleJsonFile(filePath, typeReference);
+                TypeReference<?> typeReference = JsonUtils.determineListType(new File(inputFilePath));
+                handleJsonFile(inputFilePath, outputFilePath, typeReference);
                 break;
             case "xml":
-                TypeReference<?> xmlTypeReference = XmlUtils.determineListType(new File(filePath));
-                handleXmlFile(filePath, xmlTypeReference);
+                TypeReference<?> xmlTypeReference = XmlUtils.determineListType(new File(inputFilePath));
+                handleXmlFile(inputFilePath, outputFilePath, xmlTypeReference);
+                break;
+            case "yaml":
+                TypeReference<?> yamlTypeReference = YamlUtils.determineListType(new File(inputFilePath));
+                handleYamlFile(inputFilePath, outputFilePath, yamlTypeReference);
                 break;
             default:
                 throw new Exception("Unsupported file format: " + fileFormat);
         }
+
+        return outputFilePath;
     }
 
-    private void handleJsonFile(String filePath, TypeReference<?> typeReference) throws Exception {
+    private void handleJsonFile(String filePath, String outputFilepath, TypeReference<?> typeReference) throws Exception {
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Person>>) typeReference);
             decryptAddresses(personList);
-            JsonUtils.toJson(personList, filePath);
+            JsonUtils.toJson(personList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Email>>) typeReference);
             decryptEmailDetails(emailList);
-            JsonUtils.toJson(emailList, filePath);
+            JsonUtils.toJson(emailList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Phone>>) typeReference);
             decryptPhoneDetails(phoneList);
-            JsonUtils.toJson(phoneList, filePath);
+            JsonUtils.toJson(phoneList, outputFilepath);
         }
     }
 
-    private void handleXmlFile(String filePath, TypeReference<?> typeReference) throws Exception {
+    private void handleXmlFile(String filePath, String outputFilepath, TypeReference<?> typeReference) throws Exception {
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Person>>) typeReference);
             decryptAddresses(personList);
-            XmlUtils.toXml(personList, filePath);
+            XmlUtils.toXml(personList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Email>>) typeReference);
             decryptEmailDetails(emailList);
-            XmlUtils.toXml(emailList, filePath);
+            XmlUtils.toXml(emailList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Phone>>) typeReference);
             decryptPhoneDetails(phoneList);
-            XmlUtils.toXml(phoneList, filePath);
+            XmlUtils.toXml(phoneList, outputFilepath);
+        }
+    }
+
+    private void handleYamlFile(String filePath, String outputFilepath, TypeReference<?> typeReference) throws Exception {
+        if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
+            List<Person> personList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Person>>) typeReference);
+            decryptAddresses(personList);
+            YamlUtils.toYaml(personList, outputFilepath);
+        } else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
+            List<Email> emailList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Email>>) typeReference);
+            decryptEmailDetails(emailList);
+            YamlUtils.toYaml(emailList, outputFilepath);
+        } else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
+            List<Phone> phoneList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Phone>>) typeReference);
+            decryptPhoneDetails(phoneList);
+            YamlUtils.toYaml(phoneList, outputFilepath);
         }
     }
 
