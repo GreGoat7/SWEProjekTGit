@@ -1,3 +1,7 @@
-Street: Hursley Park
-City: Winchester
-Postcode: SO21 2JN
+---
+- Street: "Hursley Park"
+  City: "Winchester"
+  Postcode: "SO21 2JN"
+- Street: "Test"
+  City: "Test"
+  Postcode: "Test"

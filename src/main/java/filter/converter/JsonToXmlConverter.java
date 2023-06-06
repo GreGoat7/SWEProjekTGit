@@ -18,6 +18,8 @@ public class JsonToXmlConverter implements Filter {
     @Override
     public String process(String inputFilePath) throws IOException {
         // Lesen der JSON-Eingabedatei in eine Liste von Objekten
+        // inputfilepath - .json
+        //+ .xml = outfilepath
         File inputFile = new File(inputFilePath);
         TypeReference<?> typeReference = JsonUtils.determineListType(inputFile);
         Object result = JsonUtils.fromJson(inputFile, typeReference);

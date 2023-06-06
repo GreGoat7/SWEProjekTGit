@@ -111,6 +111,44 @@ class YamlUtilsTest {
         validateAddress(result.get(1), "Dieter", "M\u00FCller", 32, "Nordbahnhofstr", "Stuttgart", "70191", 2, 1);
     }
 
+    @Test
+    void testDetermineListType() {
+        // Vorbereitung
+        File personFile = new File("src/test/resources/adresse.yaml");
+        File emailFile = new File("src/test/resources/email.yaml");
+        /*File phoneFile = new File("src/test/resources/PhoneList.json");
+        File addressFile = new File("src/test/resources/AddressList.json"); */
+
+        // Ausführung und Überprüfung
+        try {
+            assertEquals(
+                    new TypeReference<List<Person>>() {}.getType(),
+                    YamlUtils.determineListType(personFile).getType(),
+                    "Expected List<Person> type"
+            );
+
+            assertEquals(
+                    new TypeReference<List<Email>>() {}.getType(),
+                    YamlUtils.determineListType(emailFile).getType(),
+                    "Expected List<Email> type"
+            );
+
+            /*assertEquals(
+                    new TypeReference<List<Phone>>() {}.getType(),
+                    JsonUtils.determineListType(phoneFile).getType(),
+                    "Expected List<Phone> type"
+            );
+
+            assertEquals(
+                    new TypeReference<List<Address>>() {}.getType(),
+                    JsonUtils.determineListType(addressFile).getType(),
+                    "Expected List<Address> type"
+            ); */
+        } catch (IOException e) {
+            fail("Exception thrown during test: " + e.toString());
+        }
+    }
+
     // Hilfsmethode zur Validierung eines Address-Objekts
     private void validateAddress(Person address, String firstName, String surname, int age,
                                  String street, String city, String postcode,
