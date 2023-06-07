@@ -26,36 +26,40 @@ public class EncryptFormatter implements Filter {
     // Schlüssel für die AES-Verschlüsselung
     private static final byte[] KEY = "ThisIsASecretKey".getBytes(StandardCharsets.UTF_8);
 
+    // Hilfsmethode zum Generieren des Ausgabepfads
+    private String getOutputFilePath(String inputFilePath) {
+        int lastDotIndex = inputFilePath.lastIndexOf(".");
+        String baseName = inputFilePath.substring(0, lastDotIndex);
+        String extension = inputFilePath.substring(lastDotIndex);
+        return baseName + ".enc" + extension;
+    }
+
+
     // Die Methode process verschlüsselt die Daten in der angegebenen Datei
     @Override
-    public String process(String filePath) throws Exception {
-        File file = new File(filePath);
+    public String process(String inputFilePath) throws Exception {
+        File file = new File(inputFilePath);
+
+        String outputFilePath = getOutputFilePath(inputFilePath);
 
         // Erkennt das Dateiformat
-        String fileFormat = FormatUtils.detectFileType(filePath);
+        String fileFormat = FormatUtils.detectFileType(inputFilePath);
 
-
-        String outputFilePath = null;
 
         switch (fileFormat.toLowerCase()) {
-            // Wenn das Dateiformat JSON ist
             case "json" -> {
                 // Bestimmt den Typ der Daten in der Datei
-                TypeReference<?> typeReference = JsonUtils.determineListType(new File(filePath));
-                handleJsonFile(filePath, typeReference);
-                //speichert den outputFilePath
-                outputFilePath = filePath.replace(".json", ".enc.json");
+                TypeReference<?> typeReference = JsonUtils.determineListType(new File(inputFilePath));
+                handleJsonFile(inputFilePath, outputFilePath, typeReference);
             }
             case "xml" -> {
                 // Bestimmt den Typ der Daten in der Datei
-                TypeReference<?> xmlTypeReference = XmlUtils.determineListType(new File(filePath));
-                handleXmlFile(filePath, xmlTypeReference);
-                outputFilePath = filePath.replace(".xml", ".enc.xml");
+                TypeReference<?> xmlTypeReference = XmlUtils.determineListType(new File(inputFilePath));
+                handleXmlFile(inputFilePath, outputFilePath, xmlTypeReference);
             }
             case "yaml" -> {
-                TypeReference<?> yamlTypeReference = YamlUtils.determineListType(new File(filePath));
-                handleYamlFile(filePath, yamlTypeReference);
-                outputFilePath = filePath.replace(".yaml", ".enc.yaml");
+                TypeReference<?> yamlTypeReference = YamlUtils.determineListType(new File(inputFilePath));
+                handleYamlFile(inputFilePath, outputFilePath, yamlTypeReference);
             }
 
             // Wenn das Dateiformat nicht unterstützt wird
@@ -67,70 +71,70 @@ public class EncryptFormatter implements Filter {
     }
 
     //Die Verschlüsselungs-Hilfsmethode handleJsonFile wird aufgerufen, wenn es sich um eine JsonFile handelt
-    private void handleJsonFile(String filePath, TypeReference<?> typeReference) throws Exception {
+    private void handleJsonFile(String filePath, String outputFilePath, TypeReference<?> typeReference) throws Exception {
 
         // Wenn die Daten eine Liste von Personen sind
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Person>>) typeReference);
             encryptPersonList(personList);
-            JsonUtils.toJson(personList, filePath.replace(".json", ".enc.json"));
+            JsonUtils.toJson(personList, outputFilePath);
         }
         //Wenn die Daten eine Liste von Emails sind
         else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Email>>) typeReference);
             encryptEmails(emailList);
-            JsonUtils.toJson(emailList, filePath.replace(".json", ".enc.json"));
+            JsonUtils.toJson(emailList, outputFilePath);
         }
         //Wenn die Daten eine Liste von Telefonnummern sind
         else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Phone>>) typeReference);
             encryptPhones(phoneList);
-            JsonUtils.toJson(phoneList, filePath.replace(".json", ".enc.json"));
+            JsonUtils.toJson(phoneList, outputFilePath);
         }
     }
 
     //Die Verschlüsselungs-Hilfsmethode handleXmlFile wird aufgerufen, wenn es sich um eine XmlFile handelt
-    private void handleXmlFile(String filePath, TypeReference<?> typeReference) throws Exception {
+    private void handleXmlFile(String filePath, String outputFilePath, TypeReference<?> typeReference) throws Exception {
         // Wenn die Daten eine Liste von Personen sind
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Person>>) typeReference);
             encryptPersonList(personList);
-            XmlUtils.toXml(personList, filePath.replace(".xml", ".enc.xml"));
+            XmlUtils.toXml(personList, outputFilePath );
         }
         //Wenn die Daten eine Liste von Emails sind
         else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Email>>) typeReference);
             encryptEmails(emailList);
-            XmlUtils.toXml(emailList, filePath.replace(".xml", ".enc.xml"));
+            XmlUtils.toXml(emailList, outputFilePath);
         }
         //Wenn die Daten eine Liste von Telefonnummern sind
         else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Phone>>) typeReference);
             encryptPhones(phoneList);
-            XmlUtils.toXml(phoneList, filePath.replace(".xml", ".enc.xml"));
+            XmlUtils.toXml(phoneList, outputFilePath);
 
         }
     }
 
     //Die Verschlüsselungs-Hilfsmethode handleYamlFile wird aufgerufen, wenn es sich um eine YamlFile handelt
-    private void handleYamlFile(String filePath, TypeReference<?> typeReference) throws Exception {
+    private void handleYamlFile(String filePath, String outputFilePath, TypeReference<?> typeReference) throws Exception {
         // Wenn die Daten eine Liste von Personen sind
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Person>>) typeReference);
             encryptPersonList(personList);
-            YamlUtils.toYaml(personList, filePath.replace(".yaml", ".enc.yaml"));
+            YamlUtils.toYaml(personList, outputFilePath);
         }
         //Wenn die Daten eine Liste von Emails sind
         else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Email>>) typeReference);
             encryptEmails(emailList);
-            YamlUtils.toYaml(emailList, filePath.replace(".yaml", ".enc.yaml"));
+            YamlUtils.toYaml(emailList, outputFilePath);
         }
         //Wenn die Daten eine Liste von Telefonnummern sind
         else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Phone>>) typeReference);
             encryptPhones(phoneList);
-            YamlUtils.toYaml(phoneList, filePath.replace(".yaml", ".enc.yaml"));
+            YamlUtils.toYaml(phoneList, outputFilePath);
         }
     }
 
