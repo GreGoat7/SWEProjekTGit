@@ -40,20 +40,19 @@ public class DecryptFormatter implements Filter {
         String fileFormat = FormatUtils.detectFileType(inputFilePath);
 
         switch (fileFormat.toLowerCase()) {
-            case "json":
+            case "json" -> {
                 TypeReference<?> typeReference = JsonUtils.determineListType(new File(inputFilePath));
                 handleJsonFile(inputFilePath, outputFilePath, typeReference);
-                break;
-            case "xml":
+            }
+            case "xml" -> {
                 TypeReference<?> xmlTypeReference = XmlUtils.determineListType(new File(inputFilePath));
                 handleXmlFile(inputFilePath, outputFilePath, xmlTypeReference);
-                break;
-            case "yaml":
+            }
+            case "yaml" -> {
                 TypeReference<?> yamlTypeReference = YamlUtils.determineListType(new File(inputFilePath));
                 handleYamlFile(inputFilePath, outputFilePath, yamlTypeReference);
-                break;
-            default:
-                throw new Exception("Unsupported file format: " + fileFormat);
+            }
+            default -> throw new Exception("Unsupported file format: " + fileFormat);
         }
 
         return outputFilePath;
