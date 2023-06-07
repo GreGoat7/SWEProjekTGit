@@ -42,7 +42,12 @@ public class XmlUtils {
     } */
 
     public static <T> T fromXml(File xmlFile, TypeReference<T> type) throws IOException {
-        return mapper.readValue(new InputStreamReader(new FileInputStream(xmlFile), StandardCharsets.UTF_8), type);
+        try {
+            return mapper.readValue(new InputStreamReader(new FileInputStream(xmlFile), StandardCharsets.UTF_8), type);
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException("Fehler beim Umwandeln der Xml-Datei: Eingangsdatei ist kein Xml-File");
+        }
     }
 
     public static void toXml(Object obj, String filePath) throws IOException {
@@ -68,10 +73,16 @@ public class XmlUtils {
     }
 
     public static TypeReference<?> determineListType(File xmlFile) throws Exception {
+        Document doc = null;
+        try{
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(xmlFile);
+        doc = dBuilder.parse(xmlFile);
         doc.getDocumentElement().normalize();
+        }catch (Exception e){
+            throw new IllegalArgumentException("Fehler beim Umwandeln der XML-Datei: Eingangsdatei ist kein XML-File");
+        }
+
 
         NodeList itemList = doc.getElementsByTagName("item");
         if (itemList.getLength() > 0) {

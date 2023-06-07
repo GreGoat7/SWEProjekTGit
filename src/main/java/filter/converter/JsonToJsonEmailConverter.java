@@ -22,7 +22,7 @@ public class JsonToJsonEmailConverter implements Filter{
 
         // Überprüfen, ob es sich um eine Liste von Personen handelt
         if (!typeReference.getType().equals(new TypeReference<List<Person>>() {}.getType())) {
-            throw new IllegalArgumentException("Eingabedatei muss eine Liste von Personen enthalten");
+            throw new IllegalArgumentException("Fehler beim Verusch Emails zu extrahieren: Ausgangsliste ist keine Personenliste");
         }
 
         Object result = JsonUtils.fromJson(inputFile, typeReference);

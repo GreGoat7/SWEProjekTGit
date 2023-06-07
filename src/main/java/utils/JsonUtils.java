@@ -30,7 +30,12 @@ public class JsonUtils {
 
     public static <T> T fromJson(File jsonFile, TypeReference<T> typeReference) throws IOException {
         //JsonNode rootNode = mapper.readTree(jsonFile);
-        return mapper.readValue(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8), typeReference);
+        try {
+            return mapper.readValue(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8), typeReference);
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException("Fehler beim Umwandeln der Json-Datei: Eingangsdatei ist kein Json-File");
+        }
     }
 
     public static void toJson(Object obj, String filePath) throws IOException {
@@ -48,7 +53,14 @@ public class JsonUtils {
     }
 
     public static TypeReference<?> determineListType(File jsonFile) throws IOException {
-        JsonNode rootNode = mapper.readTree(jsonFile);
+        JsonNode rootNode = null;
+        try {
+            rootNode = mapper.readTree(jsonFile);
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException("Fehler beim Umwandeln der Json-Datei: Eingangsdatei ist kein Json-File");
+        }
+
         if (rootNode.isArray() && rootNode.size() > 0) {
             JsonNode firstElement = rootNode.get(0);
             // Prüfen auf das Vorhandensein bestimmter Felder in den JSON-Elementen
