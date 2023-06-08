@@ -68,15 +68,15 @@ public class DecryptFormatter implements Filter {
 
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = jsonUtils.toJava(inputFile, (TypeReference<List<Person>>) typeReference);
-            decryptAddresses(personList);
+            decryptPersonList(personList);
             jsonUtils.fromJava(personList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = jsonUtils.toJava(inputFile, (TypeReference<List<Email>>) typeReference);
-            decryptEmailDetails(emailList);
+            decryptEmails(emailList);
             jsonUtils.fromJava(emailList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = jsonUtils.toJava(inputFile, (TypeReference<List<Phone>>) typeReference);
-            decryptPhoneDetails(phoneList);
+            decryptPhones(phoneList);
             jsonUtils.fromJava(phoneList, outputFilepath);
         }
     }
@@ -85,15 +85,15 @@ public class DecryptFormatter implements Filter {
         File inputFile = new File(inputFilePath);
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = xmlUtils.toJava(inputFile, (TypeReference<List<Person>>) typeReference);
-            decryptAddresses(personList);
+            decryptPersonList(personList);
             xmlUtils.fromJava(personList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = xmlUtils.toJava(inputFile, (TypeReference<List<Email>>) typeReference);
-            decryptEmailDetails(emailList);
+            decryptEmails(emailList);
             xmlUtils.fromJava(emailList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = xmlUtils.toJava(inputFile, (TypeReference<List<Phone>>) typeReference);
-            decryptPhoneDetails(phoneList);
+            decryptPhones(phoneList);
             xmlUtils.fromJava(phoneList, outputFilepath);
         }
     }
@@ -102,20 +102,20 @@ public class DecryptFormatter implements Filter {
         File inputFile = new File(inputFilePath);
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = yamlUtils.toJava(inputFile, (TypeReference<List<Person>>) typeReference);
-            decryptAddresses(personList);
+            decryptPersonList(personList);
             yamlUtils.fromJava(personList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = yamlUtils.toJava(inputFile, (TypeReference<List<Email>>) typeReference);
-            decryptEmailDetails(emailList);
+            decryptEmails(emailList);
             yamlUtils.fromJava(emailList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
             List<Phone> phoneList = yamlUtils.toJava(inputFile, (TypeReference<List<Phone>>) typeReference);
-            decryptPhoneDetails(phoneList);
+            decryptPhones(phoneList);
             yamlUtils.fromJava(phoneList, outputFilepath);
         }
     }
 
-    private void decryptAddresses(List<Person> personList) throws Exception {
+    private void decryptPersonList(List<Person> personList) throws Exception {
         SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, keySpec);
@@ -124,13 +124,13 @@ public class DecryptFormatter implements Filter {
             person.setFirstName(decryptString(person.getFirstName(), cipher));
             person.setSurname(decryptString(person.getSurname(), cipher));
             person.setAge(decryptString(person.getAge(), cipher));
-            decryptAddressDetails(person.getAddress(), cipher);
-            decryptPhoneDetails(person.getPhone());
-            decryptEmailDetails(person.getEmail());
+            decryptAddresses(person.getAddress(), cipher);
+            decryptPhones(person.getPhone());
+            decryptEmails(person.getEmail());
         }
     }
 
-    private void decryptPhoneDetails(List<Phone> phones) throws Exception {
+    private void decryptPhones(List<Phone> phones) throws Exception {
         SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, keySpec);
@@ -141,7 +141,7 @@ public class DecryptFormatter implements Filter {
         }
     }
 
-    private void decryptEmailDetails(List<Email> emails) throws Exception {
+    private void decryptEmails(List<Email> emails) throws Exception {
         SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, keySpec);
@@ -156,7 +156,7 @@ public class DecryptFormatter implements Filter {
         }
     }
 
-    private void decryptAddressDetails(Address address, Cipher cipher) throws Exception {
+    private void decryptAddresses(Address address, Cipher cipher) throws Exception {
         address.setStreet(decryptString(address.getStreet(), cipher));
         address.setCity(decryptString(address.getCity(), cipher));
         address.setPostcode(decryptString(address.getPostcode(), cipher));
