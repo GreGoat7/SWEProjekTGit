@@ -25,6 +25,11 @@ java {
 }
 
 tasks {
+    tasks.test {
+        useJUnitPlatform()
+    }
+}
+
     shadowJar {
         manifest {
             attributes["Main-Class"] = "application.Application"
