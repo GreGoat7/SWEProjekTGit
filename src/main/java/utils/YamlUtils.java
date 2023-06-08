@@ -35,7 +35,7 @@ public class YamlUtils implements IUtils {
     }
 
     @Override
-    public void fromJava(Object obj, String filePath) throws IOException {
+    public <T> void fromJava(T obj, String filePath) throws IOException {
         mapper.writeValue(new File(filePath), obj);
     }
 

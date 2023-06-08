@@ -8,7 +8,7 @@ public interface IUtils {
 
     <T> T toJava(File inputfile, TypeReference<T> type) throws IOException;
 
-    void fromJava(Object obj, String filePath) throws IOException;
+    <T> void fromJava(T obj, String filePath) throws IOException;
 
     TypeReference<?> determineListType(File inputFile) throws IOException;
 }

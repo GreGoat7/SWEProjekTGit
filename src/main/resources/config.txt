@@ -1,2 +1,2 @@
 StartFile; D:\study\signalsch\Person.json
-Filters: filter.converter.JsonToJsonEmailConverter, filter.converter.JsonToXmlConverter, filter.formatter.EncryptFormatter, filter.formatter.DecryptFormatter
+Filters: filter.converter.JsonToJsonEmailConverter, filter.converter.JsonToXmlConverter, filter.formatter.EncryptFormatter
