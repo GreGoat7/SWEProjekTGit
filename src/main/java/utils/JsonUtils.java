@@ -51,7 +51,7 @@ public class JsonUtils implements IUtils{
             rootNode = mapper.readTree(jsonFile);
         }
         catch (Exception e){
-            throw new IllegalArgumentException("Fehler beim Umwandeln der Json-Datei: Eingangsdatei ist kein Json-File");
+            throw new IllegalArgumentException("Fehler beim Umwandeln der Json-Datei: Eingangsdatei ist kein Json-File. Original exception: " + e.getMessage(), e);
         }
 
         if (rootNode.isArray() && rootNode.size() > 0) {

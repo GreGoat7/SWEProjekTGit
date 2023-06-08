@@ -15,8 +15,12 @@ public class Application {
     // in String args config-file übergeben
     public static void main(String[] args) {
         try {
+            if (args.length == 0) {
+                System.out.println("Bitte geben Sie den Pfad zur Konfigurationsdatei als erstes Argument an.");
+                return;
+            }
             // Pfad zur Konfigurationsdatei, die Informationen über die zu verwendenden Filter und die zu verarbeitende Datei enthält.
-            String configFilePath = "src/main/resources/config.txt";
+            String configFilePath = args[0];
 
             // Erzeugt eine Liste von Filtern basierend auf den Einstellungen in der Konfigurationsdatei.
             List<Filter> filters = FilterFactory.createFiltersFromConfig(configFilePath);
