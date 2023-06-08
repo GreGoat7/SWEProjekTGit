@@ -20,6 +20,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import exceptions.NotAListException;
+import exceptions.WrongFiletypeException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -40,12 +42,12 @@ public class XmlUtils implements IUtils{
     } */
 
     @Override
-    public <T> T toJava(File xmlFile, TypeReference<T> type) throws IOException {
+    public <T> T toJava(File xmlFile, TypeReference<T> type) throws WrongFiletypeException {
         try {
             return mapper.readValue(new InputStreamReader(new FileInputStream(xmlFile), StandardCharsets.UTF_8), type);
         }
         catch (Exception e){
-            throw new IllegalArgumentException("Fehler beim Umwandeln der Xml-Datei: Eingangsdatei ist kein Xml-File");
+            throw new WrongFiletypeException("Fehler beim Umwandeln der Xml-Datei: Eingangsdatei ist kein Xml-File");
         }
 
     }
@@ -55,27 +57,8 @@ public class XmlUtils implements IUtils{
         mapper.writeValue(new File(filePath), obj);
     }
 
-    /*
-    public static boolean isArray(File xmlFile) {
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(xmlFile);
-
-            // Wird zur Ermittlung des obersten Knoten im XML-Dokument verwendet
-            Element rootElement = doc.getDocumentElement();
-
-            // Überprüft, ob der oberste Knoten "ArrayList" oder "root" ist
-            return rootElement.getNodeName().equals("ArrayList") || rootElement.getNodeName().equals("root");
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            // Behandlung der Ausnahmen, z.B. durch Protokollierung oder Ausgabe einer Fehlermeldung
-            System.err.println("Fehler beim Parsen der XML-Datei: " + e.getMessage());
-            return false;  // Rückgabe von false, da das Parsen fehlgeschlagen ist
-        }
-    }*/
-
     @Override
-    public TypeReference<?> determineListType(File xmlFile) throws IOException {
+    public TypeReference<?> determineListType(File xmlFile) throws NotAListException {
         Document doc = null;
         try{
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -103,7 +86,7 @@ public class XmlUtils implements IUtils{
             }
         }
 
-        throw new InvalidFormatException("Das XML-Format entspricht nicht erwarteten Feldern", xmlFile, Object.class);
+        throw new NotAListException("Das XML-Format entspricht nicht erwarteten Feldern");
     }
 
     private static TypeReference<?> determineTypeFromNodeList(NodeList nodeList) {

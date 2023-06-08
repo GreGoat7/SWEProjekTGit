@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.fasterxml.jackson.databind.JsonNode;
+import exceptions.WrongFiletypeException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,8 +30,7 @@ public class YamlUtils implements IUtils {
 
 
     @Override
-    public <T> T toJava(File yamlFile, TypeReference<T> type) throws IOException {
-        JsonNode rootNode = mapper.readTree(yamlFile);
+    public <T> T toJava(File yamlFile, TypeReference<T> type) throws IOException, WrongFiletypeException {
         return mapper.readValue(new InputStreamReader(new FileInputStream(yamlFile), StandardCharsets.UTF_8), type);
     }
 

@@ -1,6 +1,8 @@
 package filter.converter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import constants.Constants;
+import exceptions.NotAListException;
+import exceptions.WrongFiletypeException;
 import utils.JsonUtils;
 import utils.YamlUtils;
 import filter.Filter;
@@ -16,7 +18,7 @@ public class JsonToYamlConverter implements Filter {
     YamlUtils yamlUtils = Constants.YAMLUTILS;
 
     @Override
-    public String process(String inputFilePath) throws IOException {
+    public String process(String inputFilePath) throws IOException, NotAListException, WrongFiletypeException {
         // Lesen der JSON-Eingabedatei in eine Liste von Objekten
         File inputFile = new File(inputFilePath);
         TypeReference<?> typeReference = jsonUtils.determineListType(inputFile);

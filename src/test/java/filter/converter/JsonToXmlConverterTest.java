@@ -4,6 +4,8 @@ import addressmodel.*;
 import addressmodel.Email;
 import addressmodel.Person;
 import com.fasterxml.jackson.core.type.TypeReference;
+import exceptions.NotAListException;
+import exceptions.WrongFiletypeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.JsonUtils;
@@ -59,9 +61,17 @@ public class JsonToXmlConverterTest {
 
     @Test
     public void testProcessForNonexistentFile() {
-        String inputFilePath = "path/to/nonexistent.json"; // Ein Pfad zu einer Datei, die nicht existiert.
-
+        String inputFilePath = "src/test/resources/aaaa.json"; // Ein Pfad zu einer Datei, die nicht existiert.
+        File aaa = new File(inputFilePath);
         assertThrows(IOException.class, () -> {
+            converter.process(inputFilePath);
+        });
+    }
+
+    @Test
+    public void testProcessForNoList() {
+        String inputFilePath = "src/test/resources/JsonToXmlResources/Address.json"; // Ein Pfad zu einer Datei, die nicht existiert.
+        assertThrows(NotAListException.class, () -> {
             converter.process(inputFilePath);
         });
     }
@@ -69,38 +79,38 @@ public class JsonToXmlConverterTest {
 
 
     @Test
-    void testProcessForPerson() throws IOException {
+    void testProcessForPerson() throws IOException, NotAListException, WrongFiletypeException {
         runTest("src/test/resources/JsonToXmlResources/Person.json",
                 new TypeReference<List<Person>>() {});
     }
 
     @Test
-    void testProcessForEncryptedPerson() throws IOException {
+    void testProcessForEncryptedPerson() throws IOException, NotAListException, WrongFiletypeException {
         runTest("src/test/resources/JsonToXmlResources/personen.enc.json",
                 new TypeReference<List<Person>>() {});
     }
 
     @Test
-    void testProcessForAddress() throws IOException {
+    void testProcessForAddress() throws IOException, NotAListException, WrongFiletypeException {
         runTest("src/test/resources/JsonToXmlResources/AddressList.json",
                 new TypeReference<List<Address>>() {});
     }
 
     @Test
-    void testProcessForEmail() throws IOException {
+    void testProcessForEmail() throws IOException, NotAListException, WrongFiletypeException {
         runTest("src/test/resources/JsonToXmlResources/changedemail.json",
                 new TypeReference<List<Email>>() {});
     }
 
     @Test
-    void testProcessForPhone() throws IOException {
+    void testProcessForPhone() throws IOException, NotAListException, WrongFiletypeException {
         runTest("src/test/resources/JsonToXmlResources/Phone.json",
                 new TypeReference<List<Phone>>() {});
     }
 
 
 
-    private <T> void runTest(String inputFilePath, TypeReference<T> type) throws IOException {
+    private <T> void runTest(String inputFilePath, TypeReference<T> type) throws IOException, NotAListException, WrongFiletypeException {
         // Create JsonToYamlConverter object
         JsonToXmlConverter converter = new JsonToXmlConverter();
 

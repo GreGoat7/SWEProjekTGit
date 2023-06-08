@@ -13,6 +13,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import exceptions.*;
+
 public class JsonUtils implements IUtils{
     private static ObjectMapper mapper;
 
@@ -28,13 +30,13 @@ public class JsonUtils implements IUtils{
     } */
 
     @Override
-    public <T> T toJava(File jsonFile, TypeReference<T> typeReference) throws IOException {
+    public <T> T toJava(File jsonFile, TypeReference<T> typeReference) throws WrongFiletypeException {
         //JsonNode rootNode = mapper.readTree(jsonFile);
         try {
             return mapper.readValue(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8), typeReference);
         }
         catch (Exception e){
-            throw new IllegalArgumentException("Fehler beim Umwandeln der Json-Datei: Eingangsdatei ist kein Json-File");
+            throw new WrongFiletypeException("Fehler beim Umwandeln der Json-Datei: Eingangsdatei ist kein Json-File");
         }
     }
 
@@ -45,7 +47,7 @@ public class JsonUtils implements IUtils{
 
 
     @Override
-    public TypeReference<?> determineListType(File jsonFile) throws IOException {
+    public TypeReference<?> determineListType(File jsonFile) throws IOException, NotAListException {
         JsonNode rootNode = null;
         try {
             rootNode = mapper.readTree(jsonFile);
@@ -69,6 +71,6 @@ public class JsonUtils implements IUtils{
                 return new TypeReference<List<Address>>() {};
             }
         }
-        throw new InvalidFormatException("Das JSON-Format entspricht nicht erwarteten Feldern", jsonFile, Object.class);
+        throw new NotAListException("Das JSON-File muss eine Liste sein, aber ist keine.");
     }
 }

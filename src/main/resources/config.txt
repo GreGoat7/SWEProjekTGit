@@ -1,2 +1,2 @@
-StartFile; D:\study\signalsch\Person.json
-Filters: filter.converter.JsonToJsonEmailConverter, filter.converter.JsonToXmlConverter, filter.formatter.EncryptFormatter
+StartFile; D:\study\signalsch\resources\AddressList.Json
+Filters: filter.formatter.EncryptFormatter

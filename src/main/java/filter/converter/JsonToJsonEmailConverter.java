@@ -6,6 +6,7 @@ import addressmodel.Person;
 import addressmodel.Email;
 import filter.Filter;
 import constants.Constants;
+import exceptions.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.util.List;
 public class JsonToJsonEmailConverter implements Filter {
     JsonUtils jsonUtils = Constants.JSONUTILS;
     @Override
-    public String process(String inputFilePath) throws IOException {
+    public String process(String inputFilePath) throws IOException, WrongFormatException, NotAListException, WrongFiletypeException {
         // Lesen der JSON-Eingabedatei in eine Liste von Adressobjekten
         // Lesen der JSON-Eingabedatei in eine Liste von Objekten
         File inputFile = new File(inputFilePath);
@@ -25,7 +26,7 @@ public class JsonToJsonEmailConverter implements Filter {
 
         // Überprüfen, ob es sich um eine Liste von Personen handelt
         if (!typeReference.getType().equals(new TypeReference<List<Person>>() {}.getType())) {
-            throw new IllegalArgumentException("Fehler beim Verusch Emails zu extrahieren: Ausgangsliste ist keine Personenliste");
+            throw new WrongFormatException("Fehler beim Verusch Emails zu extrahieren: Ausgangsliste ist keine Personenliste");
         }
 
         Object result = jsonUtils.toJava(inputFile, typeReference);
