@@ -46,15 +46,15 @@ public class DecryptFormatter implements Filter {
 
         switch (fileFormat.toLowerCase()) {
             case "json" -> {
-                TypeReference<?> typeReference = JsonUtils.determineListType(new File(inputFilePath));
+                TypeReference<?> typeReference = jsonUtils.determineListType(new File(inputFilePath));
                 handleJsonFile(inputFilePath, outputFilePath, typeReference);
             }
             case "xml" -> {
-                TypeReference<?> xmlTypeReference = XmlUtils.determineListType(new File(inputFilePath));
+                TypeReference<?> xmlTypeReference = xmlUtils.determineListType(new File(inputFilePath));
                 handleXmlFile(inputFilePath, outputFilePath, xmlTypeReference);
             }
             case "yaml" -> {
-                TypeReference<?> yamlTypeReference = YamlUtils.determineListType(new File(inputFilePath));
+                TypeReference<?> yamlTypeReference = yamlUtils.determineListType(new File(inputFilePath));
                 handleYamlFile(inputFilePath, outputFilePath, yamlTypeReference);
             }
             default -> throw new Exception("Unsupported file format: " + fileFormat);
@@ -81,15 +81,15 @@ public class DecryptFormatter implements Filter {
 
     private void handleXmlFile(String filePath, String outputFilepath, TypeReference<?> typeReference) throws Exception {
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
-            List<Person> personList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Person>>) typeReference);
+            List<Person> personList = xmlUtils.toJava(new File(filePath), (TypeReference<List<Person>>) typeReference);
             decryptAddresses(personList);
             xmlUtils.fromJava(personList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
-            List<Email> emailList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Email>>) typeReference);
+            List<Email> emailList = xmlUtils.toJava(new File(filePath), (TypeReference<List<Email>>) typeReference);
             decryptEmailDetails(emailList);
             xmlUtils.fromJava(emailList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
-            List<Phone> phoneList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Phone>>) typeReference);
+            List<Phone> phoneList = xmlUtils.toJava(new File(filePath), (TypeReference<List<Phone>>) typeReference);
             decryptPhoneDetails(phoneList);
             xmlUtils.fromJava(phoneList, outputFilepath);
         }

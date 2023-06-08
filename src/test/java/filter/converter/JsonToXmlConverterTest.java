@@ -2,103 +2,49 @@
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import adressmodel.Person;
-import adressmodel.Email;
-import adressmodel.Address;
-import adressmodel.Phone;
-import
-
-
-import java.util.Collections;
-import java.util.List;
-
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class JsonToXmlConverterTest {
-    private JsonToXmlConverter converter;
+public class JsonToXmlConverterTest {
+    JsonToXmlConverter converter;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         converter = new JsonToXmlConverter();
     }
 
     @Test
-    void testProcess() throws IOException {
-        // Setzen Sie den Pfad zu Ihrer vorhandenen JSON-Datei
-        String jsonFilePath = "src/test/resources/Test.json";
+    public void testProcessForValidInput() {
+        String inputFilePath = "src/test/resources/Person.json"; // Hier geben Sie den Pfad zu Ihrer Testdatei an.
+        String expectedOutputFilePath = "src/test/resources/Person.xml";
 
-        // Führen Sie die Konvertierung durch
-        converter.process(jsonFilePath);
-
-        // Prüfen, ob eine XML-Datei mit dem erwarteten Namen erstellt wurde
-        Path expectedXmlFilePath = Paths.get(jsonFilePath.replace(".json", ".xml"));
-        assertTrue(Files.exists(expectedXmlFilePath), "Die XML-Datei wurde nicht erstellt.");
-    }
-    @Test
-    public void testProcess_ValidJsonPerson() throws IOException {
-        // Einrichten von Mock-Daten
-        Person person = new Person("John Doe", "1234", new Address("Street", "City", "12345"), new Email("john.doe@example.com"), new Phone("1234567890"));
-        List<Person> persons = Collections.singletonList(person);
-        File testFile = new File("person.json");
-
-        // Mocken der Methoden
-        wait(jsonUtils.determineListType(testFile)).thenReturn(new TypeReference<List<Person>>() {});
-        wait(jsonUtils.fromJson(testFile, new TypeReference<List<Person>>() {})).thenReturn(persons);
-        doNothing().wait(xmlUtils).toXml(persons, "person.xml");
-
-        // Aufrufen der Methode
-        String result = converter.process("person.json");
-
-        // Überprüfen der Ergebnisse
-        assertEquals("person.xml", result);
-        verify(jsonUtils).fromJson(testFile, new TypeReference<List<Person>>() {});
-        verify(xmlUtils).toXml(persons, "person.xml");
+        assertDoesNotThrow(() -> {
+            String result = converter.process(inputFilePath);
+            assertEquals(expectedOutputFilePath, result);
+            // Hier könnten Sie auch überprüfen, ob die resultierende XML-Datei den erwarteten Inhalt hat.
+        });
     }
 
     @Test
-    public void testProcess_ValidJsonAddress() throws IOException {
-        // Einrichten von Mock-Daten
-        Address address = new Address("Street", "City", "12345");
-        List<Address> addresses = Collections.singletonList(address);
-        File testFile = new File("address.json");
+    public void testProcessForInvalidInput() {
+        String inputFilePath = "path/to/your/invalid/test.json"; // Hier geben Sie den Pfad zu einer ungültigen Testdatei an, die nicht in eine Liste konvertiert werden kann.
 
-        // Mocken der Methoden
-        when(jsonUtils.determineListType(testFile)).thenReturn(new TypeReference<List<Address>>() {});
-        when(jsonUtils.fromJson(testFile, new TypeReference<List<Address>>() {})).thenReturn(addresses);
-        doNothing().when(xmlUtils).toXml(addresses, "address.xml");
-
-        // Aufrufen der Methode
-        String result = converter.process("address.json");
-
-        // Überprüfen der Ergebnisse
-        assertEquals("address.xml", result);
-        verify(jsonUtils).fromJson(testFile, new TypeReference<List<Address>>() {});
-        verify(xmlUtils).toXml(addresses, "address.xml");
+        assertThrows(ClassCastException.class, () -> {
+            converter.process(inputFilePath);
+        });
     }
 
     @Test
-    public void testProcess_InvalidJsonFile() throws IOException {
-        // Einrichten von Mock-Daten
-        File testFile = new File("invalid.json");
+    public void testProcessForNonexistentFile() {
+        String inputFilePath = "path/to/nonexistent.json"; // Ein Pfad zu einer Datei, die nicht existiert.
 
-        // Mocken der Methoden
-        when(jsonUtils.determineListType(testFile)).thenThrow(new IOException());
-
-        // Überprüfen, ob eine IOException ausgelöst wird
-        assertThrows(IOException.class, () -> converter.process("invalid.json"));
-
-        // Überprüfen der Ergebnisse
-        verify(jsonUtils).determineListType(testFile);
-        verify(jsonUtils, never()).fromJson(any(File.class), any(TypeReference.class));
-        verify(xmlUtils, never()).toXml(anyList(), anyString());
+        /*assertThrows(IOException.class, () -> {
+            converter.process(inputFilePath);
+        });
     }
 
-}
-*/
+    @Test
+    public void testProcessForPersonFile(){
+        String inputFilePath = "src/test/resources/Person.json";
+
+    }
+} */

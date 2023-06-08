@@ -50,7 +50,7 @@ public class EncryptFormatter implements Filter {
         switch (fileFormat.toLowerCase()) {
             case "json" -> {
                 // Bestimmt den Typ der Daten in der Datei
-                TypeReference<?> typeReference = JsonUtils.determineListType(new File(inputFilePath));
+                TypeReference<?> typeReference = jsonUtils.determineListType(new File(inputFilePath));
                 handleJsonFile(inputFilePath, outputFilePath, typeReference);
             }
             case "xml" -> {
@@ -98,7 +98,7 @@ public class EncryptFormatter implements Filter {
     private void handleXmlFile(String filePath, String outputFilePath, TypeReference<?> typeReference) throws Exception {
         // Wenn die Daten eine Liste von Personen sind
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
-            List<Person> personList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Person>>) typeReference);
+            List<Person> personList = xmlUtils.toJava(new File(filePath), (TypeReference<List<Person>>) typeReference);
             encryptPersonList(personList);
             xmlUtils.fromJava(personList, outputFilePath );
         }
