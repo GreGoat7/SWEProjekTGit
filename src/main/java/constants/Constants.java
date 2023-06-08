@@ -19,6 +19,7 @@ public final class Constants {
     public static final XmlUtils XMLUTILS = new XmlUtils();
     public static final YamlUtils YAMLUTILS = new YamlUtils();
 
+
     // Konstanten für Encrypt/Decrypt
     // AES-Algorithmus wird für die Verschlüsselung/Entschlüsselung verwendet
     public static final String ALGORITHM = "AES";

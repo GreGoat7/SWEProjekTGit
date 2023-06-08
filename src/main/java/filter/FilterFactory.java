@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import constants.Constants;
 
-public class FilterFactory {
+public class FilterFactory implements IFilterFactory {
 
 
     /* erstelle einen Filter mithilfe von Reflection, indem geschaut wird ob eine Klasse mit dem Namen "filterClassName"
     im package filter existiert */
 
-    public static Filter createFilter(String filterClassName) throws Exception {
+    @Override
+    public Filter createFilter(String filterClassName) throws Exception {
         try {
             Class<?> filterClass = Class.forName(filterClassName);
             if (Filter.class.isAssignableFrom(filterClass)) {
@@ -26,7 +27,8 @@ public class FilterFactory {
     }
 
     /* list ein configfile und erstellt dann mithilfe der Methode "createFilter" mit Reflection die aufgeführten Filter */
-    public static List<Filter> createFiltersFromConfig(String configFilePath) throws Exception {
+    @Override
+    public List<Filter> createFiltersFromConfig(String configFilePath) throws Exception {
         BufferedReader reader = new BufferedReader(new FileReader(configFilePath));
         String line;
         List<Filter> filters = new ArrayList<>();
