@@ -18,6 +18,7 @@ public class Address {
     @JacksonXmlProperty(localName = "Postcode")
     private String postcode;
 
+    // Constructor
     public Address(String street, String city, String postcode) {
         this.street = street;
         this.city = city;

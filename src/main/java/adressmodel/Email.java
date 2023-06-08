@@ -19,6 +19,7 @@ public class Email {
     @JacksonXmlProperty(localName = "address")
     private List<String> emailAddress;
 
+    // Constructor
     public Email(String type, List<String> emailAddress) {
         this.type = type;
         this.emailAddress = emailAddress;

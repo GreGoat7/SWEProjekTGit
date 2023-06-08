@@ -14,6 +14,7 @@ public class Phone {
     @JacksonXmlProperty(localName = "number")
     private String number;
 
+    // Constructor
     public Phone(String type, String number){
         this.type = type;
         this.number = number;

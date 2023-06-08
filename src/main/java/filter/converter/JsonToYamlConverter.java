@@ -17,7 +17,6 @@ public class JsonToYamlConverter implements Filter {
 
     @Override
     public String process(String inputFilePath) throws IOException {
-
         // Lesen der JSON-Eingabedatei in eine Liste von Objekten
         File inputFile = new File(inputFilePath);
         TypeReference<?> typeReference = JsonUtils.determineListType(inputFile);

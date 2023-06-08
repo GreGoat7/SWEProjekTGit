@@ -32,6 +32,7 @@ public class Person {
     @JacksonXmlProperty(localName = "Email")
     private List<Email> email;
 
+    // Constructor
     public Person(String FirstName, String Surname, String Age, Address Address, List<Phone> Phone, List<Email> Email){
         this.firstName = FirstName;
         this.surname = Surname;
