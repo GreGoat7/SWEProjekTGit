@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 @JsonPropertyOrder({ "type", "address"})
 @JacksonXmlRootElement(localName = "Email")
-public class Email {
+public class Email implements IEmail {
     @JsonProperty("type")
     @JacksonXmlProperty(localName = "type")
     private String type;
@@ -44,18 +44,22 @@ public class Email {
     }
 
     //getter und setter
+    @Override
     public List<String> getEmailAddress() {
         return emailAddress;
     }
 
+    @Override
     public void setEmailAddress(List<String> emailAddress) {
         this.emailAddress = emailAddress;
     }
 
+    @Override
     public String getType() {
         return type;
     }
 
+    @Override
     public void setType(String type) {
         this.type = type;
     }

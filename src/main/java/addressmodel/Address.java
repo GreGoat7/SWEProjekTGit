@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @JsonPropertyOrder({ "Street", "City", "Postcode"})
 @JacksonXmlRootElement(localName = "Person")
-public class Address {
+public class Address implements IAddress {
     @JsonProperty("Street")
     @JacksonXmlProperty(localName = "Street")
     private String street;
@@ -32,18 +32,21 @@ public class Address {
     }
 
     //getter Methoden
+    @Override
     @JsonProperty("Street")
     @JacksonXmlProperty(localName = "Street")
     public String getStreet() {
         return street;
     }
 
+    @Override
     @JsonProperty("City")
     @JacksonXmlProperty(localName = "City")
     public String getCity() {
         return city;
     }
 
+    @Override
     @JsonProperty("Postcode")
     @JacksonXmlProperty(localName = "Postcode")
     public String getPostcode() {
@@ -52,18 +55,21 @@ public class Address {
 
 
     //setter Methoden
+    @Override
     @JsonProperty("Street")
     @JacksonXmlProperty(localName = "Street")
     public void setStreet(String street) {
         this.street = street;
     }
 
+    @Override
     @JsonProperty("City")
     @JacksonXmlProperty(localName = "City")
     public void setCity(String city) {
         this.city = city;
     }
 
+    @Override
     @JsonProperty("Postcode")
     @JacksonXmlProperty(localName = "Postcode")
     public void setPostcode(String postcode) {

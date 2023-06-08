@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @JsonPropertyOrder({ "FirstName", "Surname", "Age", "Person", "Phone", "Email" })
 @JacksonXmlRootElement(localName = "root")
-public class Person {
+public class Person implements IPerson {
     @JsonProperty("FirstName")
     @JacksonXmlProperty(localName = "FirstName")
     private String firstName;
@@ -48,47 +48,58 @@ public class Person {
     }
 
     //getter Methoden
+    @Override
     public String getFirstName() {
         return firstName;
     }
 
+    @Override
     public String getSurname() {
         return surname;
     }
 
+    @Override
     public List<Email> getEmail() {
         return email;
     }
 
+    @Override
     public Address getAddress() {
         return address;
     }
 
+    @Override
     public String getAge() {
         return age;
     }
 
+    @Override
     public List<Phone> getPhone() {
         return phone;
     }
 
     //setter Methoden
+    @Override
     public void setAddress(Address address) {
         this.address = address;
     }
 
+    @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    @Override
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    @Override
     public void setAge(String age) {
         this.age = age;
     }
 
+    @Override
     public void setPhone(List<Phone> phone) {
         this.phone = phone;
     }

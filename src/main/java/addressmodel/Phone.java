@@ -7,7 +7,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import java.util.Objects;
 
 @JacksonXmlRootElement(localName = "Phone")
-public class Phone {
+public class Phone implements IPhone {
     @JsonProperty("type")
     @JacksonXmlProperty(localName = "type")
     private String type;
@@ -27,18 +27,22 @@ public class Phone {
     }
 
     // Getter und Setter Methoden
+    @Override
     public String getType() {
         return this.type;
     }
 
+    @Override
     public void setType(String type) {
         this.type = type;
     }
 
+    @Override
     public String getNumber() {
         return this.number;
     }
 
+    @Override
     public void setNumber(String number) {
         this.number = number;
     }
