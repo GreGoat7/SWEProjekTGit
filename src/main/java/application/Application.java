@@ -13,6 +13,7 @@ import constants.Constants;
 // einfügt und abarbeitet
 public class Application {
     // in String args config-file übergeben
+    public static FilterFactory FilterFactory  = new FilterFactory();
     public static void main(String[] args) {
         try {
             if (args.length == 0) {

@@ -39,7 +39,6 @@ public class EncryptFormatter implements Filter {
     // Die Methode process verschlüsselt die Daten in der angegebenen Datei
     @Override
     public String process(String inputFilePath) throws Exception {
-        File file = new File(inputFilePath);
 
         String outputFilePath = getOutputFilePath(inputFilePath);
 

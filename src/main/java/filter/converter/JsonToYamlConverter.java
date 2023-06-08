@@ -1,7 +1,6 @@
 package filter.converter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import constants.Constants;
-import org.yaml.snakeyaml.Yaml;
 import utils.JsonUtils;
 import utils.YamlUtils;
 import filter.Filter;

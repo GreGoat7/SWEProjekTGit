@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class JsonToJsonEmailConverter implements Filter{
+public class JsonToJsonEmailConverter implements Filter {
     JsonUtils jsonUtils = Constants.JSONUTILS;
     @Override
     public String process(String inputFilePath) throws IOException {
