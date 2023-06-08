@@ -20,6 +20,11 @@ public class JsonToXmlConverter implements Filter {
     public String process(String inputFilePath) throws IOException {
         // Lesen der JSON-Eingabedatei in eine Liste von Objekten
         File inputFile = new File(inputFilePath);
+
+        if (!inputFile.exists()) {
+            throw new IOException("Input file does not exist");
+        }
+
         TypeReference<?> typeReference = jsonUtils.determineListType(inputFile);
         Object result = jsonUtils.toJava(inputFile, typeReference);
 

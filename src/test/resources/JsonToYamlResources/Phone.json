@@ -1,0 +1,13 @@
+[ {
+  "type" : "home",
+  "number" : "0203 544 1234"
+}, {
+  "type" : "office",
+  "number" : "01962 001234"
+}, {
+  "type" : "office",
+  "number" : "01962 001235"
+}, {
+  "type" : "mobile",
+  "number" : "077 7700 1234"
+} ]

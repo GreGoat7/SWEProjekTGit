@@ -44,7 +44,7 @@ public class EncryptFormatter implements Filter {
         String outputFilePath = getOutputFilePath(inputFilePath);
 
         // Erkennt das Dateiformat
-        String fileFormat = FormatUtils.detectFileType(inputFilePath);
+        String fileFormat = FormatUtils.detectFileType(inputFilePath).toString().toLowerCase();
 
 
         switch (fileFormat.toLowerCase()) {

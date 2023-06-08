@@ -14,11 +14,11 @@ public class Main {
        Pipeline pipeline = new Pipeline();
 
 
-       pipeline.addFilter(new DecryptFormatter());
+       pipeline.addFilter(new EncryptFormatter());
 
 
         try {
-            String outputFilePath = pipeline.runPipeline("src/main/java/maintest/Person.json");
+            String outputFilePath = pipeline.runPipeline("src/main/resources/personen.json");
             System.out.println("Final output file: " + outputFilePath);
         } catch (Exception e) {
             e.printStackTrace();

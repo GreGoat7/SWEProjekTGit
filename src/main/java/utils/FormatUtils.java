@@ -16,11 +16,11 @@ public class FormatUtils {
 
         // durch equalsIgnoreCase wird nicht auf Groß- und Kleinschreibung geachtet
         if(extension.equalsIgnoreCase("json")) {
-            return "json";
+            return FileType.JSON;
         } else if(extension.equalsIgnoreCase("xml")) {
             return "xml";
         } else if(extension.equalsIgnoreCase("yaml") || extension.equalsIgnoreCase("yml")) {
-            return "yaml";
+            return FileType.YAML;
         } else {
             return "unknown";
         }

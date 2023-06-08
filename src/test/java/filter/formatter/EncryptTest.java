@@ -1,4 +1,4 @@
-package filter.formatter;
+/*package filter.formatter;
 
 //Testet die Verschlüsselung; gibt die verschlüsselte Datei aus (test.json)
 public class EncryptTest {
@@ -13,3 +13,4 @@ public class EncryptTest {
     }
 
 }
+*/

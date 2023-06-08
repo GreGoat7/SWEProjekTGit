@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import java.util.Objects;
+
 @JsonPropertyOrder({ "Street", "City", "Postcode"})
 @JacksonXmlRootElement(localName = "Person")
 public class Address {
@@ -67,4 +69,20 @@ public class Address {
     public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(street, address.street) &&
+                Objects.equals(city, address.city) &&
+                Objects.equals(postcode, address.postcode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(street, city, postcode);
+    }
+
 }

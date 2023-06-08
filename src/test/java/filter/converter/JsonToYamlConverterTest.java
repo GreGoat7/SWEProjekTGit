@@ -8,6 +8,7 @@ import utils.YamlUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,23 +16,23 @@ class JsonToYamlConverterTest {
 
     @Test
     void testProcessForAddressDetails() throws IOException {
-        runTest("src/test/resources/addressdetails.json",
-                new TypeReference<Address>() {});
+        runTest("src/test/resources/addresslist.json",
+                new TypeReference<List<Address>>() {});
     }
 
     @Test
     void testProcessForAddresses() throws IOException {
-        runTest("src/test/resources/adresse.json",
-                new TypeReference<List<Address>>() {});
+        runTest("src/test/resources/Person.json",
+                new TypeReference<List<Person>>() {});
     }
 
     @Test
     void testProcessForEmail() throws IOException {
         runTest("src/test/resources/email.json",
-                new TypeReference<Email>() {});
+                new TypeReference<List<Email>>() {});
     }
 
-   @Test
+    @Test
     void testProcessForAddressDetailsList() throws IOException {
         runTest("src/test/resources/addressdetailslist.json",
                 new TypeReference<List<Address>>() {});
@@ -52,12 +53,13 @@ class JsonToYamlConverterTest {
         assertTrue(outputFile.exists(), "Output file should exist");
 
         // Check if the result is as expected
-        T resultData = YamlUtils.toJava(outputFile, type);
+        T resultData = YamlUtils.fromYaml(outputFile, type);
 
         // Load the input data
-        T inputData = JsonUtils.toJava(new File(inputFilePath), type);
+        T inputData = JsonUtils.fromJson(new File(inputFilePath), type);
 
         // Validate the results
         assertEquals(inputData, resultData, "Converted data should match input data");
     }
-} */
+}
+*/

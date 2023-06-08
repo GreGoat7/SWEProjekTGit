@@ -55,6 +55,7 @@ public class XmlUtils implements IUtils{
         mapper.writeValue(new File(filePath), obj);
     }
 
+    /*
     public static boolean isArray(File xmlFile) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -71,7 +72,7 @@ public class XmlUtils implements IUtils{
             System.err.println("Fehler beim Parsen der XML-Datei: " + e.getMessage());
             return false;  // Rückgabe von false, da das Parsen fehlgeschlagen ist
         }
-    }
+    }*/
 
     @Override
     public TypeReference<?> determineListType(File xmlFile) throws IOException {

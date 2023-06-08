@@ -38,7 +38,7 @@ public class Application {
             while ((line = reader.readLine()) != null) {
                 // Wenn die aktuelle Zeile mit "StartFile:" beginnt, wird der Pfad als der Rest der Zeile nach dem Doppelpunkt gespeichert.
                 if (line.startsWith(Constants.STARTFILE)) {
-                    startFilePath = line.split(":")[1].trim();
+                    startFilePath = line.split(";")[1].trim();
                 }
             }
 

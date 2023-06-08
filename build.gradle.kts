@@ -24,6 +24,9 @@ java {
     withSourcesJar()
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
 tasks {
     shadowJar {
         manifest {

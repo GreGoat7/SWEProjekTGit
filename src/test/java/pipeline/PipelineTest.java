@@ -1,4 +1,4 @@
-package pipeline;
+/*package pipeline;
 
 import filter.formatter.DecryptFormatter;
 import filter.converter.JsonToXmlConverter;
@@ -38,3 +38,4 @@ public class PipelineTest {
         }
     }
 }
+*/

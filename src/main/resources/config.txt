@@ -1,2 +1,2 @@
-StartFile: src/main/resources/personen.json
+StartFile; D:\\study\\signalsch\\Person.json
 Filters: filter.converter.JsonToJsonEmailConverter, filter.converter.JsonToXmlConverter, filter.formatter.EncryptFormatter, filter.formatter.DecryptFormatter

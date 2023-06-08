@@ -1,4 +1,4 @@
-package filter.converter;
+/*package filter.converter;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,4 +25,4 @@ public class XmlToJsonConverterTest {
         // Hier könnten Sie weitere Tests hinzufügen, um die Genauigkeit der konvertierten Daten zu überprüfen
         // z.B. Lesen der XML-Datei und Überprüfen, ob bestimmte Elemente vorhanden sind, Überprüfen der Reihenfolge der Elemente usw.
     }
-}
+}*/

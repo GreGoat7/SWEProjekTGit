@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 public final class Constants {
     private Constants(){}
 
-    public static final String STARTFILE = "StartFile:";
+    public static final String STARTFILE = "StartFile;";
     public static final String FILTERLIST = "Filters:";
 
 
