@@ -26,7 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class XmlUtils {
+public class XmlUtils implements IUtils{
     private static XmlMapper mapper;
 
     static {
@@ -39,16 +39,19 @@ public class XmlUtils {
         return mapper.readValue(new InputStreamReader(new FileInputStream(xmlFile), StandardCharsets.UTF_8), classType);
     } */
 
-    public static <T> T fromXml(File xmlFile, TypeReference<T> type) throws IOException {
+    @Override
+    public <T> T toJava(File xmlFile, TypeReference<T> type) throws IOException {
         try {
             return mapper.readValue(new InputStreamReader(new FileInputStream(xmlFile), StandardCharsets.UTF_8), type);
         }
         catch (Exception e){
             throw new IllegalArgumentException("Fehler beim Umwandeln der Xml-Datei: Eingangsdatei ist kein Xml-File");
         }
+
     }
 
-    public static void toXml(Object obj, String filePath) throws IOException {
+    @Override
+    public void fromJava(Object obj, String filePath) throws IOException {
         mapper.writeValue(new File(filePath), obj);
     }
 
@@ -70,7 +73,8 @@ public class XmlUtils {
         }
     }
 
-    public static TypeReference<?> determineListType(File xmlFile) throws Exception {
+    @Override
+    public TypeReference<?> determineListType(File xmlFile) throws IOException {
         Document doc = null;
         try{
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

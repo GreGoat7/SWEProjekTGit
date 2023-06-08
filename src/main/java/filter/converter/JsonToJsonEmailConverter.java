@@ -5,6 +5,7 @@ import utils.JsonUtils;
 import addressmodel.Person;
 import addressmodel.Email;
 import filter.Filter;
+import constants.Constants;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class JsonToJsonEmailConverter implements Filter{
             throw new IllegalArgumentException("Fehler beim Verusch Emails zu extrahieren: Ausgangsliste ist keine Personenliste");
         }
 
-        Object result = JsonUtils.fromJson(inputFile, typeReference);
+        Object result = jsonUtils.toJava(inputFile, typeReference);
         List<Person> personList = (List<Person>) result;
 
         // Extrahieren der Email-Informationen aus den Adressobjekten
@@ -42,7 +43,7 @@ public class JsonToJsonEmailConverter implements Filter{
         String outputFilePath = new File(inputFile.getParent(), baseName + "_extracted_emails.json").getPath();
 
         // Schreiben der Email-Informationen in die JSON-Ausgabedatei
-        JsonUtils.toJson(emails, outputFilePath);
+        jsonUtils.fromJava(emails, outputFilePath);
 
         return outputFilePath;
     }

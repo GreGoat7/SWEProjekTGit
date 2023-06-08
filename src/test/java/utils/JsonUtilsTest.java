@@ -23,7 +23,7 @@ class JsonUtilsTest {
         // Ausführung
         Address result;
         try {
-            result = JsonUtils.fromJson(inputFile, new TypeReference<Address>() {});
+            result = JsonUtils.toJava(inputFile, new TypeReference<Address>() {});
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             result = null;
@@ -47,7 +47,7 @@ class JsonUtilsTest {
         // Ausführung
         Email result;
         try {
-            result = JsonUtils.fromJson(inputFile, new TypeReference<Email>() {});
+            result = JsonUtils.toJava(inputFile, new TypeReference<Email>() {});
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             result = null;
@@ -77,7 +77,7 @@ class JsonUtilsTest {
         // Ausführung
         List<Address> result;
         try {
-            result = JsonUtils.fromJson(inputFile, targetClass);
+            result = JsonUtils.toJava(inputFile, targetClass);
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             return;
@@ -103,7 +103,7 @@ class JsonUtilsTest {
         // Ausführung
         List<Person> result;
         try {
-            result = JsonUtils.fromJson(inputFile, targetClass);
+            result = JsonUtils.toJava(inputFile, targetClass);
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             return;

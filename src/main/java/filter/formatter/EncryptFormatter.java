@@ -20,10 +20,12 @@ import java.util.ArrayList;
 
 // Die Klasse EncryptFormatter verschlüsselt die Daten in einer Datei
 public class EncryptFormatter implements Filter {
-    // AES-Algorithmus wird für die Verschlüsselung verwendet
-    private static final String ALGORITHM = "AES";
-    // Schlüssel für die AES-Verschlüsselung
-    private static final byte[] KEY = "ThisIsASecretKey".getBytes(StandardCharsets.UTF_8);
+    JsonUtils jsonUtils = Constants.JSONUTILS;
+    XmlUtils xmlUtils = Constants.XMLUTILS;
+    YamlUtils yamlUtils = Constants.YAMLUTILS;
+
+    String ALGORITHM = Constants.ALGORITHM;
+    byte[] KEY = Constants.KEY;
 
     // Hilfsmethode zum Generieren des Ausgabepfads
     private String getOutputFilePath(String inputFilePath) {
@@ -53,11 +55,11 @@ public class EncryptFormatter implements Filter {
             }
             case "xml" -> {
                 // Bestimmt den Typ der Daten in der Datei
-                TypeReference<?> xmlTypeReference = XmlUtils.determineListType(new File(inputFilePath));
+                TypeReference<?> xmlTypeReference = xmlUtils.determineListType(new File(inputFilePath));
                 handleXmlFile(inputFilePath, outputFilePath, xmlTypeReference);
             }
             case "yaml" -> {
-                TypeReference<?> yamlTypeReference = YamlUtils.determineListType(new File(inputFilePath));
+                TypeReference<?> yamlTypeReference = yamlUtils.determineListType(new File(inputFilePath));
                 handleYamlFile(inputFilePath, outputFilePath, yamlTypeReference);
             }
 
@@ -74,21 +76,21 @@ public class EncryptFormatter implements Filter {
 
         // Wenn die Daten eine Liste von Personen sind
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
-            List<Person> personList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Person>>) typeReference);
+            List<Person> personList = jsonUtils.toJava(new File(filePath), (TypeReference<List<Person>>) typeReference);
             encryptPersonList(personList);
-            JsonUtils.toJson(personList, outputFilePath);
+            jsonUtils.fromJava(personList, outputFilePath);
         }
         //Wenn die Daten eine Liste von Emails sind
         else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
-            List<Email> emailList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Email>>) typeReference);
+            List<Email> emailList = jsonUtils.toJava(new File(filePath), (TypeReference<List<Email>>) typeReference);
             encryptEmails(emailList);
-            JsonUtils.toJson(emailList, outputFilePath);
+            jsonUtils.fromJava(emailList, outputFilePath);
         }
         //Wenn die Daten eine Liste von Telefonnummern sind
         else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
-            List<Phone> phoneList = JsonUtils.fromJson(new File(filePath), (TypeReference<List<Phone>>) typeReference);
+            List<Phone> phoneList = jsonUtils.toJava(new File(filePath), (TypeReference<List<Phone>>) typeReference);
             encryptPhones(phoneList);
-            JsonUtils.toJson(phoneList, outputFilePath);
+            jsonUtils.fromJava(phoneList, outputFilePath);
         }
     }
 
@@ -98,19 +100,19 @@ public class EncryptFormatter implements Filter {
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
             List<Person> personList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Person>>) typeReference);
             encryptPersonList(personList);
-            XmlUtils.toXml(personList, outputFilePath );
+            xmlUtils.fromJava(personList, outputFilePath );
         }
         //Wenn die Daten eine Liste von Emails sind
         else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
-            List<Email> emailList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Email>>) typeReference);
+            List<Email> emailList = xmlUtils.toJava(new File(filePath), (TypeReference<List<Email>>) typeReference);
             encryptEmails(emailList);
-            XmlUtils.toXml(emailList, outputFilePath);
+            xmlUtils.fromJava(emailList, outputFilePath);
         }
         //Wenn die Daten eine Liste von Telefonnummern sind
         else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
-            List<Phone> phoneList = XmlUtils.fromXml(new File(filePath), (TypeReference<List<Phone>>) typeReference);
+            List<Phone> phoneList = xmlUtils.toJava(new File(filePath), (TypeReference<List<Phone>>) typeReference);
             encryptPhones(phoneList);
-            XmlUtils.toXml(phoneList, outputFilePath);
+            xmlUtils.fromJava(phoneList, outputFilePath);
 
         }
     }
@@ -119,21 +121,21 @@ public class EncryptFormatter implements Filter {
     private void handleYamlFile(String filePath, String outputFilePath, TypeReference<?> typeReference) throws Exception {
         // Wenn die Daten eine Liste von Personen sind
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
-            List<Person> personList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Person>>) typeReference);
+            List<Person> personList = yamlUtils.toJava(new File(filePath), (TypeReference<List<Person>>) typeReference);
             encryptPersonList(personList);
-            YamlUtils.toYaml(personList, outputFilePath);
+            yamlUtils.fromJava(personList, outputFilePath);
         }
         //Wenn die Daten eine Liste von Emails sind
         else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
-            List<Email> emailList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Email>>) typeReference);
+            List<Email> emailList = yamlUtils.toJava(new File(filePath), (TypeReference<List<Email>>) typeReference);
             encryptEmails(emailList);
-            YamlUtils.toYaml(emailList, outputFilePath);
+            yamlUtils.fromJava(emailList, outputFilePath);
         }
         //Wenn die Daten eine Liste von Telefonnummern sind
         else if (typeReference.getType().equals(new TypeReference<List<Phone>>(){}.getType())) {
-            List<Phone> phoneList = YamlUtils.fromYaml(new File(filePath), (TypeReference<List<Phone>>) typeReference);
+            List<Phone> phoneList = yamlUtils.toJava(new File(filePath), (TypeReference<List<Phone>>) typeReference);
             encryptPhones(phoneList);
-            YamlUtils.toYaml(phoneList, outputFilePath);
+            yamlUtils.fromJava(phoneList, outputFilePath);
         }
     }
 

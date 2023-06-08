@@ -164,7 +164,7 @@ public class XmlUtilsTest {
         Person testPerson = new Person();
         testPerson.setAddress(xmlAdressDetails);
         try {
-            XmlUtils.toXml(testPerson, outputFilePath);
+            XmlUtils.fromJava(testPerson, outputFilePath);
         }catch (Exception e){
             fail("Exception thrown during test: " + e.toString());
             return;
@@ -188,7 +188,7 @@ public class XmlUtilsTest {
 
         String outputFilePath = "src/test/resources/back_adresse.xml";
         try {
-            XmlUtils.toXml(result, outputFilePath);
+            XmlUtils.fromJava(result, outputFilePath);
         }catch (Exception e){
             fail("Exception thrown during test: " + e.toString());
             return;

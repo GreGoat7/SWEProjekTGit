@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import addressmodel.*;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,7 +13,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class JsonUtils {
+public class JsonUtils implements IUtils{
     private static ObjectMapper mapper;
 
     static {
@@ -28,7 +27,8 @@ public class JsonUtils {
         return mapper.readValue(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8), classType);
     } */
 
-    public static <T> T fromJson(File jsonFile, TypeReference<T> typeReference) throws IOException {
+    @Override
+    public <T> T toJava(File jsonFile, TypeReference<T> typeReference) throws IOException {
         //JsonNode rootNode = mapper.readTree(jsonFile);
         try {
             return mapper.readValue(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8), typeReference);
@@ -38,7 +38,8 @@ public class JsonUtils {
         }
     }
 
-    public static void toJson(Object obj, String filePath) throws IOException {
+    @Override
+    public void fromJava(Object obj, String filePath) throws IOException {
         mapper.writeValue(new File(filePath), obj);
     }
 

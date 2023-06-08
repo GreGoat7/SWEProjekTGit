@@ -20,7 +20,7 @@ class YamlUtilsTest {
         // Ausführung
         Address result;
         try {
-            result = YamlUtils.fromYaml(inputFile, targetClass);
+            result = YamlUtils.toJava(inputFile, targetClass);
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             result = null;
@@ -44,7 +44,7 @@ class YamlUtilsTest {
         // Ausführung
         Email result;
         try {
-            result = YamlUtils.fromYaml(inputFile, targetClass);
+            result = YamlUtils.toJava(inputFile, targetClass);
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             result = null;
@@ -71,7 +71,7 @@ class YamlUtilsTest {
         // Ausführung
         List<Address> result;
         try {
-            result = YamlUtils.fromYaml(inputFile, targetClass);
+            result = YamlUtils.toJava(inputFile, targetClass);
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             return;
@@ -96,7 +96,7 @@ class YamlUtilsTest {
         // Ausführung
         List<Person> result;
         try {
-            result = YamlUtils.fromYaml(inputFile, targetClass);
+            result = YamlUtils.toJava(inputFile, targetClass);
         } catch (IOException e) {
             fail("Exception thrown during test: " + e.toString());
             return;

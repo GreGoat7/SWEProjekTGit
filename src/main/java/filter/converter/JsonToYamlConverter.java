@@ -13,13 +13,15 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class JsonToYamlConverter implements Filter {
+    JsonUtils jsonUtils = Constants.JSONUTILS;
+    YamlUtils yamlUtils = Constants.YAMLUTILS;
 
     @Override
     public String process(String inputFilePath) throws IOException {
         // Lesen der JSON-Eingabedatei in eine Liste von Objekten
         File inputFile = new File(inputFilePath);
-        TypeReference<?> typeReference = JsonUtils.determineListType(inputFile);
-        Object result = JsonUtils.fromJson(inputFile, typeReference);
+        TypeReference<?> typeReference = jsonUtils.determineListType(inputFile);
+        Object result = jsonUtils.toJava(inputFile, typeReference);
 
         if (!(result instanceof List)) {
             throw new ClassCastException("Ergebnis ist keine Liste");
@@ -33,7 +35,7 @@ public class JsonToYamlConverter implements Filter {
 
         // Schreiben der Informationen in die XML-Ausgabedatei
         File outputFile = new File(outputFilePath);
-        YamlUtils.toYaml(objectList, outputFilePath);
+        yamlUtils.fromJava(objectList, outputFilePath);
 
         return outputFilePath;
     }

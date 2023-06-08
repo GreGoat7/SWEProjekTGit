@@ -52,10 +52,10 @@ class JsonToYamlConverterTest {
         assertTrue(outputFile.exists(), "Output file should exist");
 
         // Check if the result is as expected
-        T resultData = YamlUtils.fromYaml(outputFile, type);
+        T resultData = YamlUtils.toJava(outputFile, type);
 
         // Load the input data
-        T inputData = JsonUtils.fromJson(new File(inputFilePath), type);
+        T inputData = JsonUtils.toJava(new File(inputFilePath), type);
 
         // Validate the results
         assertEquals(inputData, resultData, "Converted data should match input data");

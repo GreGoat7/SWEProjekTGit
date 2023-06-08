@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class YamlUtils {
+public class YamlUtils implements IUtils {
     private static YAMLMapper mapper;
 
     static {
@@ -27,17 +27,15 @@ public class YamlUtils {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
-    public static <T> T fromYaml(File yamlFile, Class<T> classType) throws IOException {
-        JsonNode rootNode = mapper.readTree(yamlFile);
-        return mapper.readValue(new InputStreamReader(new FileInputStream(yamlFile), StandardCharsets.UTF_8), classType);
-    }
 
-    public static <T> T fromYaml(File yamlFile, TypeReference<T> type) throws IOException {
+    @Override
+    public <T> T toJava(File yamlFile, TypeReference<T> type) throws IOException {
         JsonNode rootNode = mapper.readTree(yamlFile);
         return mapper.readValue(new InputStreamReader(new FileInputStream(yamlFile), StandardCharsets.UTF_8), type);
     }
 
-    public static void toYaml(Object obj, String filePath) throws IOException {
+    @Override
+    public void fromJava(Object obj, String filePath) throws IOException {
         mapper.writeValue(new File(filePath), obj);
     }
 
@@ -46,7 +44,8 @@ public class YamlUtils {
         return rootNode.isArray();
     }
 
-    public static TypeReference<?> determineListType(File yamlFile) throws IOException {
+    @Override
+    public TypeReference<?> determineListType(File yamlFile) throws IOException {
         JsonNode rootNode = mapper.readTree(yamlFile);
         if (rootNode.isArray() && rootNode.size() > 0) {
             JsonNode firstElement = rootNode.get(0);

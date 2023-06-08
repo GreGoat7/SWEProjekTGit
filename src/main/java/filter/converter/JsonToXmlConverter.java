@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import utils.JsonUtils;
 import utils.XmlUtils;
 import filter.Filter;
+import constants.Constants;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,13 +13,15 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class JsonToXmlConverter implements Filter {
+    JsonUtils jsonUtils = Constants.JSONUTILS;
+    XmlUtils xmlUtils = Constants.XMLUTILS;
 
     @Override
     public String process(String inputFilePath) throws IOException {
         // Lesen der JSON-Eingabedatei in eine Liste von Objekten
         File inputFile = new File(inputFilePath);
-        TypeReference<?> typeReference = JsonUtils.determineListType(inputFile);
-        Object result = JsonUtils.fromJson(inputFile, typeReference);
+        TypeReference<?> typeReference = jsonUtils.determineListType(inputFile);
+        Object result = jsonUtils.toJava(inputFile, typeReference);
 
         if (!(result instanceof List)) {
             throw new ClassCastException("Ergebnis ist keine Liste");
@@ -31,7 +34,7 @@ public class JsonToXmlConverter implements Filter {
         String outputFilePath = Paths.get(inputPath.getParent().toString(), inputPath.getFileName().toString().replace(".json", ".xml")).toString();
 
         // Schreiben der Informationen in die XML-Ausgabedatei
-        XmlUtils.toXml(objectList, outputFilePath);
+        xmlUtils.fromJava(objectList, outputFilePath);
 
         return outputFilePath;
     }
