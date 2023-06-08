@@ -4,9 +4,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FormatUtils {
-
+    public enum FileType{
+        JSON,XML,YAML,UNKNOWN
+    }
+    
+    
     // Diese Methode erkennt das Dateiformat anhand der Endung .json, .xml, .yaml
-    public static String detectFileType(String pathToFile) {
+    public static FileType detectFileType(String pathToFile) {
         String extension = "";
 
         int i = pathToFile.lastIndexOf('.');
@@ -18,11 +22,11 @@ public class FormatUtils {
         if(extension.equalsIgnoreCase("json")) {
             return FileType.JSON;
         } else if(extension.equalsIgnoreCase("xml")) {
-            return "xml";
+            return FileType.XML;
         } else if(extension.equalsIgnoreCase("yaml") || extension.equalsIgnoreCase("yml")) {
             return FileType.YAML;
         } else {
-            return "unknown";
+            return FileType.UNKNOWN;
         }
     }
 }

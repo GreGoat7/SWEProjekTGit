@@ -42,9 +42,9 @@ public class DecryptFormatter implements Filter {
         File inputFile = new File(inputFilePath);
         String outputFilePath = getOutputFilePath(inputFilePath);
 
-        String fileFormat = FormatUtils.detectFileType(inputFilePath);
+        String fileFormat = FormatUtils.detectFileType(inputFilePath).toString().toLowerCase();
 
-        switch (fileFormat.toLowerCase()) {
+        switch (fileFormat) {
             case "json" -> {
                 TypeReference<?> typeReference = jsonUtils.determineListType(inputFile);
                 handleJsonFile(inputFilePath, outputFilePath, typeReference);

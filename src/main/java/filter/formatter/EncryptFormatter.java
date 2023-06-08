@@ -46,7 +46,7 @@ public class EncryptFormatter implements Filter {
         String fileFormat = FormatUtils.detectFileType(inputFilePath).toString().toLowerCase();
 
 
-        switch (fileFormat.toLowerCase()) {
+        switch (fileFormat) {
             case "json" -> {
                 // Bestimmt den Typ der Daten in der Datei
                 TypeReference<?> typeReference = jsonUtils.determineListType(new File(inputFilePath));
