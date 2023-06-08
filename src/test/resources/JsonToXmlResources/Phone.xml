@@ -1,0 +1,18 @@
+<ArrayList>
+  <item>
+    <type>home</type>
+    <number>0203 544 1234</number>
+  </item>
+  <item>
+    <type>office</type>
+    <number>01962 001234</number>
+  </item>
+  <item>
+    <type>office</type>
+    <number>01962 001235</number>
+  </item>
+  <item>
+    <type>mobile</type>
+    <number>077 7700 1234</number>
+  </item>
+</ArrayList>

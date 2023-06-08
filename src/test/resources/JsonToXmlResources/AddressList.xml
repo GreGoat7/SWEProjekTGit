@@ -1,0 +1,12 @@
+<ArrayList>
+  <item>
+    <Street>Hursley Park</Street>
+    <City>Winchester</City>
+    <Postcode>SO21 2JN</Postcode>
+  </item>
+  <item>
+    <Street>Test</Street>
+    <City>Test</City>
+    <Postcode>Test</Postcode>
+  </item>
+</ArrayList>
