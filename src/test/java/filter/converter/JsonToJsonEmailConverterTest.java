@@ -1,13 +1,8 @@
 package filter.converter;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
-import utils.JsonUtils;
-import adressmodel.Email;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

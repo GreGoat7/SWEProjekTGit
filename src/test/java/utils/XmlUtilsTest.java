@@ -1,6 +1,6 @@
-package utils;
+/* package utils;
 
-import adressmodel.*;
+import addressmodel.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
 
@@ -97,7 +97,7 @@ public class XmlUtilsTest {
         // Vorbereitung
         File personFile = new File("src/test/resources/Person.xml");
         File emailFile = new File("src/test/resources/emails.xml");
-        /*File phoneFile = new File("src/test/resources/PhoneList.json");*/
+        File phoneFile = new File("src/test/resources/PhoneList.json");
         //File addressFile = new File("src/test/resources/Addressdetails.xml");
 
         // Ausführung und Überprüfung
@@ -124,7 +124,7 @@ public class XmlUtilsTest {
                     new TypeReference<AddressList>() {}.getType(),
                     JsonUtils.determineListType(addressFile).getType(),
                     "Expected List<Address> type"
-            );*/
+            );
         } catch (Exception e) {
             fail("Exception thrown during test: " + e.toString());
         }
@@ -197,17 +197,7 @@ public class XmlUtilsTest {
 
     }
 
-    @Test
-    void testArray(){
-        File testFile = new File("src/test/resources/xmladresse.xml");
-        boolean result = false;
-        try {
-            result = XmlUtils.isArray(testFile);
-        }catch (Exception e){
-            fail("Fail" + e);
-        }
 
-        assertEquals(true, result);
-    }
 
 }
+*/

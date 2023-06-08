@@ -2,8 +2,8 @@ package filter.converter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import utils.JsonUtils;
-import adressmodel.Person;
-import adressmodel.Email;
+import addressmodel.Person;
+import addressmodel.Email;
 import filter.Filter;
 
 import java.io.File;
@@ -11,14 +11,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonToJsonEmailConverter implements Filter{
 
+public class JsonToJsonEmailConverter implements Filter{
+    JsonUtils jsonUtils = Constants.JSONUTILS;
     @Override
     public String process(String inputFilePath) throws IOException {
         // Lesen der JSON-Eingabedatei in eine Liste von Adressobjekten
         // Lesen der JSON-Eingabedatei in eine Liste von Objekten
         File inputFile = new File(inputFilePath);
-        TypeReference<?> typeReference = JsonUtils.determineListType(inputFile);
+        TypeReference<?> typeReference = jsonUtils.determineListType(inputFile);
 
         // Überprüfen, ob es sich um eine Liste von Personen handelt
         if (!typeReference.getType().equals(new TypeReference<List<Person>>() {}.getType())) {

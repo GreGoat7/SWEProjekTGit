@@ -5,23 +5,28 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.io.File;
-import adressmodel.Person;
+import addressmodel.Person;
 import com.fasterxml.jackson.core.type.TypeReference;
+import constants.Constants;
 import filter.Filter;
-import utils.FormatUtils;
 import utils.JsonUtils;
 import utils.XmlUtils;
-import adressmodel.Address;
-import adressmodel.Phone;
-import adressmodel.Email;
+import addressmodel.Address;
+import addressmodel.Phone;
+import addressmodel.Email;
 import utils.YamlUtils;
+import utils.FormatUtils;
 
 import java.util.List;
 import java.util.ArrayList;
 
 public class DecryptFormatter implements Filter {
-    private static final String ALGORITHM = "AES";
-    private static final byte[] KEY = "ThisIsASecretKey".getBytes(StandardCharsets.UTF_8);
+    JsonUtils jsonUtils = Constants.JSONUTILS;
+    XmlUtils xmlUtils = Constants.XMLUTILS;
+    YamlUtils yamlUtils = Constants.YAMLUTILS;
+
+    String ALGORITHM = Constants.ALGORITHM;
+    byte[] KEY = Constants.KEY;
 
     // Hilfsmethode zum Generieren des Ausgabepfads
     private String getOutputFilePath(String inputFilePath) {

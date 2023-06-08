@@ -7,6 +7,7 @@ import pipeline.Pipeline;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.List;
+import constants.Constants;
 
 // Die Hauptklasse des Projekts, die eine Pipeline eine Liste von Filtern aus einer Config-Datei list und in eine Pipeline
 // einfügt und abarbeitet
@@ -32,7 +33,7 @@ public class Application {
             String startFilePath = null;
             while ((line = reader.readLine()) != null) {
                 // Wenn die aktuelle Zeile mit "StartFile:" beginnt, wird der Pfad als der Rest der Zeile nach dem Doppelpunkt gespeichert.
-                if (line.startsWith("StartFile:")) {
+                if (line.startsWith(Constants.STARTFILE)) {
                     startFilePath = line.split(":")[1].trim();
                 }
             }

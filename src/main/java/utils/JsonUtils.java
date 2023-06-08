@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
-import adressmodel.*;
+import addressmodel.*;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import java.io.File;
@@ -42,17 +42,9 @@ public class JsonUtils {
         mapper.writeValue(new File(filePath), obj);
     }
 
-    public static boolean isArray(File jsonFile) throws IOException{
-        JsonNode rootNode = mapper.readTree(jsonFile);
-        if(rootNode.isArray()){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 
-    public static TypeReference<?> determineListType(File jsonFile) throws IOException {
+    @Override
+    public TypeReference<?> determineListType(File jsonFile) throws IOException {
         JsonNode rootNode = null;
         try {
             rootNode = mapper.readTree(jsonFile);

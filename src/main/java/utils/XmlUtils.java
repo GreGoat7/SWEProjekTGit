@@ -1,10 +1,9 @@
 package utils;
 
-import adressmodel.Address;
-import adressmodel.Email;
-import adressmodel.Person;
-import adressmodel.Phone;
-import com.fasterxml.jackson.databind.JsonNode;
+import addressmodel.Address;
+import addressmodel.Email;
+import addressmodel.Person;
+import addressmodel.Phone;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -19,7 +18,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
 
 import org.w3c.dom.Document;

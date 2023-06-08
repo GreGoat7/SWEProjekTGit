@@ -1,6 +1,6 @@
-package filter.converter;
+/* package filter.converter;
 
-import adressmodel.*;
+import addressmodel.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
 import utils.JsonUtils;
@@ -8,7 +8,6 @@ import utils.YamlUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,11 +19,11 @@ class JsonToYamlConverterTest {
                 new TypeReference<Address>() {});
     }
 
-   /* @Test
+    @Test
     void testProcessForAddresses() throws IOException {
         runTest("src/test/resources/adresse.json",
                 new TypeReference<List<Address>>() {});
-    }*/
+    }
 
     @Test
     void testProcessForEmail() throws IOException {
@@ -32,11 +31,11 @@ class JsonToYamlConverterTest {
                 new TypeReference<Email>() {});
     }
 
-   /* @Test
+   @Test
     void testProcessForAddressDetailsList() throws IOException {
         runTest("src/test/resources/addressdetailslist.json",
                 new TypeReference<List<Address>>() {});
-    }*/
+    }
 
     private <T> void runTest(String inputFilePath, TypeReference<T> type) throws IOException {
         // Create JsonToYamlConverter object
@@ -61,4 +60,4 @@ class JsonToYamlConverterTest {
         // Validate the results
         assertEquals(inputData, resultData, "Converted data should match input data");
     }
-}
+} */

@@ -1,16 +1,15 @@
 package filter.converter;
 import com.fasterxml.jackson.core.type.TypeReference;
+import constants.Constants;
+import org.yaml.snakeyaml.Yaml;
 import utils.JsonUtils;
-import utils.XmlUtils;
 import utils.YamlUtils;
-import adressmodel.Address;
 import filter.Filter;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.List;
 
 public class JsonToYamlConverter implements Filter {

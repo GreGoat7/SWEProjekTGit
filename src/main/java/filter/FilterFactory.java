@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import constants.Constants;
 
 public class FilterFactory {
 
@@ -31,7 +32,7 @@ public class FilterFactory {
         List<Filter> filters = new ArrayList<>();
 
         while ((line = reader.readLine()) != null) {
-            if (line.startsWith("Filters:")) {
+            if (line.startsWith(Constants.FILTERLIST)) {
                 String[] classNames = line.split(":")[1].trim().split(",");
                 for (String className : classNames) {
                     Filter filter = createFilter(className.trim());

@@ -1,9 +1,9 @@
 package utils;
 
-import adressmodel.Address;
-import adressmodel.Email;
-import adressmodel.Person;
-import adressmodel.Phone;
+import addressmodel.Address;
+import addressmodel.Email;
+import addressmodel.Person;
+import addressmodel.Phone;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
