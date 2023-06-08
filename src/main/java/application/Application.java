@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.util.List;
 
 public class Application {
+    // in String args config-file übergeben
     public static void main(String[] args) {
         try {
             String configFilePath = "src/main/resources/config.txt";
