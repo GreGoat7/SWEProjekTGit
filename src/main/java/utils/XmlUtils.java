@@ -89,30 +89,47 @@ public class XmlUtils implements IUtils{
         throw new NotAListException("Das XML-Format entspricht nicht erwarteten Feldern");
     }
 
+    // Diese Methode bestimmt den Typ des Inhalts in der gegebenen NodeList.
+
+    // @param nodeList Die NodeList, deren Inhaltstyp bestimmt werden soll.
+    // @return Ein TypeReference-Objekt, das den Typ des Inhalts der NodeList darstellt.
+    // Gibt null zurück, wenn der Inhaltstyp nicht bestimmt werden kann.
     private static TypeReference<?> determineTypeFromNodeList(NodeList nodeList) {
+
+        // Holt das erste Node aus der NodeList.
         Node firstNode = nodeList.item(0);
+        // Prüft, ob das erste Node ein Element-Node ist.
         if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+            // Konvertiert das Node zu einem Element.
             Element firstElement = (Element) firstNode;
+
+            // Prüft, ob das Element "FirstName"-Tags enthält.
+            // Wenn ja, wird angenommen, dass die NodeList Personen darstellt.
             if (firstElement.getElementsByTagName("FirstName").getLength() > 0) {
-                return new TypeReference<List<Person>>() {
-                };
-            } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
+                return new TypeReference<List<Person>>() {};
+            }
+            // Prüft, ob das Element "type"- und "number"-Tags enthält.
+            // Wenn ja, wird angenommen, dass die NodeList Telefonnummern darstellt.
+            else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
                     firstElement.getElementsByTagName("number").getLength() > 0) {
-                return new TypeReference<List<Phone>>() {
-                };
-            } else if (firstElement.getElementsByTagName("Street").getLength() > 0) {
-                return new TypeReference<List<Address>>() {
-                };
-            } else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
+                return new TypeReference<List<Phone>>() {};
+            }
+            // Prüft, ob das Element "Street"-Tags enthält.
+            // Wenn ja, wird angenommen, dass die NodeList Adressen darstellt.
+            else if (firstElement.getElementsByTagName("Street").getLength() > 0) {
+                return new TypeReference<List<Address>>() {};
+            }
+            // Prüft, ob das Element "type"- und "address"-Tags enthält.
+            // Wenn ja, wird angenommen, dass die NodeList E-Mails darstellt.
+            else if (firstElement.getElementsByTagName("type").getLength() > 0 &&
                     firstElement.getElementsByTagName("address").getLength() > 0) {
-                return new TypeReference<List<Email>>() {
-                };
+                return new TypeReference<List<Email>>() {};
             }
         }
 
+        // Wenn keiner der obigen Fälle zutrifft, kann der Typ der NodeList nicht bestimmt werden und null wird zurückgegeben.
         return null;
     }
-
 
 
 

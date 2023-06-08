@@ -12,8 +12,6 @@ public class Pipeline implements IPipeline {
     private List<Filter> filters = new ArrayList<>();
 
 
-    // Diese Methode fügt einen Filter zur Pipeline hinzu
-    // Die Methode gibt die Pipeline selbst zurück, um das Hinzufügen von mehreren Filtern in einer Zeile zu ermöglichen.
     @Override
     public Pipeline addFilter(Filter filter) {
         filters.add(filter);

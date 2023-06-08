@@ -30,7 +30,13 @@ public class Email implements IEmail {
 
     }
 
+    // Überschreibt die equals-Methode, um die Gleichheit von Email-Objekten zu bestimmen.
 
+    // @param o Das Objekt, mit dem dieses Email-Objekt verglichen wird.
+    // @return  Gibt 'true' zurück, wenn das gegebene Objekt das gleiche ist wie dieses Objekt,
+    //          oder wenn das gegebene Objekt eine Email ist und der Typ und
+    //          die E-Mail-Adresse mit denen dieses Objekts übereinstimmen.
+    //          Andernfalls wird 'false' zurückgegeben.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

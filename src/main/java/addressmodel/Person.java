@@ -104,6 +104,13 @@ public class Person implements IPerson {
         this.phone = phone;
     }
 
+    // Überschreibt die equals-Methode, um die Gleichheit von Person-Objekten zu bestimmen.
+
+    // @param o Das Objekt, mit dem dieses Person-Objekt verglichen wird.
+    // @return  Gibt 'true' zurück, wenn das gegebene Objekt das gleiche ist wie dieses Objekt,
+    //          oder wenn das gegebene Objekt eine Person ist und der Vorname,
+    //          Nachname, Alter, Adresse, Telefon und E-Mail mit denen dieses Objekts übereinstimmen.
+    //          Andernfalls wird 'false' zurückgegeben.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -27,6 +27,7 @@ public class Address implements IAddress {
         this.postcode = postcode;
     }
 
+    //Default-Constructor
     public Address() {
 
     }
@@ -76,6 +77,12 @@ public class Address implements IAddress {
         this.postcode = postcode;
     }
 
+    // Diese Methode wird überschrieben, um die Gleichheit von Address-Objekten zu bestimmen.
+    // @param o Das Objekt, mit dem dieses Address-Objekt verglichen wird.
+    // @return  Gibt 'true' zurück, wenn das gegebene Objekt das gleiche ist wie dieses Objekt,
+    //          oder wenn das gegebene Objekt eine Adresse ist und die Straße, die Stadt und
+    //          die Postleitzahl mit denen dieses Objekts übereinstimmen.
+    //          Andernfalls wird 'false' zurückgegeben.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

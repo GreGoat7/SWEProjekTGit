@@ -25,11 +25,12 @@ public class DecryptFormatter implements Filter {
     JsonUtils jsonUtils = Constants.JSONUTILS;
     XmlUtils xmlUtils = Constants.XMLUTILS;
     YamlUtils yamlUtils = Constants.YAMLUTILS;
-
+    FormatUtils formatUtils = Constants.FORMATUTILS;
     String ALGORITHM = Constants.ALGORITHM;
     byte[] KEY = Constants.KEY;
 
-    // Hilfsmethode zum Generieren des Ausgabepfads
+    // generiert des Ausgabepfads
+    // @param   inputFilePath  Pfad zur Eingabedatei
     private String getOutputFilePath(String inputFilePath) {
         int lastDotIndex = inputFilePath.lastIndexOf(".");
         String baseName = inputFilePath.substring(0, lastDotIndex);
@@ -37,13 +38,12 @@ public class DecryptFormatter implements Filter {
         return baseName + ".dec" + extension;
     }
 
-    // Verwende die Hilfsmethode, um den Pfad der Ausgabedatei zu erzeugen und die Daten dorthin zu schreiben
     @Override
     public String process(String inputFilePath) throws Exception {
         File inputFile = new File(inputFilePath);
         String outputFilePath = getOutputFilePath(inputFilePath);
 
-        String fileFormat = FormatUtils.detectFileType(inputFilePath).toString().toLowerCase();
+        String fileFormat = formatUtils.detectFileType(inputFilePath).toString().toLowerCase();
 
         switch (fileFormat) {
             case "json" -> {
@@ -65,6 +65,12 @@ public class DecryptFormatter implements Filter {
     }
 
 
+    // verarbeitet eine Eingabedatei, indem sie den Inhalt der Datei liest,
+    // die Daten entschlüsselt und die entschlüsselten Daten in eine Ausgabedatei schreibt.
+    // @param   inputFilePath    der Pfad zur Eingabedatei
+    // @param   outputFilepath   der Pfad zur Ausgabedatei
+    // @param   typeReference    die Art der Daten, die in der Datei enthalten sind
+    // @param   iUtils           die Hilfsklasse, die zum Lesen der Eingabedatei und Schreiben der Ausgabedatei verwendet wird
     private void handleFile(String inputFilePath, String outputFilepath, TypeReference<?> typeReference, IUtils iUtils) throws Exception {
         File inputFile = new File(inputFilePath);
 
@@ -84,6 +90,8 @@ public class DecryptFormatter implements Filter {
     }
 
 
+    // entschlüsselt eine Liste von Personen
+    // @param   personList   eine Liste von Personen (Eingabeliste)
     private void decryptPersonList(List<Person> personList) throws Exception {
         SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
@@ -99,6 +107,8 @@ public class DecryptFormatter implements Filter {
         }
     }
 
+    // entschlüsselt eine Liste von Telefonnummern
+    // @param   phones   eine Liste von Telefonnummern (Eingabeliste)
     private void decryptPhones(List<Phone> phones) throws Exception {
         SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
@@ -110,6 +120,8 @@ public class DecryptFormatter implements Filter {
         }
     }
 
+    // entschlüsselt eine Liste von Emails
+    // @param   emails   eine Liste von Emails (Eingabeliste)
     private void decryptEmails(List<Email> emails) throws Exception {
         SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
         Cipher cipher = Cipher.getInstance(ALGORITHM);
@@ -125,12 +137,16 @@ public class DecryptFormatter implements Filter {
         }
     }
 
+    // entschlüsselt eine Adresse
+    // @param   address   eine Adresse einer Person (Eingabeliste)
     private void decryptAddresses(Address address, Cipher cipher) throws Exception {
         address.setStreet(decryptString(address.getStreet(), cipher));
         address.setCity(decryptString(address.getCity(), cipher));
         address.setPostcode(decryptString(address.getPostcode(), cipher));
     }
 
+    // entschlüsselt einen String
+    // @param   value   der zu entschlüsselnde String (Eingabeliste)
     private String decryptString(String value, Cipher cipher) throws Exception {
         byte[] decoded = Base64.getDecoder().decode(value);
         byte[] decrypted = cipher.doFinal(decoded);

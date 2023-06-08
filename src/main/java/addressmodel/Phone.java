@@ -47,6 +47,13 @@ public class Phone implements IPhone {
         this.number = number;
     }
 
+    // Überschreibt die equals-Methode, um die Gleichheit von Phone-Objekten zu bestimmen.
+
+    // @param o Das Objekt, mit dem dieses Phone-Objekt verglichen wird.
+    // @return  Gibt 'true' zurück, wenn das gegebene Objekt das gleiche ist wie dieses Objekt,
+    //          oder wenn das gegebene Objekt ein Phone ist und der Typ und
+    //          die Nummer mit denen dieses Objekts übereinstimmen.
+    //          Andernfalls wird 'false' zurückgegeben.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

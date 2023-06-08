@@ -8,10 +8,6 @@ import constants.Constants;
 
 public class FilterFactory implements IFilterFactory {
 
-
-    /* erstelle einen Filter mithilfe von Reflection, indem geschaut wird ob eine Klasse mit dem Namen "filterClassName"
-    im package filter existiert */
-
     @Override
     public Filter createFilter(String filterClassName) throws Exception {
         try {
@@ -26,7 +22,6 @@ public class FilterFactory implements IFilterFactory {
         }
     }
 
-    /* list ein configfile und erstellt dann mithilfe der Methode "createFilter" mit Reflection die aufgeführten Filter */
     @Override
     public List<Filter> createFiltersFromConfig(String configFilePath) throws Exception {
         BufferedReader reader = new BufferedReader(new FileReader(configFilePath));

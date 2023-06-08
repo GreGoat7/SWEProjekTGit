@@ -24,10 +24,12 @@ public class EncryptFormatter implements Filter {
     JsonUtils jsonUtils = Constants.JSONUTILS;
     XmlUtils xmlUtils = Constants.XMLUTILS;
     YamlUtils yamlUtils = Constants.YAMLUTILS;
+    FormatUtils formatUtils = Constants.FORMATUTILS;
     String ALGORITHM = Constants.ALGORITHM;
     byte[] KEY = Constants.KEY;
 
     // generiert den Ausgabepfad und gibt ihn zurück
+    // @param   inputFilePath   Pfad zur Eingabedatei
     private String getOutputFilePath(String inputFilePath) {
         int lastDotIndex = inputFilePath.lastIndexOf(".");
         String baseName = inputFilePath.substring(0, lastDotIndex);
@@ -42,7 +44,7 @@ public class EncryptFormatter implements Filter {
         String outputFilePath = getOutputFilePath(inputFilePath);
 
         // Erkennt das Dateiformat
-        String fileFormat = FormatUtils.detectFileType(inputFilePath).toString().toLowerCase();
+        String fileFormat = formatUtils.detectFileType(inputFilePath).toString().toLowerCase();
 
 
         switch (fileFormat) {
@@ -68,13 +70,23 @@ public class EncryptFormatter implements Filter {
         return outputFilePath;
     }
 
-    //
+    // verarbeitet eine Eingabedatei, indem sie den Inhalt der Datei liest,
+    // die Daten verschlüsselt und die verschlüsselten Daten in eine Ausgabedatei schreibt.
+    // @param   inputFilePath    der Pfad zur Eingabedatei
+    // @param   outputFilepath   der Pfad zur Ausgabedatei
+    // @param   typeReference    die Art der Daten, die in der Datei enthalten sind
+    // @param   iUtils           die Hilfsklasse, die zum Lesen der Eingabedatei und Schreiben der Ausgabedatei verwendet wird
     private void handleFile(String inputFilePath, String outputFilepath, TypeReference<?> typeReference, IUtils iUtils) throws Exception {
+        // Erstellt eine Datei aus dem Eingabepfad
         File inputFile = new File(inputFilePath);
 
+        // Überprüft, ob die Daten in der Datei eine Liste von Personen sind
         if (typeReference.getType().equals(new TypeReference<List<Person>>(){}.getType())) {
+            // Wandelt den Inhalt der Datei in eine Liste von Personen um
             List<Person> personList = iUtils.toJava(inputFile, (TypeReference<List<Person>>) typeReference);
+            // Verschlüsselt die Daten in der Liste
             encryptPersonList(personList);
+            // Schreibt die verschlüsselten Daten in die Ausgabedatei
             iUtils.fromJava(personList, outputFilepath);
         } else if (typeReference.getType().equals(new TypeReference<List<Email>>(){}.getType())) {
             List<Email> emailList = iUtils.toJava(inputFile, (TypeReference<List<Email>>) typeReference);

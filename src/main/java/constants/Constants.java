@@ -1,5 +1,6 @@
 package constants;
 
+import utils.FormatUtils;
 import utils.JsonUtils;
 import utils.XmlUtils;
 import utils.YamlUtils;
@@ -9,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 public final class Constants {
     private Constants(){}
 
+    // für Konfigurationsdatei
     public static final String STARTFILE = "StartFile;";
     public static final String FILTERLIST = "Filters:";
 
@@ -18,6 +20,7 @@ public final class Constants {
     public static final JsonUtils JSONUTILS = new JsonUtils();
     public static final XmlUtils XMLUTILS = new XmlUtils();
     public static final YamlUtils YAMLUTILS = new YamlUtils();
+    public static final FormatUtils FORMATUTILS = new FormatUtils();
 
 
     // Konstanten für Encrypt/Decrypt
