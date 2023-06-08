@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-
 import java.util.List;
 import java.util.Objects;
+
 @JsonPropertyOrder({ "type", "address"})
 @JacksonXmlRootElement(localName = "Email")
+
 public class Email implements IEmail {
     @JsonProperty("type")
     @JacksonXmlProperty(localName = "type")
@@ -24,6 +25,7 @@ public class Email implements IEmail {
         this.emailAddress = emailAddress;
     }
 
+    //Default-Constructor
     public Email() {
 
     }
