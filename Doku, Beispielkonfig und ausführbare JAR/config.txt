@@ -1,0 +1,2 @@
+StartFile; src/test/resources/JsonToXmlResources/Person.json
+Filters: filter.converter.JsonToJsonEmailConverter, filter.converter.JsonToXmlConverter, filter.formatter.EncryptFormatter, filter.formatter.DecryptFormatter
