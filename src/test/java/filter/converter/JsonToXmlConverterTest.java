@@ -29,8 +29,8 @@ public class JsonToXmlConverterTest {
 
     @Test
     public void testProcessForValidInput() {
-        String inputFilePath = "src/test/resources/JsonToYamlResources/Person.json"; // Hier geben Sie den Pfad zu Ihrer Testdatei an.
-        String expectedOutputFilePath = "src\\test\\resources\\JsonToYamlResources\\Person.xml";
+        String inputFilePath = "src/test/resources/JsonToXmlResources/Person.json"; // Hier geben Sie den Pfad zu Ihrer Testdatei an.
+        String expectedOutputFilePath = "src\\test\\resources\\JsonToXmlResources\\Person.xml";
 
         assertDoesNotThrow(() -> {
             String result = converter.process(inputFilePath);
@@ -41,7 +41,7 @@ public class JsonToXmlConverterTest {
 
     @Test
     public void testProcessForNoJsonInput() {
-        String inputFilePath = "src/test/resources/JsonToYamlResources/AddressList.xml"; // Hier geben Sie den Pfad zu einer ungültigen Testdatei an, die nicht in eine Liste konvertiert werden kann.
+        String inputFilePath = "src/test/resources/JsonToXmlResources/AddressList.xml"; // Hier geben Sie den Pfad zu einer ungültigen Testdatei an, die nicht in eine Liste konvertiert werden kann.
 
         assertThrows(IllegalArgumentException.class, () -> {
             converter.process(inputFilePath);
@@ -50,7 +50,7 @@ public class JsonToXmlConverterTest {
 
     @Test
     public void testProcessForInvalidJsonInput() {
-        String inputFilePath = "src/test/resources/JsonToYamlResources/AddressList.xml"; // Hier geben Sie den Pfad zu einer ungültigen Testdatei an, die nicht in eine Liste konvertiert werden kann.
+        String inputFilePath = "src/test/resources/JsonToXmlResources/AddressList.xml"; // Hier geben Sie den Pfad zu einer ungültigen Testdatei an, die nicht in eine Liste konvertiert werden kann.
 
         assertThrows(IllegalArgumentException.class, () -> {
             converter.process(inputFilePath);
@@ -70,31 +70,31 @@ public class JsonToXmlConverterTest {
 
     @Test
     void testProcessForPerson() throws IOException {
-        runTest("src/test/resources/JsonToYamlResources/Person.json",
+        runTest("src/test/resources/JsonToXmlResources/Person.json",
                 new TypeReference<List<Person>>() {});
     }
 
     @Test
     void testProcessForEncryptedPerson() throws IOException {
-        runTest("src/test/resources/JsonToYamlResources/personen.enc.json",
+        runTest("src/test/resources/JsonToXmlResources/personen.enc.json",
                 new TypeReference<List<Person>>() {});
     }
 
     @Test
     void testProcessForAddress() throws IOException {
-        runTest("src/test/resources/JsonToYamlResources/AddressList.json",
+        runTest("src/test/resources/JsonToXmlResources/AddressList.json",
                 new TypeReference<List<Address>>() {});
     }
 
     @Test
     void testProcessForEmail() throws IOException {
-        runTest("src/test/resources/JsonToYamlResources/changedemail.json",
+        runTest("src/test/resources/JsonToXmlResources/changedemail.json",
                 new TypeReference<List<Email>>() {});
     }
 
     @Test
     void testProcessForPhone() throws IOException {
-        runTest("src/test/resources/JsonToYamlResources/Phone.json",
+        runTest("src/test/resources/JsonToXmlResources/Phone.json",
                 new TypeReference<List<Phone>>() {});
     }
 
