@@ -96,6 +96,10 @@ public class EncryptFormatter implements Filter {
             List<Phone> phoneList = iUtils.toJava(inputFile, (TypeReference<List<Phone>>) typeReference);
             encryptPhones(phoneList);
             iUtils.fromJava(phoneList, outputFilepath);
+        } else if (typeReference.getType().equals(new TypeReference<List<Address>>(){}.getType())) {
+            List<Address> addressList = iUtils.toJava(inputFile, (TypeReference<List<Address>>) typeReference);
+            encryptAddresses(addressList);
+            iUtils.fromJava(addressList, outputFilepath);
         }
     }
 
@@ -109,15 +113,22 @@ public class EncryptFormatter implements Filter {
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, keySpec);
 
+
         for (Person person : personList) {
             // Verschlüsselt die einzelnen Daten der Person
             person.setFirstName(encryptString(person.getFirstName(), cipher));
             person.setSurname(encryptString(person.getSurname(), cipher));
             person.setAge(encryptString(person.getAge(), cipher));
-            encryptAddresses(person.getAddress(), cipher);
+            encryptAddressesForPerson(person.getAddress(), cipher);
             encryptPhones(person.getPhone());
             encryptEmails(person.getEmail());
         }
+    }
+
+    private void encryptAddressesForPerson(Address address, Cipher cipher) throws Exception {
+        address.setStreet(encryptString(address.getStreet(), cipher));
+        address.setCity(encryptString(address.getCity(), cipher));
+        address.setPostcode(encryptString(address.getPostcode(), cipher));
     }
 
     // verschlüsselt eine Liste von Telefonnummern
@@ -152,10 +163,16 @@ public class EncryptFormatter implements Filter {
 
     // verschlüsselt eine Adresse
     // @param   address   eine Adresse einer Person (Eingabeliste)
-    private void encryptAddresses(Address address, Cipher cipher) throws Exception {
-        address.setStreet(encryptString(address.getStreet(), cipher));
-        address.setCity(encryptString(address.getCity(), cipher));
-        address.setPostcode(encryptString(address.getPostcode(), cipher));
+    private void encryptAddresses(List<Address> addresses) throws Exception {
+        SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, keySpec);
+
+        for (Address address : addresses) {
+            address.setStreet(encryptString(address.getStreet(), cipher));
+            address.setCity(encryptString(address.getCity(), cipher));
+            address.setPostcode(encryptString(address.getPostcode(), cipher));
+        }
     }
 
     // verschlüsselt einen String

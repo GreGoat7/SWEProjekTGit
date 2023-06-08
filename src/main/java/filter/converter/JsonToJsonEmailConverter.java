@@ -21,7 +21,6 @@ public class JsonToJsonEmailConverter implements Filter {
         // Lesen der JSON-Eingabedatei in eine Liste von Adressobjekten
         // Lesen der JSON-Eingabedatei in eine Liste von Objekten
         File inputFile = new File(inputFilePath);
-        System.out.println(inputFilePath);
         TypeReference<?> typeReference = jsonUtils.determineListType(inputFile);
 
         // Überprüfen, ob es sich um eine Liste von Personen handelt

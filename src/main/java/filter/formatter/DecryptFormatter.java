@@ -86,6 +86,10 @@ public class DecryptFormatter implements Filter {
             List<Phone> phoneList = iUtils.toJava(inputFile, (TypeReference<List<Phone>>) typeReference);
             decryptPhones(phoneList);
             iUtils.fromJava(phoneList, outputFilepath);
+        }  else if (typeReference.getType().equals(new TypeReference<List<Address>>(){}.getType())) {
+            List<Address> addressList = iUtils.toJava(inputFile, (TypeReference<List<Address>>) typeReference);
+            decryptAddresses(addressList);
+            iUtils.fromJava(addressList, outputFilepath);
         }
     }
 
@@ -101,7 +105,7 @@ public class DecryptFormatter implements Filter {
             person.setFirstName(decryptString(person.getFirstName(), cipher));
             person.setSurname(decryptString(person.getSurname(), cipher));
             person.setAge(decryptString(person.getAge(), cipher));
-            decryptAddresses(person.getAddress(), cipher);
+            decryptAddressesForPerson(person.getAddress(), cipher);
             decryptPhones(person.getPhone());
             decryptEmails(person.getEmail());
         }
@@ -139,7 +143,19 @@ public class DecryptFormatter implements Filter {
 
     // entschlüsselt eine Adresse
     // @param   address   eine Adresse einer Person (Eingabeliste)
-    private void decryptAddresses(Address address, Cipher cipher) throws Exception {
+    private void decryptAddresses(List<Address> addresses) throws Exception {
+        SecretKeySpec keySpec = new SecretKeySpec(KEY, ALGORITHM);
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, keySpec);
+
+        for (Address address : addresses) {
+            address.setStreet(decryptString(address.getStreet(), cipher));
+            address.setCity(decryptString(address.getCity(), cipher));
+            address.setPostcode(decryptString(address.getPostcode(), cipher));
+        }
+    }
+
+    private void decryptAddressesForPerson(Address address, Cipher cipher) throws Exception {
         address.setStreet(decryptString(address.getStreet(), cipher));
         address.setCity(decryptString(address.getCity(), cipher));
         address.setPostcode(decryptString(address.getPostcode(), cipher));

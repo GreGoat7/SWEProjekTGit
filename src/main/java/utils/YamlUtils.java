@@ -10,7 +10,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.fasterxml.jackson.databind.JsonNode;
+import exceptions.NotAListException;
 import exceptions.WrongFiletypeException;
+import exceptions.WrongFormatException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,8 +32,15 @@ public class YamlUtils implements IUtils {
 
 
     @Override
-    public <T> T toJava(File yamlFile, TypeReference<T> type) throws IOException, WrongFiletypeException {
-        return mapper.readValue(new InputStreamReader(new FileInputStream(yamlFile), StandardCharsets.UTF_8), type);
+    public <T> T toJava(File yamlFile, TypeReference<T> type) throws WrongFiletypeException{
+
+        try {
+            return mapper.readValue(new InputStreamReader(new FileInputStream(yamlFile), StandardCharsets.UTF_8), type);
+        }
+        catch (Exception e){
+            throw new WrongFiletypeException("Fehler beim Umwandeln der Json-Datei: Eingangsdatei ist kein Json-File");
+        }
+
     }
 
     @Override
@@ -39,14 +48,15 @@ public class YamlUtils implements IUtils {
         mapper.writeValue(new File(filePath), obj);
     }
 
-    public static boolean isArray(File yamlFile) throws IOException{
-        JsonNode rootNode = mapper.readTree(yamlFile);
-        return rootNode.isArray();
-    }
-
     @Override
-    public TypeReference<?> determineListType(File yamlFile) throws IOException {
-        JsonNode rootNode = mapper.readTree(yamlFile);
+    public TypeReference<?> determineListType(File yamlFile) throws IOException, NotAListException, WrongFormatException, WrongFiletypeException {
+        JsonNode rootNode = null;
+        try {
+            rootNode = mapper.readTree(yamlFile);
+        }
+        catch (Exception e){
+            throw new WrongFiletypeException("Fehler beim Umwandeln der XML-Datei: Eingangsdatei ist kein JSON-File");
+        }
         if (rootNode.isArray() && rootNode.size() > 0) {
             JsonNode firstElement = rootNode.get(0);
             // Prüfen auf das Vorhandensein bestimmter Felder in den JSON-Elementen
@@ -61,7 +71,8 @@ public class YamlUtils implements IUtils {
             else if(firstElement.has("Street")){
                 return new TypeReference<List<Address>>() {};
             }
+            throw new WrongFormatException("Felder im YAML-File enstprechen nicht den erwartenden Feldern");
         }
-        throw new InvalidFormatException("Das JSON-Format entspricht nicht erwarteten Feldern", yamlFile, Object.class);
+        throw new NotAListException("Das YAML-File muss eine Liste sein, aber ist keine.");
     }
 }

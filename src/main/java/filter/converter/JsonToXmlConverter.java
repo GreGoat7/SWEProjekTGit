@@ -3,6 +3,7 @@ package filter.converter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import exceptions.NotAListException;
 import exceptions.WrongFiletypeException;
+import exceptions.WrongFormatException;
 import utils.JsonUtils;
 import utils.XmlUtils;
 import filter.Filter;
@@ -19,7 +20,7 @@ public class JsonToXmlConverter implements Filter {
     XmlUtils xmlUtils = Constants.XMLUTILS;
 
     @Override
-    public String process(String inputFilePath) throws IOException, NotAListException, WrongFiletypeException {
+    public String process(String inputFilePath) throws IOException, NotAListException, WrongFiletypeException, WrongFormatException {
         // Lesen der JSON-Eingabedatei in eine Liste von Objekten
         File inputFile = new File(inputFilePath);
 

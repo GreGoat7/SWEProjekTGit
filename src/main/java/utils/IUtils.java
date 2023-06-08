@@ -28,5 +28,5 @@ public interface IUtils {
     // @return Gibt einen TypeReference des Typs der Liste zurück, die in der Datei repräsentiert wird.
     // @throws IOException Wird geworfen, wenn ein Ein-/Ausgabefehler auftritt.
     // @throws NotAListException Wird geworfen, wenn die Datei keine Liste repräsentiert.
-    TypeReference<?> determineListType(File inputFile) throws IOException, NotAListException;
+    TypeReference<?> determineListType(File inputFile) throws IOException, NotAListException, WrongFiletypeException, WrongFormatException;
 }

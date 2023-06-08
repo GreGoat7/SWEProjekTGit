@@ -22,6 +22,7 @@ import java.util.List;
 
 import exceptions.NotAListException;
 import exceptions.WrongFiletypeException;
+import exceptions.WrongFormatException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -58,7 +59,7 @@ public class XmlUtils implements IUtils{
     }
 
     @Override
-    public TypeReference<?> determineListType(File xmlFile) throws NotAListException {
+    public TypeReference<?> determineListType(File xmlFile) throws NotAListException, WrongFiletypeException, WrongFormatException {
         Document doc = null;
         try{
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -66,7 +67,7 @@ public class XmlUtils implements IUtils{
         doc = dBuilder.parse(xmlFile);
         doc.getDocumentElement().normalize();
         }catch (Exception e){
-            throw new IllegalArgumentException("Fehler beim Umwandeln der XML-Datei: Eingangsdatei ist kein XML-File");
+            throw new WrongFiletypeException("Fehler beim Umwandeln der XML-Datei: Eingangsdatei ist kein XML-File");
         }
 
 
@@ -84,9 +85,10 @@ public class XmlUtils implements IUtils{
             if (rowType != null) {
                 return rowType;
             }
+            throw new WrongFormatException("Felder im XML-File enstprechen nicht den erwartenden Feldern");
         }
 
-        throw new NotAListException("Das XML-Format entspricht nicht erwarteten Feldern");
+        throw new NotAListException("Das XML-File muss eine Liste sein, aber ist keine.");
     }
 
     // Diese Methode bestimmt den Typ des Inhalts in der gegebenen NodeList.

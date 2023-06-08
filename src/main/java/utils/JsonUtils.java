@@ -47,13 +47,13 @@ public class JsonUtils implements IUtils{
 
 
     @Override
-    public TypeReference<?> determineListType(File jsonFile) throws IOException, NotAListException {
+    public TypeReference<?> determineListType(File jsonFile) throws WrongFiletypeException, NotAListException, WrongFormatException {
         JsonNode rootNode = null;
         try {
             rootNode = mapper.readTree(jsonFile);
         }
         catch (Exception e){
-            throw new IllegalArgumentException("Fehler beim Umwandeln der Json-Datei: Eingangsdatei ist kein Json-File. Original exception: " + e.getMessage(), e);
+            throw new WrongFiletypeException("Fehler beim Umwandeln der JSON-Datei: Eingangsdatei ist kein JSON-File");
         }
 
         if (rootNode.isArray() && rootNode.size() > 0) {
@@ -70,6 +70,7 @@ public class JsonUtils implements IUtils{
             else if(firstElement.has("Street")){
                 return new TypeReference<List<Address>>() {};
             }
+            throw new WrongFormatException("Felder im JSON-File enstprechen nicht den erwartenden Feldern");
         }
         throw new NotAListException("Das JSON-File muss eine Liste sein, aber ist keine.");
     }

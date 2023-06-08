@@ -21,10 +21,6 @@ public class XmlToJsonConverter implements Filter {
         TypeReference<?> typeReference = xmlUtils.determineListType(inputFile);
         Object result = xmlUtils.toJava(inputFile, typeReference);
 
-        if (!(result instanceof List)) {
-            throw new ClassCastException("Ergebnis ist keine Liste");
-        }
-
         List<?> objectList = (List<?>) result;
 
         // Erstellen des Pfads für die Ausgabedatei durch Ersetzen von .xml durch .json
